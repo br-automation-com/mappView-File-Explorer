@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BindingsSet xmlns="http://www.br-automation.com/iat2015/binding/engineering/v2" xmlns:be="http://www.br-automation.com/iat2015/bindingListEmbedded/engineering/v2" xmlns:bt="http://www.br-automation.com/iat2015/bindingListTypes/engineering/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Explorer_binding">
+	<Bindings>
+		
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.status" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="txtStatus" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::USBdevice:usb_is_linked" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="btnUSBconnected" attribute="value" />
+		</Binding>
+		
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.txt" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="txtError" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.nr" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="numErrorNo" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[0].item_num" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="numItemsA" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[1].item_num" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="numItemsB" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[0].item_list" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="tableNameA" attribute="stringValue" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[0].item_size" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="tableSizeA" attribute="stringValue" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[1].item_size" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="tableSizeB" attribute="stringValue" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[1].item_list" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="tableNameB" attribute="stringValue" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].item_selected" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="tblDirectoryA" attribute="selectedRow" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[1].dir_path" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="txtDirPathB" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].dir_path" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="txtDirPathA" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].item_selected" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="tblDirectoryB" attribute="selectedRow" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].dir_name" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="txtNewDirA" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="btnCopyA" attribute="enable" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="btnDeleteA" attribute="enable" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="btnCopyAllA" attribute="enable" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="btnCopyB" attribute="enable" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="btnCopyAllB" attribute="enable" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="btnDeleteB" attribute="enable" />
+		</Binding>
+		
+	
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[1].item_filter" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="txtFilterB" attribute="value" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].item_filter" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="txtFilterA" attribute="value" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[1].dir_name" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="txtNewDirB" attribute="value" />
+</Binding>
+
+
+
+
+
+<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].device_list" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="ddbDeviceA" attribute="dataProvider" />
+</Binding>
+<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].device_list" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="ddbDeviceB" attribute="dataProvider" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].device_active" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="ddbDeviceA" attribute="selectedValue" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[1].device_active" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentUser" widgetRefId="ddbDeviceB" attribute="selectedValue" />
+</Binding>
+</Bindings>
+</BindingsSet>

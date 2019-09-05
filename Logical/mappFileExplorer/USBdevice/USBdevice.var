@@ -1,0 +1,31 @@
+(*Settings*)
+VAR CONSTANT
+	IGNORE_DONGLE : BOOL := TRUE; (*Do not list B&R license dongles*)
+END_VAR
+(*Local constants*)
+VAR CONSTANT
+	CREATE_NODE_ID_LIST : USINT := 10; (*Function step: Create a list of Node-IDs from all active USB devices*)
+	READ_DEVICE_DATA : USINT := 11; (*Function step: Read out the specific data from the Node-IDs*)
+	CHECK_DEVICE : USINT := 12; (*Function step: Check file device data*)
+	LINK_DEVICE : USINT := 20; (*Function step: Link file device*)
+	UNLINK_DEVICE : USINT := 21; (*Function step: Unlink the File Device from specific path*)
+	WAIT : USINT := 0; (*Function step: Wait for starting the Function chain*)
+	ERROR_CASE : USINT := 99; (*Function step: Jump to this step in every case of Error occuring in the Function chain*)
+	REFRESH_TIMER : UINT := 200;
+END_VAR
+VAR
+	TON_10ms_01 : TON_10ms;
+	start_reading_usb_data : BOOL; (*If TRUE - Function chain gets started*)
+	step : USINT; (*Determines the Function step*)
+	UsbNodeListGet_0 : UsbNodeListGet; (*Type of FUB UsbNodeListGet*)
+	UsbNodeGet_0 : UsbNodeGet; (*Type of FUB UsbNodeGet*)
+	DevLink_0 : DevLink; (*Type of FUB DevLink*)
+	DevUnlink_0 : DevUnlink; (*Type of FUB DevUnlink*)
+	device_param : STRING[80]; (*Connection path of USB device*)
+	usb_data : ARRAY[0..4] OF usbNode_typ; (*Defined data_typ of AsUSB - Library*)
+	usb_data_linked : usbNode_typ; (*Defined data_typ of AsUSB - Library*)
+	usb_is_linked : BOOL;
+	node_id_buffer : ARRAY[0..4] OF UDINT; (*Different nodeIDs saved in array-elements*)
+	node : USINT; (*Node number*)
+	idx : USINT;
+END_VAR

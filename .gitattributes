@@ -1,0 +1,7 @@
+# Example of a `.gitattributes`
+*.apj linguist-language=B&R
+*.typ linguist-language=B&R
+*.var linguist-language=B&R
+*.pkg linguist-language=B&R
+*.lby linguist-language=B&R
+*.fun linguist-language=B&R

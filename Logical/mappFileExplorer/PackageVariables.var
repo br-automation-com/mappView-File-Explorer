@@ -1,0 +1,12 @@
+VAR CONSTANT
+	DIR_PATH_SIZE : UINT := 200; (* Directory path name size							*)
+	DAT_LIST_NUM : UINT := 50;
+	DAT_ITEM_SIZE : USINT := 30; (* Record name size									*)
+	DAT_SIZE_SIZE : USINT := 30; (* Record name size									*)
+	DEVICE_LIST : ARRAY[0..4] OF STRING[40] := ['USER','SYSTEM',3('')];
+END_VAR
+VAR
+	EXPL : typMain_EXP;
+	ClientInfoCurrent : ClientInfoType;
+	ClientInfo : ARRAY[0..4] OF ClientInfoType;
+END_VAR

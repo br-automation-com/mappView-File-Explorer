@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EventBindingSet id="Explorer_eventbinding" xmlns="http://www.br-automation.com/iat2014/eventbinding/v2" xmlns:types="http://www.br-automation.com/iat2015/widgetTypes/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Bindings>
+		<!-- Refresh directory data when page is loaded />-->
+		<EventBinding>
+			<Source xsi:type="clientSystem.Event" event="ContentLoaded" />
+			<EventHandler condition="contentId=&quot;contentInfoSample&quot;" >
+				<Sequence>
+					<Step order="0">
+						<Action>
+							<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[0].refresh" >
+								<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+							</Target>
+						</Action>
+					</Step>
+					<Step order="1">
+						<Action>
+							<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[1].refresh" >
+								<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+							</Target>
+						</Action>
+					</Step>
+				</Sequence>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// />-->
+		
+		<!-- Directory change with double click on table />-->
+		<EventBinding id="contentUser.tblDirectoryA.Click">
+			<Source contentRefId="contentUser" widgetRefId="tblDirectoryA" xsi:type="widgets.brease.Table.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.VIS[0].double_click_dir_change" >
+						<Method xsi:type="opcUa.NodeAction.AddValue" value="1" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+
+		<!-- Refresh files on side A when new device was selected />-->
+		<EventBinding id="contentUser.ddbDeviceA.SelectedIndexChanged">
+			<Source contentRefId="contentUser" widgetRefId="ddbDeviceA" xsi:type="widgets.brease.DropDownBox.Event" event="SelectedIndexChanged" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[0].refresh" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- Refresh files on side A />-->
+		<EventBinding id="contentUser.btnRefreshA.Click">
+			<Source contentRefId="contentUser" widgetRefId="btnRefreshA" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[0].refresh" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+					
+		<!-- Delete file or directory on side A />-->
+		<EventBinding id="contentUser.btnDeleteA.Click">
+			<Source contentRefId="contentUser" widgetRefId="btnDeleteA" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[0].delete" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- Copy file or directory on side A to B />-->
+		<EventBinding id="contentUser.btnCopyA.Click">
+			<Source contentRefId="contentUser" widgetRefId="btnCopyA" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[0].copy" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- Copy all files on side A to B />-->
+		<EventBinding id="contentUser.btnCopyAllA.Click">
+			<Source contentRefId="contentUser" widgetRefId="btnCopyAllA" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[0].copyall" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- Create new folder on side A />-->
+		<EventBinding id="contentUser.btnDirCreateA.Click">
+			<Source contentRefId="contentUser" widgetRefId="btnDirCreateA" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[0].dir_create" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+
+		<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// />-->
+		
+		<!-- Directory change with double click on table />-->
+		<EventBinding id="contentUser.tblDirectoryB.Click">
+			<Source contentRefId="contentUser" widgetRefId="tblDirectoryB" xsi:type="widgets.brease.Table.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.VIS[1].double_click_dir_change" >
+						<Method xsi:type="opcUa.NodeAction.AddValue" value="1" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- Refresh files on side A when new device was selected />-->
+		<EventBinding id="contentUser.ddbDeviceB.SelectedIndexChanged">
+			<Source contentRefId="contentUser" widgetRefId="ddbDeviceB" xsi:type="widgets.brease.DropDownBox.Event" event="SelectedIndexChanged" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[1].refresh" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+
+		<!-- Refresh files on side B />-->
+		<EventBinding id="contentUser.btnRefreshB.Click">
+			<Source contentRefId="contentUser" widgetRefId="btnRefreshB" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[1].refresh" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+	
+		<!-- Delete file or directory on side B />-->
+		<EventBinding id="contentUser.btnDeleteB.Click">
+			<Source contentRefId="contentUser" widgetRefId="btnDeleteB" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[1].delete" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- Copy file or directory on side B to A />-->
+		<EventBinding id="contentUser.btnCopyB.Click">
+			<Source contentRefId="contentUser" widgetRefId="btnCopyB" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[1].copy" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- Copy all files on side B to A />-->
+		<EventBinding id="contentUser.btnCopyAllB.Click">
+			<Source contentRefId="contentUser" widgetRefId="btnCopyAllB" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[1].copyall" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- Create new folder on side B />-->
+		<EventBinding id="contentUser.btnDirCreateB.Click">
+			<Source contentRefId="contentUser" widgetRefId="btnDirCreateB" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[1].dir_create" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+	</Bindings>
+</EventBindingSet>

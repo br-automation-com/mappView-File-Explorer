@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<OpcUaSource FileVersion="4" ArVersion="B4.53">
+  <Aliases>
+    <ACLAliases />
+    <EURangeViolationAliases />
+    <EURangesAliases />
+    <EngineeringUnitAliases />
+  </Aliases>
+  <DefaultView>
+    <Module Name="&lt;Default&gt;">
+      <GlobalVariables Name="Global Variables">
+        <Variable Name="EXPL" AutomaticEnable="True">
+          <Variable Name="CMD" EnableArrayElements="True" />
+          <Variable Name="PAR" EnableArrayElements="True" />
+          <Variable Name="DAT" EnableArrayElements="True" />
+          <Variable Name="VIS" EnableArrayElements="True">
+            <Variable Name="VIS[0]">
+              <Variable Name="device_list" EnableArrayElements="True" />
+            </Variable>
+            <Variable Name="VIS[1]">
+              <Variable Name="device_list" EnableArrayElements="True" />
+            </Variable>
+          </Variable>
+        </Variable>
+        <Variable Name="ClientInfo" EnableArrayElements="True" />
+        <Variable Name="ClientInfoCurrent" />
+      </GlobalVariables>
+      <Task Name="USBdevice">
+        <Variable Name="usb_is_linked" />
+      </Task>
+    </Module>
+  </DefaultView>
+</OpcUaSource>

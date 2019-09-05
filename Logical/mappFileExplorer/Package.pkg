@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?AutomationStudio Version=4.5.3.86 SP?>
+<Package xmlns="http://br-automation.co.at/AS/Package">
+  <Objects>
+    <Object Type="File">PackageTypes.typ</Object>
+    <Object Type="File">PackageVariables.var</Object>
+    <Object Type="Program" Language="ANSIC">FileExplorer</Object>
+    <Object Type="Program" Language="IEC" Description="Sample for all AsUSB-Library-Functions">USBdevice</Object>
+    <Object Type="File">changelog.txt</Object>
+    <Object Type="File">HowToImport.pdf</Object>
+  </Objects>
+</Package>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<vdef:Visualization id="visExplorer" xmlns:vdef="http://www.br-automation.com/iat2015/visualizationDefinition/v2">
+	<StartPage pageRefId="ExplorerPage" />
+	<Pages>
+		<Page refId="ExplorerPage"/>
+	</Pages>
+	<Navigations>
+		<!--<Navigation refId="" />-->
+	</Navigations>  
+	<BindingsSets>
+		<BindingsSet refId="Explorer_binding" />
+	</BindingsSets>
+	<EventBindingsSets>
+		<EventBindingsSet refId="Explorer_eventbinding" />
+	</EventBindingsSets>
+	<Dialogs>
+		<!--<Dialog refId="dialogOK" />-->
+	</Dialogs>
+	<Contents>
+		<!--<Content refId="" />-->
+	</Contents>
+	<SnippetsSets>
+		<!--<SnippetsSet refId=""/>-->
+	</SnippetsSets>
+	<ExpressionsSets>
+		<!--<ExpressionsSet refId=""/>-->
+	</ExpressionsSets>
+	<VariablesSets>
+		<!--<VariablesSet refId="" />-->
+	</VariablesSets>
+	<StartTheme themeRefId="BuRTheme1" />
+	<Themes>
+		<Theme refId="BuRTheme1"/>
+	</Themes>
+	<Configurations>
+		<Configuration key="activityCount" value="false" />
+		<Configuration key="zoom" value="true" />
+		<Gestures>
+			<!--<SystemGesture1 touchPoints="2" />
+			<SystemGesture2 touchPoints="2" />
+			<SystemGesture3 touchPoints="2" />-->
+		</Gestures>
+		<VirtualKeyboards>
+			<!--<InputProcessing onKeyDown="false" />-->
+		</VirtualKeyboards>
+	</Configurations>
+</vdef:Visualization>

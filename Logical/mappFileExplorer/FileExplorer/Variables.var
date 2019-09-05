@@ -1,0 +1,36 @@
+(*Local constants*)
+VAR CONSTANT
+	OK : USINT := 0; (* CONSTANT for status OK *)
+	FILTER_AUTO_REFRESH : USINT := 1; (* Auto refresh when filter changes *)
+	COPY_AUTO_SELECT : USINT := 1; (* Select target item after copying *)
+	COPY_AUTO_REFRESH : USINT := 1; (* Refresh items after copying *)
+	override : USINT := 3; (* Number OF executions per cycle *)
+END_VAR
+(*Local Variables*)
+VAR
+	side : USINT := 0; (* Current side *)
+	step : STEP := STP_WAIT; (* Main step index *)
+	cycles : USINT := 0; (* Counter for override *)
+	animation : USINT := 0; (* Animation for working status	*)
+	do_select : USINT := 0; (* Select item after copying *)
+	old_filter : ARRAY[0..1] OF STRING[4]; (* Track filter change *)
+	tmp_str1 : STRING[DIR_PATH_SIZE]; (* Temporary STRING variable *)
+	tmp_str2 : STRING[DIR_PATH_SIZE]; (* Temporary STRING variable *)
+	tmp_str3 : STRING[DIR_PATH_SIZE]; (* Temporary STRING variable *)
+	tmp_str4 : STRING[DIR_PATH_SIZE]; (* Temporary STRING variable *)
+	x : UINT := 0; (* Index	*)
+	DoubleClickDirChange : TON_10ms;
+END_VAR
+(*Local function calls*)
+VAR
+	DInfo : DirInfo;
+	DOpen : DirOpen;
+	DRead : DirReadEx;
+	DClose : DirClose;
+	FCopy : FileCopy;
+	FDelete : FileDelete;
+	DCopy : DirCopy;
+	DCreate : DirCreate;
+	DDelete : DirDeleteEx;
+	lDirReadData : fiDIR_READ_EX_DATA;
+END_VAR
