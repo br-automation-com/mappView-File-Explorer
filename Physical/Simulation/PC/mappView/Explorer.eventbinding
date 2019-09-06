@@ -24,7 +24,19 @@
 			</EventHandler>
 		</EventBinding>
 		
-		<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// />-->
+		<!-- //////////////////////////////////////////////// Events for side A //////////////////////////////////////////////////////////////////////// />-->
+		
+		<!-- Clear filter on side A />-->
+		<EventBinding id="contentExplorer.btnClearFilterA.Click">
+			<Source contentRefId="contentExplorer" widgetRefId="btnClearFilterA" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.PAR[0].item_filter" >
+						<Method xsi:type="opcUa.NodeAction.SetValueString" value="" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
 		
 		<!-- Directory change with double click on table />-->
 		<EventBinding id="contentExplorer.tblDirectoryA.Click">
@@ -110,8 +122,20 @@
 			</EventHandler>
 		</EventBinding>
 
-		<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// />-->
+		<!-- //////////////////////////////////////////////// Events for side B //////////////////////////////////////////////////////////////////////// />-->
 		
+		<!-- Clear filter on side A />-->
+		<EventBinding id="contentExplorer.btnClearFilterB.Click">
+			<Source contentRefId="contentExplorer" widgetRefId="btnClearFilterB" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.PAR[1].item_filter" >
+						<Method xsi:type="opcUa.NodeAction.SetValueString" value="" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+				
 		<!-- Directory change with double click on table />-->
 		<EventBinding id="contentExplorer.tblDirectoryB.Click">
 			<Source contentRefId="contentExplorer" widgetRefId="tblDirectoryB" xsi:type="widgets.brease.Table.Event" event="Click" />
