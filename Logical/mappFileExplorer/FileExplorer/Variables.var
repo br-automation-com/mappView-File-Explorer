@@ -20,6 +20,7 @@ VAR
 	tmp_str4 : STRING[DIR_PATH_SIZE]; (* Temporary STRING variable *)
 	x : UINT := 0; (* Index	*)
 	DoubleClickDirChange : TON_10ms;
+	device_active_old : ARRAY[0..1] OF STRING[40];
 END_VAR
 (*Local function calls*)
 VAR

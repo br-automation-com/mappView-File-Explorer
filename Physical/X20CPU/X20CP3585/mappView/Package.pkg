@@ -4,7 +4,7 @@
   <Objects>
     <Object Type="File" Reference="true">\Physical\Simulation\PC\mappView\Visualizat.vis</Object>
     <Object Type="File" Reference="true">\Physical\Simulation\PC\mappView\Config.mappviewcfg</Object>
-    <Object Type="File" Reference="true">\Physical\Simulation\PC\mappView\Binding.binding</Object>
-    <Object Type="File" Reference="true">\Physical\Simulation\PC\mappView\EventBinding.eventbinding</Object>
+    <Object Type="File" Reference="true">\Physical\Simulation\PC\mappView\Explorer.binding</Object>
+    <Object Type="File" Reference="true">\Physical\Simulation\PC\mappView\Explorer.eventbinding</Object>
   </Objects>
 </Package>

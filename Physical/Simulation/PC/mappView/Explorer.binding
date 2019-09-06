@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BindingsSet xmlns="http://www.br-automation.com/iat2015/binding/engineering/v2" xmlns:be="http://www.br-automation.com/iat2015/bindingListEmbedded/engineering/v2" xmlns:bt="http://www.br-automation.com/iat2015/bindingListTypes/engineering/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Explorer_binding">
+	<Bindings>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.status" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtStatus" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::USBdevice:usb_is_linked" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBconnected" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.txt" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtError" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.nr" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numErrorNo" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[0].item_num" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numItemsA" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[1].item_num" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numItemsB" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[0].item_list" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="tableNameA" attribute="stringValue" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[0].item_size" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="tableSizeA" attribute="stringValue" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[1].item_size" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="tableSizeB" attribute="stringValue" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[1].item_list" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="tableNameB" attribute="stringValue" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].item_selected" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="tblDirectoryA" attribute="selectedRow" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[1].dir_path" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtDirPathB" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].dir_path" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtDirPathA" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].item_selected" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="tblDirectoryB" attribute="selectedRow" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].dir_name" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirA" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnCopyA" attribute="enable" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnDeleteA" attribute="enable" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnCopyAllA" attribute="enable" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnCopyB" attribute="enable" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnCopyAllB" attribute="enable" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnDeleteB" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[1].item_filter" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtFilterB" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].item_filter" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtFilterA" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[1].dir_name" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirB" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].device_list" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbDeviceA" attribute="dataProvider" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].device_list" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbDeviceB" attribute="dataProvider" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].device_active" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbDeviceA" attribute="selectedValue" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[1].device_active" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbDeviceB" attribute="selectedValue" />
+		</Binding>
+	<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_refresh_create" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnDirCreateA" attribute="visible" />
+</Binding>
+<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_refresh_create" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnRefreshA" attribute="visible" />
+</Binding>
+<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_refresh_create" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnRefreshB" attribute="enable" />
+</Binding>
+<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_refresh_create" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnDirCreateB" attribute="enable" />
+</Binding>
+</Bindings>
+</BindingsSet>

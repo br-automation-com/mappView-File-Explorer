@@ -4,7 +4,7 @@
   <Objects>
     <Object Type="File">Visualizat.vis</Object>
     <Object Type="File">Config.mappviewcfg</Object>
-    <Object Type="File">Binding.binding</Object>
-    <Object Type="File">EventBinding.eventbinding</Object>
+    <Object Type="File">Explorer.binding</Object>
+    <Object Type="File">Explorer.eventbinding</Object>
   </Objects>
 </Package>
