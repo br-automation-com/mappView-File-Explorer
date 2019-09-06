@@ -3,7 +3,7 @@ This is a sample project for a file Explorer with mappView. It allows you to cop
 
 ![](Logical/mappView/Resources/Media/screenshot.png)
 
-Also see [**How to import the user management into an existing project.**](Logical/UserManagement/HowToImport.pdf) Download the latest release from [**here.**](archive/V0.1.zip)
+Also see [**How to import the user management into an existing project.**](Logical/mappFileExplorer/HowToImport.pdf) Download the latest release from [**here.**](../../releases)
 
 ## Requirements
 * Automation Studio 4.5
@@ -41,11 +41,12 @@ The task and mappView visualization use an interface to communicate that can als
 	  * item_size	File size
 	  * item_num	Number of files and folders
 	  * UserActive	This is the user that is currently logged in
-	* VIS		Data specific for the visualization
-	  * item_selected	File or folder that is selected in mappView
-	  * enable_copy_delete	Enables/Disables the button to copy or delete a file
+	* VIS				Data specific for the visualization
+	  * item_selected		File or folder that is selected in mappView
+	  * enable_copy_delete		Enables/Disables the buttons to copy or delete a file
+	  * enable_refresh_create	Enables/Disables the buttons to create or refreash a folder
 	  * double_click_dir_change	Helper variable to detect double click on itelm list
-	  * device_list		Same information as PAR->device_list but formated for mappView  
+	  * device_list			Same information as PAR->device_list but formated for mappView  
 	* ERR		Information about errors
 	  * txt		Error text
 	  * nr		Error number
