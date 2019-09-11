@@ -1,0 +1,34 @@
+(*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
+(*Local constants*)
+VAR CONSTANT
+	WAIT : USINT := 0; (*Function step: Wait for starting the Function chain*)
+	LINK_DEVICE : USINT := 1; (*Function step: Link file device*)
+	UNLINK_DEVICE : USINT := 2; (*Function step: Unlink the File Device from specific path*)
+	ERROR_CASE : USINT := 3; (*Function step: Jump to this step in every case of Error occuring in the Function chain*)
+END_VAR
+(*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
+(*Local functions*)
+VAR
+	DevLink_0 : DevLink; (*Type of FUB DevLink*)
+	DevUnlink_0 : DevUnlink; (*Type of FUB DevUnlink*)
+END_VAR
+(*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
+(*Local variables*)
+VAR
+	step : USINT; (*Determines the Function step*)
+	cmdConnectToServer : BOOL;
+	cmdReset : BOOL; (*Reset error or abort connection*)
+	device_param : STRING[200]; (*Connection path of USB device*)
+	NET_server_name : STRING[80];
+	NET_server_ip : STRING[80] := '10.49.140.210';
+	NET_server_port : STRING[80];
+	NET_server_protocol : STRING[80] := 'ftp';
+	NET_server_domain : STRING[80];
+	NET_server_share : STRING[80] := 'share';
+	NET_user_name : STRING[80] := 'fmo';
+	NET_user_password : STRING[80] := 'B&Rgreven';
+	NET_is_linked : BOOL;
+	vis_enable_connect : BOOL;
+	error_code : UINT;
+	error_text : STRING[80];
+END_VAR

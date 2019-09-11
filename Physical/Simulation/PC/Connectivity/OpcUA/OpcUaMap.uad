@@ -1,12 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <OpcUaSource FileVersion="4" ArVersion="B4.53">
   <Aliases>
-    <ACLAliases />
+    <ACLAliases>
+      <ACL Id="1">
+        <ACE RoleId="2" RoleName="Everyone" Access="0x015F" />
+      </ACL>
+      <ACL Id="2">
+        <ACE RoleId="2" RoleName="Everyone" Access="0x017F" />
+      </ACL>
+    </ACLAliases>
     <EURangeViolationAliases />
     <EURangesAliases />
     <EngineeringUnitAliases />
   </Aliases>
-  <DefaultView>
+  <DefaultView AclId="2">
     <Module Name="&lt;Default&gt;">
       <GlobalVariables Name="Global Variables">
         <Variable Name="EXPL" AutomaticEnable="True">
@@ -27,6 +34,30 @@
       </GlobalVariables>
       <Task Name="USBdevice">
         <Variable Name="usb_is_linked" />
+        <Variable Name="cmdReadUSB" />
+        <Variable Name="REFRESH_TIMER" />
+        <Variable Name="IGNORE_DONGLE" />
+        <Variable Name="cmdReset" />
+        <Variable Name="error_code" />
+        <Variable Name="error_text" />
+        <Variable Name="step" />
+      </Task>
+      <Task Name="NETdevice">
+        <Variable Name="cmdReset" />
+        <Variable Name="error_code" />
+        <Variable Name="error_text" />
+        <Variable Name="NET_is_linked" />
+        <Variable Name="NET_server_domain" />
+        <Variable Name="NET_server_ip" />
+        <Variable Name="NET_server_name" />
+        <Variable Name="NET_server_port" />
+        <Variable Name="NET_server_protocol" />
+        <Variable Name="NET_server_share" />
+        <Variable Name="NET_user_name" />
+        <Variable Name="NET_user_password" />
+        <Variable Name="cmdConnectToServer" />
+        <Variable Name="step" />
+        <Variable Name="vis_enable_connect" />
       </Task>
     </Module>
   </DefaultView>

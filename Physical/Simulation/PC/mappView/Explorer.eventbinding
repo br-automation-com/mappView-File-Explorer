@@ -24,6 +24,44 @@
 			</EventHandler>
 		</EventBinding>
 		
+		<!-- //////////////////////////////////////////////// Configuration //////////////////////////////////////////////////////////////////////// />-->
+		
+		<!-- Connect to network share />-->
+		<EventBinding id="contentExplorer.btnNETconnect.Click">
+			<Source contentRefId="contentExplorer" widgetRefId="btnNETconnect" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::NETdevice:cmdConnectToServer" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- Reset error or abort command on network share />-->
+		<EventBinding id="contentExplorer.btnNETreset.Click">
+			<Source contentRefId="contentExplorer" widgetRefId="btnNETreset" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::NETdevice:cmdReset" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- Reset error for USB port />-->
+		<EventBinding id="contentExplorer.btnUSBreset.Click">
+			<Source contentRefId="contentExplorer" widgetRefId="btnUSBreset" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::USBdevice:cmdReset" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
 		<!-- //////////////////////////////////////////////// Events for side A //////////////////////////////////////////////////////////////////////// />-->
 		
 		<!-- Clear filter on side A />-->

@@ -1,6 +1,6 @@
 
 PROGRAM _INIT
-	start_reading_usb_data := TRUE;
+	cmdReadUSB := TRUE;
 END_PROGRAM
 
 PROGRAM _CYCLIC
@@ -11,7 +11,7 @@ PROGRAM _CYCLIC
 		// -----------------------------------------------------------------------------------------------------------
 		WAIT:
 			// Refresh USB data every X seconds when enabled
-			IF start_reading_usb_data = TRUE THEN
+			IF cmdReadUSB = TRUE THEN
 				TON_10ms_01(IN:=1, PT:=REFRESH_TIMER);
 				// Get new USB data
 				IF(TON_10ms_01.Q) THEN
@@ -150,13 +150,26 @@ PROGRAM _CYCLIC
 				step := ERROR_CASE;
 			END_IF;
 	
-		ERROR_CASE:														
+		ERROR_CASE:
+			// Get more error information
+			error_code := FileIoGetSysError();
+
+			// Reset error
+			IF(cmdReset) THEN
+				cmdReset := FALSE;
+				error_code := 0;
+				brsmemset(ADR(error_text), 0, SIZEOF(error_text));
+				step := WAIT;
+			END_IF
 	END_CASE;
 
 END_PROGRAM
 
 PROGRAM _EXIT
-	DevUnlink_0.enable := 1;
-	DevUnlink_0.handle := DevLink_0.handle;  
-	DevUnlink_0;
+	REPEAT
+		DevUnlink_0.enable := 1;
+		DevUnlink_0.handle := DevLink_0.handle;  
+		DevUnlink_0;
+		UNTIL DevUnlink_0.status <> ERR_FUB_BUSY
+	END_REPEAT;
 END_PROGRAM

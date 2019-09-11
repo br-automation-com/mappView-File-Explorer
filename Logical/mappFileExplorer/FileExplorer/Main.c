@@ -404,7 +404,7 @@ void _CYCLIC ProgramCyclic(void)
 					x = brsstrlen((UDINT)EXPL.PAR[SIDE].dir_path);
 					while(x>0)
 					{				
-					if(brsmemcmp((UDINT)(UDINT)(EXPL.PAR[SIDE].dir_path + x), (UDINT)"\\", 1) == 0) break;
+					if(brsmemcmp((UDINT)(UDINT)(EXPL.PAR[SIDE].dir_path + x), (UDINT)"/", 1) == 0) break;
 					else brsmemset((UDINT)(UDINT)(EXPL.PAR[SIDE].dir_path + x), 0, 1);
 					x--;
 					}
@@ -414,7 +414,7 @@ void _CYCLIC ProgramCyclic(void)
 					// Move one directory down																	
 				else
 				{
-					brsstrcat((UDINT)EXPL.PAR[SIDE].dir_path, (UDINT)"\\");
+					brsstrcat((UDINT)EXPL.PAR[SIDE].dir_path, (UDINT)"/");
 					brsstrcat((UDINT)EXPL.PAR[SIDE].dir_path, (UDINT)EXPL.DAT[SIDE].item_list[EXPL.VIS[SIDE].item_selected] + 5);
 					EXPL.CMD[SIDE].refresh = 1;
 				}
@@ -663,7 +663,7 @@ void CreateCompletePath(STRING path[DIR_PATH_SIZE+MAX_ITEM_SIZE], STRING target[
 		
 	// ------------------------------------------------------------------------------------------------ 		
 	// Create directory path																			
-	brsstrcat((UDINT)return_path, (UDINT)"\\"); 
+	brsstrcat((UDINT)return_path, (UDINT)"/"); 
 	brsstrcat((UDINT)return_path, (UDINT)tmp);
 }
 

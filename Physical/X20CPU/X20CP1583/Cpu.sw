@@ -10,6 +10,7 @@
   <TaskClass Name="Cyclic#7" />
   <TaskClass Name="Cyclic#8">
     <Task Name="USBdevice" Source="mappFileExplorer.USBdevice.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="NETdevice" Source="mappFileExplorer.NETdevice.prg" Memory="UserROM" Language="IEC" Debugging="true" />
     <Task Name="FileExplor" Source="mappFileExplorer.FileExplorer.prg" Memory="UserROM" Language="ANSIC" Debugging="true" />
   </TaskClass>
   <Libraries>
