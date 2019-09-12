@@ -1,14 +1,11 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <BindingsSet xmlns="http://www.br-automation.com/iat2015/binding/engineering/v2" xmlns:be="http://www.br-automation.com/iat2015/bindingListEmbedded/engineering/v2" xmlns:bt="http://www.br-automation.com/iat2015/bindingListTypes/engineering/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Explorer_binding">
 	<Bindings>
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.status" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtStatus" attribute="value" />
 		</Binding>
-		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::USBdevice:usb_is_linked" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBconnected" attribute="value" />
-		</Binding>
+		
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.txt" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtError" attribute="value" />
@@ -130,80 +127,90 @@
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnDirCreateB" attribute="enable" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::NETdevice:NET_server_name" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.server_name" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNETserver_name" attribute="value" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::NETdevice:NET_server_ip" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.server_ip" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNETserver_ip" attribute="value" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::NETdevice:NET_server_port" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.server_port" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNETserver_port" attribute="value" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::NETdevice:NET_server_domain" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.server_domain" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNETserver_domain" attribute="value" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::NETdevice:NET_server_protocol" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.server_protocol" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbNETprotocol" attribute="selectedValue" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::NETdevice:NET_user_name" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.user_name" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNETuser_name" attribute="value" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::NETdevice:NET_user_password" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.user_password" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNETuser_password" attribute="value" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::NETdevice:error_code" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.ERR.no" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numNETErrorNo" attribute="value" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::NETdevice:error_text" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.ERR.text" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNETError" attribute="value" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::NETdevice:NET_is_linked" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.is_linked" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBconnected1" attribute="value" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::NETdevice:step" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.state_machine" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbNETstatus" attribute="selectedIndex" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::NETdevice:NET_server_share" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.server_share" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNETserver_path" attribute="value" />
 		</Binding>
+		
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::USBdevice:cmdReadUSB" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="chkUSBenable" attribute="value" />
-		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::USBdevice:REFRESH_TIMER" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.refresh_interval" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numUSBintervall" attribute="value" />
 		</Binding>
+		
+		
+		
+		
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::USBdevice:IGNORE_DONGLE" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="chkUSBdongle" attribute="value" />
-		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::NETdevice:vis_enable_connect" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnNETconnect" attribute="enable" />
-		</Binding>
-		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::USBdevice:error_code" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numNETErrorNo1" attribute="value" />
-		</Binding>
-		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::USBdevice:error_text" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtUSBError" attribute="value" />
-		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::USBdevice:step" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.state_machine" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbUSBstatus" attribute="selectedIndex" />
 		</Binding>
-	</Bindings>
+	<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.is_connected" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBconnected" attribute="value" />
+</Binding>
+
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.ignore_dongle" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="chkUSBdongle" attribute="value" />
+</Binding>
+<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.text" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtUSBError" attribute="value" />
+</Binding>
+<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.no" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numNETErrorNo1" attribute="value" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.CMD.AutoScan" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="chkUSBenable" attribute="value" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.enable_connect" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnNETconnect" attribute="enable" />
+</Binding>
+</Bindings>
 </BindingsSet>

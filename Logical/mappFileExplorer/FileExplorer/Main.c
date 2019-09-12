@@ -1,20 +1,20 @@
-	//******************************** B&R * Application TB-West *******************************************
-	//	Function:	Mini explorer																			
-	//	Autor:		S.Stricker																				
-	//  Version:	1.00																					
-	//	Changed:	03.09.2019																				
-	//	Error numbers:																						
-	//	50000		Selected item name is empty																
-	//	50001		This is not a valid item name															
-	//	50010		Device is not defined																	
-	//	50011		Item list is not defined																
-	//	50012		Maximum entry parameter is 0															
-	//	50100		Maximum number of files reached															
-	//	50200		File name exceeds maximum length														
-	//	50201		Directory name exceeds maximum length													
-	//	50202		Directory path exceeds maximum length													
-	//	50203		Directory path critical error															
-	//******************************************************************************************************
+//******************************** B&R * Application TB-West *******************************************
+//	Function:	Mini explorer																			
+//	Autor:		S.Stricker																				
+//  Version:	1.00																					
+//	Changed:	03.09.2019																				
+//	Error numbers:																						
+//	50000		Selected item name is empty																
+//	50001		This is not a valid item name															
+//	50010		Device is not defined																	
+//	50011		Item list is not defined																
+//	50012		Maximum entry parameter is 0															
+//	50100		Maximum number of files reached															
+//	50200		File name exceeds maximum length														
+//	50201		Directory name exceeds maximum length													
+//	50202		Directory path exceeds maximum length													
+//	50203		Directory path critical error															
+//******************************************************************************************************
 
 #include <bur/plctypes.h>
 
@@ -22,11 +22,13 @@
 	#include <AsDefault.h>
 #endif
 
-void CreateError(UINT nr, USINT SIDE, STRING txt[100], typMain_EXP *EXPL);
-void WorkingStatus(typMain_EXP *EXPL, UDINT str);
+//--------------------------------------------------------------------------------------------------
+// Local function definition
+void CreateError(UINT nr, USINT SIDE, STRING txt[100], expMAIN *EXPL);
+void WorkingStatus(expMAIN *EXPL, UDINT str);
 void CreateCompletePath(STRING path[DIR_PATH_SIZE+MAX_ITEM_SIZE], STRING target[MAX_ITEM_SIZE], UDINT return_path);
-void InsertRecName(typMain_EXP *EXPL, STRING new_name[DIR_PATH_SIZE], STRING size[15], UINT SIDE);
-void SelectItem(typMain_EXP *EXPL, USINT SOURCE);
+void InsertRecName(expMAIN *EXPL, STRING new_name[DIR_PATH_SIZE], STRING size[15], UINT SIDE);
+void SelectItem(expMAIN *EXPL, USINT SOURCE);
 BOOL IsInstr(STRING string1[MAX_ITEM_SIZE], STRING string2[MAX_ITEM_SIZE]);
 
 //******************************************************************************************************
@@ -670,7 +672,7 @@ void CreateCompletePath(STRING path[DIR_PATH_SIZE+MAX_ITEM_SIZE], STRING target[
 //******************************************************************************************************
 // Raise error function																					
 //******************************************************************************************************
-void CreateError(UINT nr, USINT SIDE, STRING txt[100], typMain_EXP *EXPL)
+void CreateError(UINT nr, USINT SIDE, STRING txt[100], expMAIN *EXPL)
 {
 	if (nr == fiERR_NOT_ENOUGH_FREEMEM) brsstrcpy((UDINT)EXPL->ERR.txt, (UDINT)"not enough memory available on the target device");
 	else if (nr == fiERR_FILE_DEVICE) 	brsstrcpy((UDINT)EXPL->ERR.txt, (UDINT)"device is not connected");
@@ -692,7 +694,7 @@ void CreateError(UINT nr, USINT SIDE, STRING txt[100], typMain_EXP *EXPL)
 //******************************************************************************************************
 // Working status																						
 //******************************************************************************************************
-void WorkingStatus(typMain_EXP *EXPL, UDINT str)
+void WorkingStatus(expMAIN *EXPL, UDINT str)
 {
 	animation++;
 	if (animation == 80) animation = 0;
@@ -710,7 +712,7 @@ void WorkingStatus(typMain_EXP *EXPL, UDINT str)
 //******************************************************************************************************
 // Fill new folder or directory name																	
 //******************************************************************************************************
-void InsertRecName(typMain_EXP *EXPL, STRING new_name[MAX_ITEM_SIZE], STRING size[15], UINT SIDE)
+void InsertRecName(expMAIN *EXPL, STRING new_name[MAX_ITEM_SIZE], STRING size[15], UINT SIDE)
 {
 	DINT 				lx		= 0;
 	DINT 				ly		= 0;
@@ -761,7 +763,7 @@ void InsertRecName(typMain_EXP *EXPL, STRING new_name[MAX_ITEM_SIZE], STRING siz
 //******************************************************************************************************
 // Select item																							
 //******************************************************************************************************
-void SelectItem(typMain_EXP *EXPL, USINT SOURCE)
+void SelectItem(expMAIN *EXPL, USINT SOURCE)
 {
 	UINT x = 0;
 	

@@ -15,20 +15,6 @@ END_VAR
 (*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
 (*Local variables*)
 VAR
-	step : USINT; (*Determines the Function step*)
-	cmdConnectToServer : BOOL;
-	cmdReset : BOOL; (*Reset error or abort connection*)
 	device_param : STRING[200]; (*Connection path of USB device*)
-	NET_server_name : STRING[80];
-	NET_server_ip : STRING[80] := '10.49.140.210';
-	NET_server_port : STRING[80];
-	NET_server_protocol : STRING[80] := 'ftp';
-	NET_server_domain : STRING[80];
-	NET_server_share : STRING[80] := 'share';
-	NET_user_name : STRING[80] := 'fmo';
-	NET_user_password : STRING[80] := 'B&Rgreven';
-	NET_is_linked : BOOL;
-	vis_enable_connect : BOOL;
-	error_code : UINT;
-	error_text : STRING[80];
+	device_handle : UDINT;
 END_VAR

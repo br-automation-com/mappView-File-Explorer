@@ -31,7 +31,7 @@
 			<Source contentRefId="contentExplorer" widgetRefId="btnNETconnect" xsi:type="widgets.brease.Button.Event" event="Click" />
 			<EventHandler>
 				<Action>
-					<Target xsi:type="opcUa.NodeAction" refId="::NETdevice:cmdConnectToServer" >
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:NET.CMD.Connect" >
 						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
 					</Target>
 				</Action>
@@ -43,7 +43,7 @@
 			<Source contentRefId="contentExplorer" widgetRefId="btnNETreset" xsi:type="widgets.brease.Button.Event" event="Click" />
 			<EventHandler>
 				<Action>
-					<Target xsi:type="opcUa.NodeAction" refId="::NETdevice:cmdReset" >
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:NET.CMD.ErrorReset" >
 						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
 					</Target>
 				</Action>
@@ -55,7 +55,7 @@
 			<Source contentRefId="contentExplorer" widgetRefId="btnUSBreset" xsi:type="widgets.brease.Button.Event" event="Click" />
 			<EventHandler>
 				<Action>
-					<Target xsi:type="opcUa.NodeAction" refId="::USBdevice:cmdReset" >
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:USB.CMD.ErrorReset" >
 						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
 					</Target>
 				</Action>

@@ -1,2 +1,6 @@
+Version 0.2
+- Added configuration for network connections
+- Code cleanup
+
 Version 0.1
 - First public release

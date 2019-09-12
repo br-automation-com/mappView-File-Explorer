@@ -1,10 +1,4 @@
 (*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
-(*Settings*)
-VAR
-	IGNORE_DONGLE : {REDUND_UNREPLICABLE} BOOL := TRUE; (*Do not list B&R license dongles*)
-	REFRESH_TIMER : {REDUND_UNREPLICABLE} UINT := 200; (*Time to refresh USB port data in 10ms (200 = 2 seconds)*)
-END_VAR
-(*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
 (*Local constants*)
 VAR CONSTANT
 	WAIT : USINT := 0; (*Function step: Wait for starting the Function chain*)
@@ -27,16 +21,10 @@ END_VAR
 (*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
 (*Local variables*)
 VAR
-	step : USINT; (*Determines the Function step*)
-	cmdReadUSB : BOOL; (*If TRUE - Function chain gets started*)
-	cmdReset : BOOL; (*Reset error or abort connection*)
 	device_param : STRING[80]; (*Connection path of USB device*)
 	usb_data : ARRAY[0..4] OF usbNode_typ; (*Data of all available USB devices*)
 	usb_data_linked : usbNode_typ; (*Data of the linked device*)
-	usb_is_linked : BOOL; (*Indicates that USB drive is connected*)
 	node_id_buffer : ARRAY[0..4] OF UDINT; (*Different nodeIDs saved in array-elements*)
 	node : USINT; (*Node number*)
 	idx : USINT;
-	error_code : UINT;
-	error_text : STRING[80];
 END_VAR

@@ -31,34 +31,15 @@
         </Variable>
         <Variable Name="ClientInfo" EnableArrayElements="True" />
         <Variable Name="ClientInfoCurrent" />
+        <Variable Name="NET" AutomaticEnable="True">
+          <Variable Name="CMD" />
+          <Variable Name="PAR" />
+          <Variable Name="ERR" />
+        </Variable>
+        <Variable Name="USB" AutomaticEnable="True" />
       </GlobalVariables>
-      <Task Name="USBdevice">
-        <Variable Name="usb_is_linked" />
-        <Variable Name="cmdReadUSB" />
-        <Variable Name="REFRESH_TIMER" />
-        <Variable Name="IGNORE_DONGLE" />
-        <Variable Name="cmdReset" />
-        <Variable Name="error_code" />
-        <Variable Name="error_text" />
-        <Variable Name="step" />
-      </Task>
-      <Task Name="NETdevice">
-        <Variable Name="cmdReset" />
-        <Variable Name="error_code" />
-        <Variable Name="error_text" />
-        <Variable Name="NET_is_linked" />
-        <Variable Name="NET_server_domain" />
-        <Variable Name="NET_server_ip" />
-        <Variable Name="NET_server_name" />
-        <Variable Name="NET_server_port" />
-        <Variable Name="NET_server_protocol" />
-        <Variable Name="NET_server_share" />
-        <Variable Name="NET_user_name" />
-        <Variable Name="NET_user_password" />
-        <Variable Name="cmdConnectToServer" />
-        <Variable Name="step" />
-        <Variable Name="vis_enable_connect" />
-      </Task>
+      <Task Name="USBdevice" />
+      <Task Name="NETdevice" />
     </Module>
   </DefaultView>
 </OpcUaSource>

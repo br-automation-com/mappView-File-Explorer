@@ -1,31 +1,31 @@
 
 PROGRAM _INIT
-	cmdReadUSB := TRUE;
+	USB.CMD.AutoScan := TRUE;
 END_PROGRAM
 
 PROGRAM _CYCLIC
 
-	CASE step OF
+	CASE USB.PAR.state_machine OF
 		// -----------------------------------------------------------------------------------------------------------
 		// Wait state
 		// -----------------------------------------------------------------------------------------------------------
 		WAIT:
 			// Refresh USB data every X seconds when enabled
-			IF cmdReadUSB = TRUE THEN
-				TON_10ms_01(IN:=1, PT:=REFRESH_TIMER);
+			IF USB.CMD.AutoScan = TRUE THEN
+				TON_10ms_01(IN:=1, PT:=USB.PAR.refresh_interval);
 				// Get new USB data
 				IF(TON_10ms_01.Q) THEN
 					TON_10ms_01(IN:=0);
 					node := 0;
 					brsmemset(ADR(usb_data), 0, SIZEOF(usb_data));
-					step := CREATE_NODE_ID_LIST;
+					USB.PAR.state_machine := CREATE_NODE_ID_LIST;
 				END_IF
 			ELSE
 				TON_10ms_01(IN:=0);
 			END_IF;		
-			// -----------------------------------------------------------------------------------------------------------
-			// Get USB device list
-			// -----------------------------------------------------------------------------------------------------------
+		// -----------------------------------------------------------------------------------------------------------
+		// Get USB device list
+		// -----------------------------------------------------------------------------------------------------------
 		CREATE_NODE_ID_LIST:  
 			UsbNodeListGet_0.enable := 1;
 			UsbNodeListGet_0.pBuffer := ADR(node_id_buffer);  
@@ -37,22 +37,22 @@ PROGRAM _CYCLIC
 			// --------------------------------------------------------------------------------------------------------------------	
 			// Success
 			IF UsbNodeListGet_0.status = 0 THEN
-				step := READ_DEVICE_DATA;
+				USB.PAR.state_machine := READ_DEVICE_DATA;
 				// No USB devices found
 			ELSIF UsbNodeListGet_0.status = asusbERR_USB_NOTFOUND THEN
 				// Unlink old device if it is gone now otherwise wait for next round
-				IF(usb_is_linked) THEN
-					step := UNLINK_DEVICE;
+				IF(USB.PAR.is_connected) THEN
+					USB.PAR.state_machine := UNLINK_DEVICE;
 				ELSE
-					step := WAIT;
+					USB.PAR.state_machine := WAIT;
 				END_IF
 				// Error
 			ELSIF UsbNodeListGet_0.status <> ERR_FUB_BUSY THEN
-				step := ERROR_CASE;
+				USB.PAR.state_machine := ERROR_CASE;
 			END_IF;
-			// -----------------------------------------------------------------------------------------------------------
-			// Get device information
-			// -----------------------------------------------------------------------------------------------------------	
+		// -----------------------------------------------------------------------------------------------------------
+		// Get device information
+		// -----------------------------------------------------------------------------------------------------------	
 		READ_DEVICE_DATA:  				
 			UsbNodeGet_0.enable := 1;
 			UsbNodeGet_0.nodeId := node_id_buffer[node];  
@@ -63,49 +63,49 @@ PROGRAM _CYCLIC
 			// --------------------------------------------------------------------------------------------------------------------	
 			// Success
 			IF UsbNodeGet_0.status = 0 THEN
-				// Make sure we have enough space to store USB data, proceed with next step when all devices are detetced
+				// Make sure we have enough space to store USB data, proceed with next USB.PAR.state_machine when all devices are detetced
 				IF (node = UsbNodeListGet_0.listNodes - 1) OR (node > SIZEOF(usb_data)/SIZEOF(usb_data[0])) THEN
 					idx := 0;
-					step := CHECK_DEVICE;
+					USB.PAR.state_machine := CHECK_DEVICE;
 					// Get next USB device
 				ELSE
 					node := node + 1;
 				END_IF;
 				// Error
 			ELSIF UsbNodeGet_0.status <> ERR_FUB_BUSY THEN
-				step := ERROR_CASE;  (*error occured*)
+				USB.PAR.state_machine := ERROR_CASE;  (*error occured*)
 			END_IF;
-			// -----------------------------------------------------------------------------------------------------------
-			// Check if device is connected
-			// -----------------------------------------------------------------------------------------------------------			
+		// -----------------------------------------------------------------------------------------------------------
+		// Check if device is connected
+		// -----------------------------------------------------------------------------------------------------------			
 		CHECK_DEVICE:
 			// Check if device is already linked
-			IF(usb_is_linked) THEN
+			IF(USB.PAR.is_connected) THEN
 				// Device is already linked, return to wait state
 				IF(brsmemcmp(ADR(usb_data_linked), ADR(usb_data[idx]), SIZEOF(usb_data[idx])) = 0) THEN
-					step := WAIT;
+					USB.PAR.state_machine := WAIT;
 					// Check next device
 				ELSIF(idx < node) THEN
 					idx := idx + 1;
 					// Unlink device if it is gone
 				ELSE
-					step := UNLINK_DEVICE;
+					USB.PAR.state_machine := UNLINK_DEVICE;
 				END_IF	
 			ELSE
 				// Check if B&R dongle should be excluded from list
-				IF(IGNORE_DONGLE=TRUE AND usb_data[idx].productId=1001 AND usb_data[idx].vendorId=1615) THEN
+				IF(USB.PAR.ignore_dongle=TRUE AND usb_data[idx].productId=1001 AND usb_data[idx].vendorId=1615) THEN
 					IF(idx < node) THEN
 						idx := idx + 1;
 					ELSE
-						step := WAIT;						
+						USB.PAR.state_machine := WAIT;						
 					END_IF
 				ELSE
-					step := LINK_DEVICE;
+					USB.PAR.state_machine := LINK_DEVICE;
 				END_IF
 			END_IF
-			// -----------------------------------------------------------------------------------------------------------
-			// Link device
-			// -----------------------------------------------------------------------------------------------------------			
+		// -----------------------------------------------------------------------------------------------------------
+		// Link device
+		// -----------------------------------------------------------------------------------------------------------			
 		LINK_DEVICE:
 			// Create device string
 			brsstrcpy(ADR(device_param), ADR('/DEVICE='));  		
@@ -120,15 +120,15 @@ PROGRAM _CYCLIC
 			// Success
 			IF DevLink_0.status = 0 THEN
 				brsmemcpy(ADR(usb_data_linked), ADR(usb_data[node]), SIZEOF(usb_data[node]));
-				usb_is_linked := TRUE;
-				step := WAIT;
+				USB.PAR.is_connected := TRUE;
+				USB.PAR.state_machine := WAIT;
 				// Error
 			ELSIF DevLink_0.status <> ERR_FUB_BUSY THEN
-				step := ERROR_CASE;  
+				USB.PAR.state_machine := ERROR_CASE;  
 			END_IF;										
-			// -----------------------------------------------------------------------------------------------------------
-			// UnLink device
-			// -----------------------------------------------------------------------------------------------------------				
+		// -----------------------------------------------------------------------------------------------------------
+		// UnLink device
+		// -----------------------------------------------------------------------------------------------------------				
 		UNLINK_DEVICE:
 			DevUnlink_0.enable := 1;
 			DevUnlink_0.handle := DevLink_0.handle;  
@@ -138,28 +138,28 @@ PROGRAM _CYCLIC
 			// Success
 			IF DevUnlink_0.status = 0 THEN
 				brsmemset(ADR(usb_data_linked), 0, SIZEOF(usb_data_linked));
-				usb_is_linked := FALSE;
+				USB.PAR.is_connected := FALSE;
 				IF(UsbNodeListGet_0.status = asusbERR_USB_NOTFOUND) THEN
-					step := WAIT;
+					USB.PAR.state_machine := WAIT;
 				ELSE
 					idx := 0;
-					step := CHECK_DEVICE;
+					USB.PAR.state_machine := CHECK_DEVICE;
 				END_IF
 				// Error
 			ELSIF DevUnlink_0.status <> ERR_FUB_BUSY THEN
-				step := ERROR_CASE;
+				USB.PAR.state_machine := ERROR_CASE;
 			END_IF;
 	
 		ERROR_CASE:
 			// Get more error information
-			error_code := FileIoGetSysError();
+			USB.ERR.no := FileIoGetSysError();
 
 			// Reset error
-			IF(cmdReset) THEN
-				cmdReset := FALSE;
-				error_code := 0;
-				brsmemset(ADR(error_text), 0, SIZEOF(error_text));
-				step := WAIT;
+			IF(USB.CMD.ErrorReset) THEN
+				USB.CMD.ErrorReset := FALSE;
+				USB.ERR.no := 0;
+				brsmemset(ADR(USB.ERR.text), 0, SIZEOF(USB.ERR.text));
+				USB.PAR.state_machine := WAIT;
 			END_IF
 	END_CASE;
 

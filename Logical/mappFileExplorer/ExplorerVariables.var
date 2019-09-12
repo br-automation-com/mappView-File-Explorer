@@ -5,7 +5,9 @@ VAR CONSTANT
 	DEVICE_LIST : ARRAY[0..4] OF STRING[40] := ['USER','SYSTEM','USB_DEVICE','NET_DEVICE','']; (* List if predefined devices *)
 END_VAR
 VAR
-	EXPL : typMain_EXP;
+	EXPL : expMAIN;
+	NET : netMAIN;
+	USB : usbMAIN;
 	ClientInfoCurrent : ClientInfoType;
 	ClientInfo : ARRAY[0..4] OF ClientInfoType;
 END_VAR
