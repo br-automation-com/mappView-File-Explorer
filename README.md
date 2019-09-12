@@ -1,7 +1,7 @@
 ## Introduction
 This is a sample project for a file Explorer with mappView. It allows you to copy and delete files between multiple locations.
 
-![](Logical/mappView/Resources/Media/screenshot.png)
+![](Logical/mappView/Resources/Media/screenshot_main.png)
 
 Also see [**How to import the user management into an existing project.**](Logical/mappFileExplorer/HowToImport.pdf) Download the latest release from [**here.**](../../releases)
 
@@ -13,7 +13,7 @@ Also see [**How to import the user management into an existing project.**](Logic
 Recommended task class is #8 with a 10ms cycle time.
 
 ## Description
-The sample consists of two tasks and a mappView sample page. The task FileExplorer handles the majority of all functions and a helper task USBdevice. The USBdevice tasks auto detects connected USB sticks and automatically mounts these so they can be accessed from the FileExploer. The sample page shows all available functions and can be used as a starting point. The following functions are currently supported.
+The sample consists of three tasks and a mappView sample page. The task FileExplorer handles the majority of all functions. The two additional helper tasks USBdevice and NETdevice allow the connection of USB sticks and network devices. The USBdevice tasks auto detects connected USB sticks and automatically mounts these so they can be accessed from the FileExploer. The sample page shows all available functions and can be used as a starting point. The following functions are currently supported.
 
 * Copy one or all files or folders
 * Delete one or all files or folders
@@ -52,19 +52,29 @@ The task and mappView visualization use an interface to communicate that can als
 	  * nr		Error number
 	  * step	State where the error occured
 
-## Configuration
-The sample can be configured through the following constants located in mappFileExplorer->ExplorerVariables.var
+## Pre-Configuration
+The sample can be pre-configured through the following constants located in mappFileExplorer->ExplorerVariables.var
 
 	DIR_PATH_SIZE 	Maximum length for the complete path
 	ITEM_LIST_NUM 	Maximum number if files and folders that can be listed
 	MAX_ITEM_SIZE 	Maximum length for a file or folder name
 	DEVICE_LIST   	List if predefined devices
 
+## Configuration at runtime
+The following settings can be changed during runtime. For details about the network settings see the Automation Help (6bc04f87-a564-42fe-be38-060045eb83d6).
+
+![](Logical/mappView/Resources/Media/screenshot_cfg.png)
+
 ## Limitations
 * The sample is not yet multi client capable.
 * There is no extra message box when files or folders are deleted.
+* The network needs up to two minutes to time out if the corresponding is not available. This time must also be considerred when the server address is corrected. Even in this case it can take a few minutes to connect to the correct server.
 
 ## Revision History
+
+#### Version 0.2
+- Added configuration for network connections
+- Code cleanup
 
 #### Version 0.1
 First public release
