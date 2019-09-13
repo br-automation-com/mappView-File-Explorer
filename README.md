@@ -1,3 +1,14 @@
+## Table of Contents
+* [Introduction](#Introduction)
+* [Requirements](#Requirements)
+* [Description](#Description)
+* [Pre Configuration](#Pre-Configuration)
+* [Post Configuration](#Post-Configuration)
+* [Limitations](#Limitations)
+* [Error Messages](#Errors)
+* [Revision History](#Revision-History)
+
+<a name="Introduction"></a>
 ## Introduction
 This is a sample project for a file Explorer with mappView. It allows you to copy and delete files between multiple locations.
 
@@ -5,6 +16,7 @@ This is a sample project for a file Explorer with mappView. It allows you to cop
 
 Also see [**How to import the user management into an existing project.**](Logical/mappFileExplorer/HowToImport.pdf) Download the latest release from [**here.**](../../releases)
 
+<a name="Requirements"></a>
 ## Requirements
 * Automation Studio 4.5
 * mappView 5.7.1
@@ -12,6 +24,7 @@ Also see [**How to import the user management into an existing project.**](Logic
 
 Recommended task class is #8 with a 10ms cycle time.
 
+<a name="Description"></a>
 ## Description
 The sample consists of three tasks and a mappView sample page. The task FileExplorer handles the majority of all functions. The two additional helper tasks USBdevice and NETdevice allow the connection of USB sticks and network devices. The USBdevice tasks auto detects connected USB sticks and automatically mounts these so they can be accessed from the FileExploer. The sample page shows all available functions and can be used as a starting point. The following functions are currently supported.
 
@@ -52,6 +65,7 @@ The task and mappView visualization use an interface to communicate that can als
 	  * nr		Error number
 	  * step	State where the error occured
 
+<a name="Pre-Configuration"></a>
 ## Pre-Configuration
 The sample can be pre-configured through the following constants located in mappFileExplorer->ExplorerVariables.var
 
@@ -60,16 +74,32 @@ The sample can be pre-configured through the following constants located in mapp
 	MAX_ITEM_SIZE 	Maximum length for a file or folder name
 	DEVICE_LIST   	List if predefined devices
 
+<a name="Post-Configuration"></a>
 ## Configuration at runtime
 The following settings can be changed during runtime. For details about the network settings see the Automation Help (6bc04f87-a564-42fe-be38-060045eb83d6).
 
 ![](Logical/mappView/Resources/Media/screenshot_cfg.png)
 
+<a name="Limitations"></a>
 ## Limitations
 * The sample is not yet multi client capable.
 * There is no extra message box when files or folders are deleted.
 * The network needs up to two minutes to time out if the corresponding is not available. This time must also be considerred when the server address is corrected. Even in this case it can take a few minutes to connect to the correct server.
 
+<a name="Errors"></a>
+## Error messages
+	50000		Selected item name is empty										
+	50001		This is not a valid item name											
+	50010		Device is not defined												
+	50011		Item list is not defined											
+	50012		Maximum entry parameter is 0											
+	50100		Maximum number of files reached		-> increase value of ITEM_LIST_NUN					
+	50200		File name exceeds maximum length	-> increase value of MAX_ITEM_SIZE					
+	50201		Directory name exceeds maximum length	-> increase value of MAX_ITEM_SIZE					
+	50202		Directory path exceeds maximum length	-> increase value of DIR_PATH_SIZE			
+	50203		Directory path critical error
+
+<a name="Revision-History"></a>
 ## Revision History
 
 #### Version 0.2
