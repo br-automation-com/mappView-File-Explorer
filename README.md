@@ -46,14 +46,12 @@ The task and mappView visualization use an interface to communicate that can als
 	  * device_active 	The device name that is currently used, see constant definition below
 	  * device_list 	List of all available devices name that can be used, see constant definition below
 	  * item_filter 	Only files and folders that fit this pattern will be listed
-	  * UserRole 		The user role used with the assign and remove command
 	  * dir_name 		Folder name used with the command dir_create
 	  * dir_path 		Complete folder path 
 	* DAT		File and folder information
 	  * item_list	List of files and folders
 	  * item_size	File size
 	  * item_num	Number of files and folders
-	  * UserActive	This is the user that is currently logged in
 	* VIS				Data specific for the visualization
 	  * item_selected		File or folder that is selected in mappView
 	  * enable_copy_delete		Enables/Disables the buttons to copy or delete a file
