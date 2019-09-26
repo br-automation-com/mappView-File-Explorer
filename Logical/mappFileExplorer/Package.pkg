@@ -4,7 +4,7 @@
   <Objects>
     <Object Type="File">ExplorerTypes.typ</Object>
     <Object Type="File">ExplorerVariables.var</Object>
-    <Object Type="Program" Language="ANSIC">FileExplorer</Object>
+    <Object Type="Program" Language="IEC">FileExplorer</Object>
     <Object Type="Program" Language="IEC" Description="Sample for all AsUSB-Library-Functions">USBdevice</Object>
     <Object Type="Program" Language="IEC">NETdevice</Object>
     <Object Type="File">changelog.txt</Object>

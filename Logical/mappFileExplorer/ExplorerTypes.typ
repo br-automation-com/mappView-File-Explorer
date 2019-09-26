@@ -8,10 +8,25 @@ TYPE
 		screenResolution : WSTRING[32];
 		slotId : SINT;
 	END_STRUCT;
+	expSTATE : 
+		(
+		STP_WAIT,
+		STP_READ_DIR,
+		STP_READ_DIR_1,
+		STP_READ_DIR_2,
+		STP_READ_DIR_3,
+		STP_DIR_CHANGE,
+		STP_COPY_ALL,
+		STP_FILE_COPY,
+		STP_FILE_DELETE,
+		STP_DIR_COPY,
+		STP_DIR_CREATE,
+		STP_DIR_DELETE
+		);
 	expERR : 	STRUCT 
 		txt : STRING[100]; (* Error text *)
 		nr : UINT; (* Error number *)
-		step : USINT; (* Error step *)
+		step : expSTATE; (* Error step *)
 	END_STRUCT;
 	expCMD : 	STRUCT 
 		refresh : BOOL; (* Read directory and file names from devices *)
@@ -30,7 +45,7 @@ TYPE
 	END_STRUCT;
 	expDAT : 	STRUCT 
 		item_list : ARRAY[0..ITEM_LIST_NUM]OF STRING[MAX_ITEM_SIZE]; (* List with file names	*)
-		item_size : ARRAY[0..ITEM_LIST_NUM]OF STRING[15]; (* List with file names *)
+		item_size : ARRAY[0..ITEM_LIST_NUM]OF STRING[MAX_SIZE_SIZE]; (* List with file names *)
 		item_num : UINT; (* Number OF files	*)
 	END_STRUCT;
 	expVIS : 	STRUCT 

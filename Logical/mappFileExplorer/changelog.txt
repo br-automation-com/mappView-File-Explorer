@@ -1,3 +1,6 @@
+Version 0.4
+- Main task ported to structure text
+
 Version 0.2
 - Added configuration for network connections
 - Code cleanup

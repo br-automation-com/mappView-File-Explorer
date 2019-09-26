@@ -16,10 +16,27 @@
   <DefaultView AclId="2">
     <Module Name="&lt;Default&gt;">
       <GlobalVariables Name="Global Variables">
+        <Variable Name="ClientInfo" EnableArrayElements="True" />
+        <Variable Name="ClientInfoCurrent" />
+        <Variable Name="NET" AutomaticEnable="True">
+          <Variable Name="CMD" />
+          <Variable Name="PAR" />
+          <Variable Name="ERR" />
+        </Variable>
+        <Variable Name="USB" AutomaticEnable="True" />
         <Variable Name="EXPL" AutomaticEnable="True">
           <Variable Name="CMD" EnableArrayElements="True" />
           <Variable Name="PAR" EnableArrayElements="True" />
-          <Variable Name="DAT" EnableArrayElements="True" />
+          <Variable Name="DAT" EnableArrayElements="True">
+            <Variable Name="DAT[0]">
+              <Variable Name="item_list" EnableArrayElements="True" />
+              <Variable Name="item_size" EnableArrayElements="True" />
+            </Variable>
+            <Variable Name="DAT[1]">
+              <Variable Name="item_list" EnableArrayElements="True" />
+              <Variable Name="item_size" EnableArrayElements="True" />
+            </Variable>
+          </Variable>
           <Variable Name="VIS" EnableArrayElements="True">
             <Variable Name="VIS[0]">
               <Variable Name="device_list" EnableArrayElements="True" />
@@ -29,17 +46,12 @@
             </Variable>
           </Variable>
         </Variable>
-        <Variable Name="ClientInfo" EnableArrayElements="True" />
-        <Variable Name="ClientInfoCurrent" />
-        <Variable Name="NET" AutomaticEnable="True">
-          <Variable Name="CMD" />
-          <Variable Name="PAR" />
-          <Variable Name="ERR" />
-        </Variable>
-        <Variable Name="USB" AutomaticEnable="True" />
       </GlobalVariables>
       <Task Name="USBdevice" />
       <Task Name="NETdevice" />
+      <Task Name="FileExplor">
+        <Variable Name="step" />
+      </Task>
     </Module>
   </DefaultView>
 </OpcUaSource>

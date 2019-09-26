@@ -3,7 +3,7 @@
 <Hardware xmlns="http://br-automation.co.at/AS/Hardware">
   <Module Name="PC" Type="PC_any" Version="1.1.0.0" OrderNumber="PC">
     <Parameter ID="ConfigurationID" Value="Tmp_Explorer_V1_Simulation" />
-    <Parameter ID="Cyclic8Duration" Value="50000" />
+    <Parameter ID="Cyclic8Duration" Value="10000" />
     <Group ID="FileDevice1" />
     <Parameter ID="FileDeviceName1" Value="USER" />
     <Parameter ID="FileDevicePath1" Value="C:\Temp" />
