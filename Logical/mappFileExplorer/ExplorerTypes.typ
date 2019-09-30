@@ -25,7 +25,7 @@ TYPE
 		);
 	expERR : 	STRUCT 
 		txt : STRING[100]; (* Error text *)
-		nr : UINT; (* Error number *)
+		no : UINT; (* Error number *)
 		step : expSTATE; (* Error step *)
 	END_STRUCT;
 	expCMD : 	STRUCT 
@@ -39,7 +39,7 @@ TYPE
 	expPAR : 	STRUCT 
 		device_active : STRING[40]; (*Active device name *)
 		device_list : ARRAY[0..4]OF STRING[40]; (*List of all devices*)
-		item_filter : STRING[4]; (* Only show files with this extension	*)
+		item_filter : STRING[MAX_ITEM_SIZE]; (* Only show files with this extension	*)
 		dir_name : STRING[MAX_ITEM_SIZE]; (* Directory name for create *)
 		dir_path : STRING[DIR_PATH_SIZE]; (* Current directory path	*)
 	END_STRUCT;

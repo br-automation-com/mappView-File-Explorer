@@ -207,7 +207,7 @@ PROGRAM _CYCLIC
 		// Clear errors																						
 		IF (EXPL.CMD[side].refresh	= 1 OR EXPL.CMD[side].copy = 1 OR	EXPL.CMD[side].copyall = 1 OR 	EXPL.CMD[side].dir_create = 1 OR EXPL.CMD[side].delete = 1) THEN
 			EXPL.ERR.txt	:= '';
-			EXPL.ERR.nr   	:= 0;
+			EXPL.ERR.no   	:= 0;
 			EXPL.ERR.step 	:= 0;
 		END_IF			
 

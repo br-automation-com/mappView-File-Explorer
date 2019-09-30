@@ -25,7 +25,7 @@ FUNCTION CreateError
 	ELSE			
 		brsstrcat(ADR(EXPL.ERR.txt), ADR(' on side b'));
 	END_IF
-	EXPL.ERR.nr   	:= nr;
+	EXPL.ERR.no   	:= nr;
 	EXPL.ERR.step 	:= step;
 	// Set next step
 	IF (step = STP_READ_DIR_2) THEN
@@ -105,7 +105,7 @@ FUNCTION InsertRecName
 		// New range is lower or higher than current													
 		IF (lSort > 0) THEN
 			lx := lx + ly;
-			IF (lx > EXPL.DAT[side].item_num) THEN
+			IF (lx > UINT_TO_INT(EXPL.DAT[side].item_num)) THEN
 				lx := EXPL.DAT[side].item_num;  
 			END_IF
 		ELSE
@@ -118,7 +118,7 @@ FUNCTION InsertRecName
 			
 	// New entry is this, next or previous 																
 	lSort := brsstrcmp(ADR(new_name), ADR(EXPL.DAT[side].item_list[lx]));
-	IF (lSort > 0 AND lx <> EXPL.DAT[side].item_num) THEN 
+	IF (lSort > 0 AND lx <> UINT_TO_INT(EXPL.DAT[side].item_num)) THEN 
 		lx := lx +1;
 	ELSIF (lx > 0) THEN
 		lSort := brsstrcmp(ADR(new_name), ADR(EXPL.DAT[side].item_list[lx-1]));
