@@ -1,6 +1,5 @@
 
 PROGRAM _INIT
-	USB.CMD.AutoScan := TRUE;
 END_PROGRAM
 
 PROGRAM _CYCLIC
@@ -27,9 +26,9 @@ PROGRAM _CYCLIC
 			IF USB.CMD.ErrorReset = TRUE THEN
 				USB.PAR.state_machine := ERROR_CASE;				
 			END_IF;		
-		// -----------------------------------------------------------------------------------------------------------
-		// Get USB device list
-		// -----------------------------------------------------------------------------------------------------------
+			// -----------------------------------------------------------------------------------------------------------
+			// Get USB device list
+			// -----------------------------------------------------------------------------------------------------------
 		CREATE_NODE_ID_LIST:  
 			UsbNodeListGet_0.enable := 1;
 			UsbNodeListGet_0.pBuffer := ADR(node_id_buffer);  
@@ -56,9 +55,9 @@ PROGRAM _CYCLIC
 				USB.ERR.text := 'error getting device list';
 				USB.PAR.state_machine := ERROR_CASE;
 			END_IF;
-		// -----------------------------------------------------------------------------------------------------------
-		// Get device information
-		// -----------------------------------------------------------------------------------------------------------	
+			// -----------------------------------------------------------------------------------------------------------
+			// Get device information
+			// -----------------------------------------------------------------------------------------------------------	
 		READ_DEVICE_DATA:  				
 			UsbNodeGet_0.enable := 1;
 			UsbNodeGet_0.nodeId := node_id_buffer[node];  
@@ -77,15 +76,15 @@ PROGRAM _CYCLIC
 				ELSE
 					node := node + 1;
 				END_IF;
-			// Error
+				// Error
 			ELSIF UsbNodeGet_0.status <> ERR_FUB_BUSY THEN
 				USB.ERR.state := USB.PAR.state_machine;
 				USB.ERR.text := 'error getting device data';
 				USB.PAR.state_machine := ERROR_CASE;
 			END_IF;
-		// -----------------------------------------------------------------------------------------------------------
-		// Check if device is connected
-		// -----------------------------------------------------------------------------------------------------------			
+			// -----------------------------------------------------------------------------------------------------------
+			// Check if device is connected
+			// -----------------------------------------------------------------------------------------------------------			
 		CHECK_DEVICE:
 			// Check if device is already linked
 			IF(USB.PAR.is_connected) THEN
@@ -111,9 +110,9 @@ PROGRAM _CYCLIC
 					USB.PAR.state_machine := LINK_DEVICE;
 				END_IF
 			END_IF
-		// -----------------------------------------------------------------------------------------------------------
-		// Link device
-		// -----------------------------------------------------------------------------------------------------------			
+			// -----------------------------------------------------------------------------------------------------------
+			// Link device
+			// -----------------------------------------------------------------------------------------------------------			
 		LINK_DEVICE:
 			// Create device string
 			brsstrcpy(ADR(device_param), ADR('/DEVICE='));  		
@@ -136,9 +135,9 @@ PROGRAM _CYCLIC
 				USB.ERR.text := 'error linking device';
 				USB.PAR.state_machine := ERROR_CASE;  
 			END_IF;										
-		// -----------------------------------------------------------------------------------------------------------
-		// UnLink device
-		// -----------------------------------------------------------------------------------------------------------				
+			// -----------------------------------------------------------------------------------------------------------
+			// UnLink device
+			// -----------------------------------------------------------------------------------------------------------				
 		UNLINK_DEVICE:
 			DevUnlink_0.enable := 1;
 			DevUnlink_0.handle := DevLink_0.handle;  
@@ -166,9 +165,15 @@ PROGRAM _CYCLIC
 			// Get more error information
 			USB.ERR.no := FileIoGetSysError();
 			USB.ERR.active := TRUE;
+			USB.PAR.is_connected := FALSE;
+			
+			// Unlink device
+			DevUnlink_0.enable := 1;
+			DevUnlink_0.handle := DevLink_0.handle;  
+			DevUnlink_0;
 
 			// Reset error
-			IF(USB.CMD.ErrorReset) THEN
+			IF(USB.CMD.ErrorReset AND DevUnlink_0.status <> ERR_FUB_BUSY) THEN
 				USB.CMD.ErrorReset := FALSE;
 				USB.ERR.active := FALSE;
 				USB.ERR.no := 0;
