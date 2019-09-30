@@ -147,6 +147,7 @@ PROGRAM _CYCLIC
 
 			// Get more error information
 			NET.ERR.no := FileIoGetSysError();
+			NET.ERR.active := TRUE;
 			IF(NET.ERR.no=26228) THEN
 				brsstrcpy(ADR(NET.ERR.text), ADR('connection rejected: check network protocol, username and password'));
 			ELSIF(DevLink_0.status = fiERR_DEVICE_ALREADY_EXIST) THEN
@@ -156,6 +157,7 @@ PROGRAM _CYCLIC
 			// Reset error
 			IF(NET.CMD.ErrorReset) THEN
 				NET.CMD.ErrorReset := FALSE;
+				NET.ERR.active := FALSE;
 				NET.ERR.no := 0;
 				brsmemset(ADR(NET.ERR.text), 0, SIZEOF(NET.ERR.text));
 				NET.PAR.state_machine := WAIT;

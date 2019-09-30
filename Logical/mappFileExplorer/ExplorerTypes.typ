@@ -82,7 +82,9 @@ TYPE
 	END_STRUCT;
 	netERR : 	STRUCT 
 		no : UINT; (*Error number*)
+		state : UINT;
 		text : STRING[80]; (*Error text*)
+		active : BOOL;
 	END_STRUCT;
 	netMAIN : 	STRUCT 
 		CMD : netCMD; (*Command structure*)
@@ -101,7 +103,9 @@ TYPE
 	END_STRUCT;
 	usbERR : 	STRUCT 
 		no : UINT; (*Error number*)
+		state : UINT;
 		text : STRING[80]; (*Error text*)
+		active : BOOL;
 	END_STRUCT;
 	usbMAIN : 	STRUCT 
 		CMD : usbCMD; (*Command structure*)

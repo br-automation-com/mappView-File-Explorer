@@ -23,6 +23,10 @@ PROGRAM _CYCLIC
 			ELSE
 				TON_10ms_01(IN:=0);
 			END_IF;		
+			// Refresh USB data every X seconds when enabled
+			IF USB.CMD.ErrorReset = TRUE THEN
+				USB.PAR.state_machine := ERROR_CASE;				
+			END_IF;		
 		// -----------------------------------------------------------------------------------------------------------
 		// Get USB device list
 		// -----------------------------------------------------------------------------------------------------------
@@ -48,6 +52,8 @@ PROGRAM _CYCLIC
 				END_IF
 				// Error
 			ELSIF UsbNodeListGet_0.status <> ERR_FUB_BUSY THEN
+				USB.ERR.state := USB.PAR.state_machine;
+				USB.ERR.text := 'error getting device list';
 				USB.PAR.state_machine := ERROR_CASE;
 			END_IF;
 		// -----------------------------------------------------------------------------------------------------------
@@ -71,9 +77,11 @@ PROGRAM _CYCLIC
 				ELSE
 					node := node + 1;
 				END_IF;
-				// Error
+			// Error
 			ELSIF UsbNodeGet_0.status <> ERR_FUB_BUSY THEN
-				USB.PAR.state_machine := ERROR_CASE;  (*error occured*)
+				USB.ERR.state := USB.PAR.state_machine;
+				USB.ERR.text := 'error getting device data';
+				USB.PAR.state_machine := ERROR_CASE;
 			END_IF;
 		// -----------------------------------------------------------------------------------------------------------
 		// Check if device is connected
@@ -124,6 +132,8 @@ PROGRAM _CYCLIC
 				USB.PAR.state_machine := WAIT;
 				// Error
 			ELSIF DevLink_0.status <> ERR_FUB_BUSY THEN
+				USB.ERR.state := USB.PAR.state_machine;
+				USB.ERR.text := 'error linking device';
 				USB.PAR.state_machine := ERROR_CASE;  
 			END_IF;										
 		// -----------------------------------------------------------------------------------------------------------
@@ -147,16 +157,20 @@ PROGRAM _CYCLIC
 				END_IF
 				// Error
 			ELSIF DevUnlink_0.status <> ERR_FUB_BUSY THEN
+				USB.ERR.state := USB.PAR.state_machine;
+				USB.ERR.text := 'error unlinking device';
 				USB.PAR.state_machine := ERROR_CASE;
 			END_IF;
 	
 		ERROR_CASE:
 			// Get more error information
 			USB.ERR.no := FileIoGetSysError();
+			USB.ERR.active := TRUE;
 
 			// Reset error
 			IF(USB.CMD.ErrorReset) THEN
 				USB.CMD.ErrorReset := FALSE;
+				USB.ERR.active := FALSE;
 				USB.ERR.no := 0;
 				brsmemset(ADR(USB.ERR.text), 0, SIZEOF(USB.ERR.text));
 				USB.PAR.state_machine := WAIT;

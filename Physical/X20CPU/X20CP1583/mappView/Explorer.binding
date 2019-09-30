@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <BindingsSet xmlns="http://www.br-automation.com/iat2015/binding/engineering/v2" xmlns:be="http://www.br-automation.com/iat2015/bindingListEmbedded/engineering/v2" xmlns:bt="http://www.br-automation.com/iat2015/bindingListTypes/engineering/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Explorer_binding">
 	<Bindings>
 		<Binding mode="oneWay">
@@ -10,10 +10,7 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.txt" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtError" attribute="value" />
 		</Binding>
-		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.nr" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numErrorNo" attribute="value" />
-		</Binding>
+		
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[0].item_num" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numItemsA" attribute="value" />
@@ -211,6 +208,20 @@
 <Binding mode="twoWay">
 <Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.enable_connect" attribute="value" />
 <Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnNETconnect" attribute="enable" />
+</Binding>
+<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.no" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numErrorNo" attribute="value" />
+</Binding>
+
+
+<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.ERR.active" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnNETreset" attribute="enable" />
+</Binding>
+<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.active" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBreset" attribute="enable" />
 </Binding>
 </Bindings>
 </BindingsSet>
