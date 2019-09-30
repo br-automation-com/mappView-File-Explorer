@@ -2,9 +2,9 @@
 <?AutomationStudio Version=4.5.3.86 SP?>
 <Package SubType="mappViewControl" PackageType="mappViewControl" xmlns="http://br-automation.co.at/AS/Package">
   <Objects>
-    <Object Type="File" Reference="true">\Physical\Simulation\PC\mappView\Visualizat.vis</Object>
-    <Object Type="File" Reference="true">\Physical\Simulation\PC\mappView\Config.mappviewcfg</Object>
-    <Object Type="File" Reference="true">\Physical\Simulation\PC\mappView\Explorer.binding</Object>
-    <Object Type="File" Reference="true">\Physical\Simulation\PC\mappView\Explorer.eventbinding</Object>
+    <Object Type="File">Visualizat.vis</Object>
+    <Object Type="File">Config.mappviewcfg</Object>
+    <Object Type="File">Explorer.binding</Object>
+    <Object Type="File">Explorer.eventbinding</Object>
   </Objects>
 </Package>
