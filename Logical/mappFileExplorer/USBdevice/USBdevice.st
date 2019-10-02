@@ -51,6 +51,7 @@ PROGRAM _CYCLIC
 				// Error
 			ELSIF UsbNodeListGet_0.status <> ERR_FUB_BUSY THEN
 				USB.ERR.state := USB.PAR.state_machine;
+				USB.ERR.no := UsbNodeListGet_0.status;
 				USB.ERR.text := 'error getting device list';
 				USB.PAR.state_machine := USB_ERROR;
 			END_IF;
@@ -78,6 +79,7 @@ PROGRAM _CYCLIC
 				// Error
 			ELSIF UsbNodeGet_0.status <> ERR_FUB_BUSY THEN
 				USB.ERR.state := USB.PAR.state_machine;
+				USB.ERR.no := UsbNodeGet_0.status;
 				USB.ERR.text := 'error getting device data';
 				USB.PAR.state_machine := USB_ERROR;
 			END_IF;
@@ -131,6 +133,7 @@ PROGRAM _CYCLIC
 				// Error
 			ELSIF DevLink_0.status <> ERR_FUB_BUSY THEN
 				USB.ERR.state := USB.PAR.state_machine;
+				USB.ERR.no := DevLink_0.status;
 				USB.ERR.text := 'error linking device';
 				USB.PAR.state_machine := USB_ERROR;  
 			END_IF;										
@@ -156,6 +159,7 @@ PROGRAM _CYCLIC
 				// Error
 			ELSIF DevUnlink_0.status <> ERR_FUB_BUSY THEN
 				USB.ERR.state := USB.PAR.state_machine;
+				USB.ERR.no := DevUnlink_0.status;
 				USB.ERR.text := 'error unlinking device';
 				USB.PAR.state_machine := USB_ERROR;
 			END_IF;
@@ -164,7 +168,9 @@ PROGRAM _CYCLIC
 		// -----------------------------------------------------------------------------------------------------------					
 		USB_ERROR:
 			// Get more error information
-			USB.ERR.no := FileIoGetSysError();
+			IF(USB.ERR.no = 0) THEN
+				USB.ERR.no := FileIoGetSysError();
+			END_IF
 			USB.ERR.active := TRUE;
 			USB.PAR.is_connected := FALSE;
 			

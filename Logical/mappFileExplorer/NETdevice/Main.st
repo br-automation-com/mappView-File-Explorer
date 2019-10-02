@@ -109,6 +109,9 @@ PROGRAM _CYCLIC
 				NET.PAR.state_machine := NET_WAIT;
 				// Error
 			ELSIF DevLink_0.status <> ERR_FUB_BUSY THEN
+				NET.ERR.state := NET.PAR.state_machine;
+				NET.ERR.no := DevLink_0.status;
+				NET.ERR.text := 'error linking device';
 				NET.PAR.state_machine := NET_ERROR;  
 			END_IF;										
 		// -----------------------------------------------------------------------------------------------------------
@@ -135,6 +138,9 @@ PROGRAM _CYCLIC
 			// Error
 			ELSIF DevUnlink_0.status <> ERR_FUB_BUSY THEN
 				NET.CMD.error_reset := FALSE;
+				NET.ERR.state := NET.PAR.state_machine;
+				NET.ERR.no := DevUnlink_0.status;
+				NET.ERR.text := 'error unlinking device';
 				NET.PAR.state_machine := NET_ERROR;
 			END_IF;
 		// -----------------------------------------------------------------------------------------------------------
@@ -146,7 +152,9 @@ PROGRAM _CYCLIC
 			NET.CMD.connect := FALSE;
 
 			// Get more error information
-			NET.ERR.no := FileIoGetSysError();
+			IF(NET.ERR.no = 0) THEN
+				NET.ERR.no := FileIoGetSysError();
+			END_IF
 			NET.ERR.active := TRUE;
 			IF(NET.ERR.no=26228) THEN
 				brsstrcpy(ADR(NET.ERR.text), ADR('connection rejected: check network protocol, username and password'));
