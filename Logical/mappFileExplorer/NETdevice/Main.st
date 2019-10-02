@@ -10,40 +10,40 @@ PROGRAM _CYCLIC
 		// -----------------------------------------------------------------------------------------------------------
 		// Wait state
 		// -----------------------------------------------------------------------------------------------------------
-		WAIT:
+		NET_WAIT:
 			NET.PAR.enable_connect := TRUE;
 			// --------------------------------------------------------------------------------------------------------------------	
 			// Connect to server
-			IF(NET.CMD.Connect) THEN
+			IF(NET.CMD.connect) THEN
 				IF(NET.PAR.is_linked) THEN
 					DevUnlink_0.enable := 0;
 					DevUnlink_0;
 					IF (DevUnlink_0.status = ERR_FUB_ENABLE_FALSE) THEN
-						NET.PAR.state_machine := UNLINK_DEVICE;
+						NET.PAR.state_machine := NET_UNLINK_DEVICE;
 					END_IF
 				ELSE
 					DevLink_0.enable := 0;
 					DevLink_0;
 					IF (DevLink_0.status = ERR_FUB_ENABLE_FALSE) THEN
-						NET.PAR.state_machine := LINK_DEVICE;
+						NET.PAR.state_machine := NET_LINK_DEVICE;
 					END_IF
 				END_IF
 			END_IF
 			// --------------------------------------------------------------------------------------------------------------------	
 			// Disconnect from server
-			IF(NET.CMD.ErrorReset) THEN
+			IF(NET.CMD.error_reset) THEN
 				IF(NET.PAR.is_linked) THEN
 					DevUnlink_0.enable := 0;
 					DevUnlink_0;
-					NET.PAR.state_machine := UNLINK_DEVICE;
+					NET.PAR.state_machine := NET_UNLINK_DEVICE;
 				ELSE
-					NET.CMD.ErrorReset := FALSE;
+					NET.CMD.error_reset := FALSE;
 				END_IF
 			END_IF
 		// -----------------------------------------------------------------------------------------------------------
 		// Link device
 		// -----------------------------------------------------------------------------------------------------------			
-		LINK_DEVICE:
+		NET_LINK_DEVICE:
 			// Create device string
 			NET.PAR.enable_connect := FALSE;
 			brsmemset(ADR(device_param), 0, SIZEOF(device_param));
@@ -99,22 +99,22 @@ PROGRAM _CYCLIC
 			IF DevLink_0.status = 0 THEN
 				device_handle := DevLink_0.handle;
 				NET.PAR.is_linked := TRUE;
-				NET.CMD.Connect := FALSE;				
-				NET.PAR.state_machine := WAIT;
+				NET.CMD.connect := FALSE;				
+				NET.PAR.state_machine := NET_WAIT;
 			// --------------------------------------------------------------------------------------------------------------------	
 			// Abort command
-			ELSIF(NET.CMD.ErrorReset) THEN
-				NET.CMD.ErrorReset := FALSE;
-				NET.CMD.Connect := FALSE;
-				NET.PAR.state_machine := WAIT;
+			ELSIF(NET.CMD.error_reset) THEN
+				NET.CMD.error_reset := FALSE;
+				NET.CMD.connect := FALSE;
+				NET.PAR.state_machine := NET_WAIT;
 				// Error
 			ELSIF DevLink_0.status <> ERR_FUB_BUSY THEN
-				NET.PAR.state_machine := ERROR;  
+				NET.PAR.state_machine := NET_ERROR;  
 			END_IF;										
 		// -----------------------------------------------------------------------------------------------------------
 		// UnLink device
 		// -----------------------------------------------------------------------------------------------------------				
-		UNLINK_DEVICE:
+		NET_UNLINK_DEVICE:
 			NET.PAR.enable_connect := FALSE;
 			DevUnlink_0.enable := 1;
 			DevUnlink_0.handle := device_handle;  
@@ -124,26 +124,26 @@ PROGRAM _CYCLIC
 			// Success
 			IF DevUnlink_0.status = 0 THEN
 				NET.PAR.is_linked := FALSE;
-				IF(NET.CMD.Connect) THEN
+				IF(NET.CMD.connect) THEN
 					DevLink_0.enable := 0;
 					DevLink_0;
-					NET.PAR.state_machine := LINK_DEVICE;
+					NET.PAR.state_machine := NET_LINK_DEVICE;
 				ELSE
-					NET.CMD.ErrorReset := FALSE;
-					NET.PAR.state_machine := WAIT;
+					NET.CMD.error_reset := FALSE;
+					NET.PAR.state_machine := NET_WAIT;
 				END_IF					
 			// Error
 			ELSIF DevUnlink_0.status <> ERR_FUB_BUSY THEN
-				NET.CMD.ErrorReset := FALSE;
-				NET.PAR.state_machine := ERROR;
+				NET.CMD.error_reset := FALSE;
+				NET.PAR.state_machine := NET_ERROR;
 			END_IF;
 		// -----------------------------------------------------------------------------------------------------------
 		// Error step
 		// -----------------------------------------------------------------------------------------------------------				
-		ERROR:
+		NET_ERROR:
 			// Reset commands
 			NET.PAR.enable_connect := FALSE;
-			NET.CMD.Connect := FALSE;
+			NET.CMD.connect := FALSE;
 
 			// Get more error information
 			NET.ERR.no := FileIoGetSysError();
@@ -155,12 +155,12 @@ PROGRAM _CYCLIC
 			END_IF
 			
 			// Reset error
-			IF(NET.CMD.ErrorReset) THEN
-				NET.CMD.ErrorReset := FALSE;
+			IF(NET.CMD.error_reset) THEN
+				NET.CMD.error_reset := FALSE;
 				NET.ERR.active := FALSE;
 				NET.ERR.no := 0;
 				brsmemset(ADR(NET.ERR.text), 0, SIZEOF(NET.ERR.text));
-				NET.PAR.state_machine := WAIT;
+				NET.PAR.state_machine := NET_WAIT;
 			END_IF
 	END_CASE;
 	 

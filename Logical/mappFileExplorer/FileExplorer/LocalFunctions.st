@@ -5,36 +5,36 @@
 FUNCTION CreateError
 	// Generate for known errors
 	IF (nr = fiERR_NOT_ENOUGH_FREEMEM) THEN
-		EXPL.ERR.txt := 'not enough memory available on the target device';
+		EXPL.ERR.text := 'not enough memory available on the target device';
 	ELSIF (nr = fiERR_FILE_DEVICE) THEN
-		EXPL.ERR.txt := 'device is not connected';
+		EXPL.ERR.text := 'device is not connected';
 	ELSIF (nr = fiERR_INVALID_PATH) THEN
-		EXPL.ERR.txt := 'directory is too long or has invalid characters';
+		EXPL.ERR.text := 'directory is too long or has invalid characters';
 	ELSIF (nr = fiERR_DIR_NOT_EXIST) THEN
-		EXPL.ERR.txt := 'directory does not exist';
+		EXPL.ERR.text := 'directory does not exist';
 	ELSIF (nr = fiERR_FILE_DEVICE) THEN
-		EXPL.ERR.txt := 'directory path does not exist';
+		EXPL.ERR.text := 'directory path does not exist';
 	ELSIF (nr = fiERR_DIR_ALREADY_EXIST) THEN
-		EXPL.ERR.txt := 'directory or file already exists';			
+		EXPL.ERR.text := 'directory or file already exists';			
 	ELSE 
-		EXPL.ERR.txt := text;
+		EXPL.ERR.text := text;
 	END_IF	
 	// Convert to error structure																		
 	IF (side = 0) THEN
-		brsstrcat(ADR(EXPL.ERR.txt), ADR(' on side a'));
+		brsstrcat(ADR(EXPL.ERR.text), ADR(' on side a'));
 	ELSE			
-		brsstrcat(ADR(EXPL.ERR.txt), ADR(' on side b'));
+		brsstrcat(ADR(EXPL.ERR.text), ADR(' on side b'));
 	END_IF
 	EXPL.ERR.no   	:= nr;
-	EXPL.ERR.step 	:= step;
+	EXPL.ERR.state 	:= step;
 	// Set next step
-	IF (step = STP_READ_DIR_2) THEN
-		CreateError := STP_READ_DIR_3;
+	IF (step = EXP_READ_DIR_2) THEN
+		CreateError := EXP_READ_DIR_3;
 	ELSE
 		// Reset all commands																				
 		brsmemset(ADR(EXPL.CMD[side]), 0, SIZEOF(EXPL.CMD[side]));
 		brsmemset(ADR(EXPL.CMD[NOT side]), 0, SIZEOF(EXPL.CMD[NOT side]));
-		CreateError := STP_WAIT;
+		CreateError := EXP_WAIT;
 	END_IF
 END_FUNCTION
 
