@@ -12,6 +12,7 @@ VAR
 	animation : USINT := 0; (* Animation for working status	*)
 	do_select : USINT := 0; (* Select item after copying *)
 	old_filter : ARRAY[0..1] OF STRING[4]; (* Track filter change *)
+	has_oversized_items : BOOL;
 	tmp_str1 : STRING[DIR_PATH_SIZE]; (* Temporary STRING variable *)
 	tmp_str2 : STRING[DIR_PATH_SIZE]; (* Temporary STRING variable *)
 	tmp_str3 : STRING[DIR_PATH_SIZE]; (* Temporary STRING variable *)
