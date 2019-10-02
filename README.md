@@ -99,6 +99,11 @@ The following settings can be changed during runtime. For details about the netw
 
 <a name="Revision-History"></a>
 ## Revision History
+Version 0.5
+- Main task ported to structure text
+- Allow oversized names for files and folders
+- Fixed variables types
+- Applied python naming convention to all code
 
 #### Version 0.2
 - Added configuration for network connections
