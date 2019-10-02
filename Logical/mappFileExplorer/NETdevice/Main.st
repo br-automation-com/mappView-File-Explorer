@@ -109,7 +109,7 @@ PROGRAM _CYCLIC
 				NET.PAR.state_machine := WAIT;
 				// Error
 			ELSIF DevLink_0.status <> ERR_FUB_BUSY THEN
-				NET.PAR.state_machine := ERROR_CASE;  
+				NET.PAR.state_machine := ERROR;  
 			END_IF;										
 		// -----------------------------------------------------------------------------------------------------------
 		// UnLink device
@@ -135,12 +135,12 @@ PROGRAM _CYCLIC
 			// Error
 			ELSIF DevUnlink_0.status <> ERR_FUB_BUSY THEN
 				NET.CMD.ErrorReset := FALSE;
-				NET.PAR.state_machine := ERROR_CASE;
+				NET.PAR.state_machine := ERROR;
 			END_IF;
 		// -----------------------------------------------------------------------------------------------------------
 		// Error step
 		// -----------------------------------------------------------------------------------------------------------				
-		ERROR_CASE:
+		ERROR:
 			// Reset commands
 			NET.PAR.enable_connect := FALSE;
 			NET.CMD.Connect := FALSE;

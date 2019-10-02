@@ -7,7 +7,7 @@ VAR CONSTANT
 	CHECK_DEVICE : USINT := 3; (*Function step: Check file device data*)
 	LINK_DEVICE : USINT := 4; (*Function step: Link file device*)
 	UNLINK_DEVICE : USINT := 5; (*Function step: Unlink the File Device from specific path*)
-	ERROR_CASE : USINT := 6; (*Function step: Jump to this step in every case of Error occuring in the Function chain*)
+	ERROR : USINT := 6; (*Function step: Jump to this step in every case of Error occuring in the Function chain*)
 END_VAR
 (*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
 (*Local functions*)

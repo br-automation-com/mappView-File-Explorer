@@ -1,4 +1,3 @@
-
 PROGRAM _INIT
 END_PROGRAM
 
@@ -24,11 +23,11 @@ PROGRAM _CYCLIC
 			END_IF;		
 			// Refresh USB data every X seconds when enabled
 			IF USB.CMD.ErrorReset = TRUE THEN
-				USB.PAR.state_machine := ERROR_CASE;				
+				USB.PAR.state_machine := ERROR;				
 			END_IF;		
-			// -----------------------------------------------------------------------------------------------------------
-			// Get USB device list
-			// -----------------------------------------------------------------------------------------------------------
+		// -----------------------------------------------------------------------------------------------------------
+		// Get USB device list
+		// -----------------------------------------------------------------------------------------------------------
 		CREATE_NODE_ID_LIST:  
 			UsbNodeListGet_0.enable := 1;
 			UsbNodeListGet_0.pBuffer := ADR(node_id_buffer);  
@@ -53,11 +52,11 @@ PROGRAM _CYCLIC
 			ELSIF UsbNodeListGet_0.status <> ERR_FUB_BUSY THEN
 				USB.ERR.state := USB.PAR.state_machine;
 				USB.ERR.text := 'error getting device list';
-				USB.PAR.state_machine := ERROR_CASE;
+				USB.PAR.state_machine := ERROR;
 			END_IF;
-			// -----------------------------------------------------------------------------------------------------------
-			// Get device information
-			// -----------------------------------------------------------------------------------------------------------	
+		// -----------------------------------------------------------------------------------------------------------
+		// Get device information
+		// -----------------------------------------------------------------------------------------------------------	
 		READ_DEVICE_DATA:  				
 			UsbNodeGet_0.enable := 1;
 			UsbNodeGet_0.nodeId := node_id_buffer[node];  
@@ -80,11 +79,11 @@ PROGRAM _CYCLIC
 			ELSIF UsbNodeGet_0.status <> ERR_FUB_BUSY THEN
 				USB.ERR.state := USB.PAR.state_machine;
 				USB.ERR.text := 'error getting device data';
-				USB.PAR.state_machine := ERROR_CASE;
+				USB.PAR.state_machine := ERROR;
 			END_IF;
-			// -----------------------------------------------------------------------------------------------------------
-			// Check if device is connected
-			// -----------------------------------------------------------------------------------------------------------			
+		// -----------------------------------------------------------------------------------------------------------
+		// Check if device is connected
+		// -----------------------------------------------------------------------------------------------------------			
 		CHECK_DEVICE:
 			// Check if device is already linked
 			IF(USB.PAR.is_connected) THEN
@@ -104,15 +103,15 @@ PROGRAM _CYCLIC
 					IF(idx < node) THEN
 						idx := idx + 1;
 					ELSE
-						USB.PAR.state_machine := WAIT;						
+						USB.PAR.state_machine := WAIT;
 					END_IF
 				ELSE
 					USB.PAR.state_machine := LINK_DEVICE;
 				END_IF
 			END_IF
-			// -----------------------------------------------------------------------------------------------------------
-			// Link device
-			// -----------------------------------------------------------------------------------------------------------			
+		// -----------------------------------------------------------------------------------------------------------
+		// Link device
+		// -----------------------------------------------------------------------------------------------------------			
 		LINK_DEVICE:
 			// Create device string
 			brsstrcpy(ADR(device_param), ADR('/DEVICE='));  		
@@ -133,11 +132,11 @@ PROGRAM _CYCLIC
 			ELSIF DevLink_0.status <> ERR_FUB_BUSY THEN
 				USB.ERR.state := USB.PAR.state_machine;
 				USB.ERR.text := 'error linking device';
-				USB.PAR.state_machine := ERROR_CASE;  
+				USB.PAR.state_machine := ERROR;  
 			END_IF;										
-			// -----------------------------------------------------------------------------------------------------------
-			// UnLink device
-			// -----------------------------------------------------------------------------------------------------------				
+		// -----------------------------------------------------------------------------------------------------------
+		// UnLink device
+		// -----------------------------------------------------------------------------------------------------------				
 		UNLINK_DEVICE:
 			DevUnlink_0.enable := 1;
 			DevUnlink_0.handle := DevLink_0.handle;  
@@ -158,10 +157,12 @@ PROGRAM _CYCLIC
 			ELSIF DevUnlink_0.status <> ERR_FUB_BUSY THEN
 				USB.ERR.state := USB.PAR.state_machine;
 				USB.ERR.text := 'error unlinking device';
-				USB.PAR.state_machine := ERROR_CASE;
+				USB.PAR.state_machine := ERROR;
 			END_IF;
-	
-		ERROR_CASE:
+		// -----------------------------------------------------------------------------------------------------------
+		// Error state
+		// -----------------------------------------------------------------------------------------------------------					
+		ERROR:
 			// Get more error information
 			USB.ERR.no := FileIoGetSysError();
 			USB.ERR.active := TRUE;

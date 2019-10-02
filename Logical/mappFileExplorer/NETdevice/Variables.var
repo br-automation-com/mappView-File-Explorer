@@ -4,7 +4,7 @@ VAR CONSTANT
 	WAIT : USINT := 0; (*Function step: Wait for starting the Function chain*)
 	LINK_DEVICE : USINT := 1; (*Function step: Link file device*)
 	UNLINK_DEVICE : USINT := 2; (*Function step: Unlink the File Device from specific path*)
-	ERROR_CASE : USINT := 3; (*Function step: Jump to this step in every case of Error occuring in the Function chain*)
+	ERROR : USINT := 3; (*Function step: Jump to this step in every case of Error occuring in the Function chain*)
 END_VAR
 (*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
 (*Local functions*)
