@@ -7,7 +7,7 @@
 		</Binding>
 		
 		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.txt" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.text" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtError" attribute="value" />
 		</Binding>
 		
@@ -202,7 +202,7 @@
 <Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numNETErrorNo1" attribute="value" />
 </Binding>
 <Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.CMD.AutoScan" attribute="value" />
+<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.CMD.auto_scan" attribute="value" />
 <Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="chkUSBenable" attribute="value" />
 </Binding>
 <Binding mode="twoWay">
@@ -222,6 +222,10 @@
 <Binding mode="oneWay">
 <Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.active" attribute="value" />
 <Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBreset" attribute="enable" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_refresh_create" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="flyConfiguration" attribute="enable" />
 </Binding>
 </Bindings>
 </BindingsSet>

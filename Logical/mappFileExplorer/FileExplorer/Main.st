@@ -97,7 +97,7 @@ PROGRAM _CYCLIC
 
 	// ------------------------------------------------------------------------------------------------ 
 	// Break if no command is set																		
-	IF (EXPL.CMD[side].refresh = 0 AND EXPL.CMD[side].dir_change = 0 AND EXPL.CMD[side].dir_create = 0 AND EXPL.CMD[side].copy = 0 AND EXPL.CMD[side].copyall = 0 AND EXPL.CMD[side].delete = 0) THEN
+	IF (EXPL.CMD[side].refresh = 0 AND EXPL.CMD[side].dir_change = 0 AND EXPL.CMD[side].dir_create = 0 AND EXPL.CMD[side].copy = 0 AND EXPL.CMD[side].copy_all = 0 AND EXPL.CMD[side].delete = 0) THEN
 		// -------------------------------------------------------------------------------------------- 
 		// Show current state																			
 		EXPL.status := 'Waiting...'; 
@@ -124,11 +124,11 @@ PROGRAM _CYCLIC
 		//**********************************************************************************************
 		// Wait for command																				
 		//**********************************************************************************************
-		STP_WAIT:
+		EXP_WAIT:
 			// ---------------------------------------------------------------------------------------- 
 			// Command refresh																			
 			IF (EXPL.CMD[side].refresh = 1) THEN
-				step := STP_READ_DIR;
+				step := EXP_READ_DIR;
 			END_IF
 			// ---------------------------------------------------------------------------------------- 
 			// Command directory change																	
@@ -144,77 +144,77 @@ PROGRAM _CYCLIC
 			ELSIF(brsstrlen(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected])) - 5 + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= DIR_PATH_SIZE) THEN 
 				step := CreateError(50202, side, step, 'directory path exceeds maximum length', ADR(EXPL));
 			ELSE 
-				step := STP_DIR_CHANGE;
+				step := EXP_DIR_CHANGE;
+				END_IF
 			END_IF
-		END_IF
-		// ---------------------------------------------------------------------------------------- 
-		// Command directory create																	
-		IF (EXPL.CMD[side].dir_create = 1) THEN
+			// ---------------------------------------------------------------------------------------- 
+			// Command directory create																	
+			IF (EXPL.CMD[side].dir_create = 1) THEN
+				// ------------------------------------------------------------------------------------ 		
+				// Check if new directory name is empty													
+				IF (EXPL.PAR[side].dir_name = '') THEN
+					step := CreateError(50000, side, step, 'directory name is empty', ADR(EXPL));
+				// Check if new directory name fits into path string									
+				ELSIF(brsstrlen(ADR(EXPL.PAR[side].dir_name)) + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= DIR_PATH_SIZE) THEN
+					step := CreateError(50202, side, step, 'directory path name exceeds maximum length', ADR(EXPL));
+				// Check if new directory name fits into directory name string						
+				ELSIF(brsstrlen(ADR(EXPL.PAR[side].dir_name)) + 5 >= MAX_ITEM_SIZE) THEN
+					step := CreateError(50201, side, step, 'directory name exceeds maximum length', ADR(EXPL));
+				ELSE 
+					step := EXP_DIR_CREATE;
+				END_IF
+			END_IF
+			// ---------------------------------------------------------------------------------------- 
+			// Command copy																				
+			IF (EXPL.CMD[side].copy = 1) THEN 	
+				// ------------------------------------------------------------------------------------ 		
+				// Make sure that user chooses a valid item												
+				IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '..') THEN
+					step := CreateError(50001, side, step, 'this is not a valid item name', ADR(EXPL));
+				ELSIF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) = 0)	THEN
+					step := EXP_DIR_COPY;
+				ELSE																														
+					step := EXP_FILE_COPY;
+				END_IF
+			END_IF
+			// ---------------------------------------------------------------------------------------- 
+			// Command copy all																			
+			IF (EXPL.CMD[side].copy_all = 1) THEN
+				step := EXP_COPY_ALL;
+			END_IF
+			// ---------------------------------------------------------------------------------------- 
+			// Command delete																			
+			IF (EXPL.CMD[side].delete = 1) THEN
 			// ------------------------------------------------------------------------------------ 		
-			// Check if new directory name is empty													
-			IF (EXPL.PAR[side].dir_name = '') THEN
-				step := CreateError(50000, side, step, 'directory name is empty', ADR(EXPL));
-			// Check if new directory name fits into path string									
-			ELSIF(brsstrlen(ADR(EXPL.PAR[side].dir_name)) + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= DIR_PATH_SIZE) THEN
-				step := CreateError(50202, side, step, 'directory path name exceeds maximum length', ADR(EXPL));
-			// Check if new directory name fits into directory name string						
-			ELSIF(brsstrlen(ADR(EXPL.PAR[side].dir_name)) + 5 >= MAX_ITEM_SIZE) THEN
-				step := CreateError(50201, side, step, 'directory name exceeds maximum length', ADR(EXPL));
-			ELSE 
-				step := STP_DIR_CREATE;
+				// Check if directory name is empty														
+				IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '')	THEN
+					step := CreateError(50000, side, step, 'item name is empty', ADR(EXPL));
+				// Check if new directory name fits into string											
+				ELSIF(brsstrlen(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected])) + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= DIR_PATH_SIZE + MAX_ITEM_SIZE) THEN
+					step := CreateError(50202, side, step, 'directory path exceeds maximum length', ADR(EXPL));
+				// Make sure that user chooses a valid item												
+				ELSIF(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '..') THEN
+					step := CreateError(50001, side, step, 'this is not a valid item name', ADR(EXPL));
+				// Delete a directory																	
+				ELSIF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) = 0)	THEN
+					step := EXP_DIR_DELETE;
+				// Delete a file																		
+				ELSE																									
+					step := EXP_FILE_DELETE;
+				END_IF
 			END_IF
-		END_IF
-		// ---------------------------------------------------------------------------------------- 
-		// Command copy																				
-		IF (EXPL.CMD[side].copy = 1) THEN 	
-			// ------------------------------------------------------------------------------------ 		
-			// Make sure that user chooses a valid item												
-			IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '..') THEN
-				step := CreateError(50001, side, step, 'this is not a valid item name', ADR(EXPL));
-			ELSIF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) = 0)	THEN
-				step := STP_DIR_COPY;
-			ELSE																														
-				step := STP_FILE_COPY;
-			END_IF
-		END_IF
-		// ---------------------------------------------------------------------------------------- 
-		// Command copy all																			
-		IF (EXPL.CMD[side].copyall = 1) THEN
-			step := STP_COPY_ALL;
-		END_IF
-		// ---------------------------------------------------------------------------------------- 
-		// Command delete																			
-		IF (EXPL.CMD[side].delete = 1) THEN
-		// ------------------------------------------------------------------------------------ 		
-			// Check if directory name is empty														
-			IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '')	THEN
-				step := CreateError(50000, side, step, 'item name is empty', ADR(EXPL));
-			// Check if new directory name fits into string											
-			ELSIF(brsstrlen(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected])) + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= DIR_PATH_SIZE + MAX_ITEM_SIZE) THEN
-				step := CreateError(50202, side, step, 'directory path exceeds maximum length', ADR(EXPL));
-			// Make sure that user chooses a valid item												
-			ELSIF(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '..') THEN
-				step := CreateError(50001, side, step, 'this is not a valid item name', ADR(EXPL));
-			// Delete a directory																	
-			ELSIF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) = 0)	THEN
-				step := STP_DIR_DELETE;
-			// Delete a file																		
-			ELSE																									
-				step := STP_FILE_DELETE;
-			END_IF
-		END_IF
-		// ---------------------------------------------------------------------------------------- 
-		// Clear errors																						
-		IF (EXPL.CMD[side].refresh	= 1 OR EXPL.CMD[side].copy = 1 OR	EXPL.CMD[side].copyall = 1 OR 	EXPL.CMD[side].dir_create = 1 OR EXPL.CMD[side].delete = 1) THEN
-			EXPL.ERR.txt	:= '';
-			EXPL.ERR.no   	:= 0;
-			EXPL.ERR.step 	:= 0;
-		END_IF			
+			// ---------------------------------------------------------------------------------------- 
+			// Clear errors																						
+			IF (EXPL.CMD[side].refresh	= 1 OR EXPL.CMD[side].copy = 1 OR	EXPL.CMD[side].copy_all = 1 OR 	EXPL.CMD[side].dir_create = 1 OR EXPL.CMD[side].delete = 1) THEN
+				EXPL.ERR.text	:= '';
+				EXPL.ERR.no   	:= 0;
+				EXPL.ERR.state 	:= 0;
+			END_IF			
 
 		//**********************************************************************************************
 		// Read directory information																	
 		//**********************************************************************************************
-		STP_READ_DIR:
+		EXP_READ_DIR:
 			// Show current state																		
 			animation := animation := WorkingStatus(ADR(EXPL), ADR('read directory...'), animation);
 			// ---------------------------------------------------------------------------------------- 
@@ -238,7 +238,7 @@ PROGRAM _CYCLIC
 			// ---------------------------------------------------------------------------------------- 		
 			// ->Success																																				
 			IF (DInfo.status = OK) THEN
-				step := STP_READ_DIR_1;
+				step := EXP_READ_DIR_1;
 			// ---------------------------------------------------------------------------------------- 		
 			// Device is not available																	
 			ELSIF (DInfo.status = fiERR_FILE_DEVICE) THEN
@@ -255,7 +255,7 @@ PROGRAM _CYCLIC
 		//**********************************************************************************************
 		// Open directory 																				
 		//**********************************************************************************************
-		STP_READ_DIR_1:
+		EXP_READ_DIR_1:
 			// ---------------------------------------------------------------------------------------- 		
 			// Set values and get device dir															
 			DOpen.enable 	:= 1;
@@ -267,14 +267,14 @@ PROGRAM _CYCLIC
 			// ->Success																																				
 			IF (DOpen.status = OK) THEN
 				has_oversized_items := FALSE;
-				step := STP_READ_DIR_2;
+				step := EXP_READ_DIR_2;
 			ELSIF (DOpen.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(DOpen.status, side, step, 'error dir open', ADR(EXPL));			
 			END_IF;
 		//**********************************************************************************************
 		// Read file directory information																
 		//**********************************************************************************************
-	 	STP_READ_DIR_2:
+	 	EXP_READ_DIR_2:
 			// ---------------------------------------------------------------------------------------- 		
 			// Initialize read directory structure 														
 			DRead.enable 	:= 1;
@@ -333,7 +333,7 @@ PROGRAM _CYCLIC
 					step := CreateError(50100, side, step, 'maximum number of files reached', ADR(EXPL));
 				END_IF
 			ELSIF (DRead.status = fiERR_NO_MORE_ENTRIES) THEN 
-				step := STP_READ_DIR_3;
+				step := EXP_READ_DIR_3;
 			// ---------------------------------------------------------------------------------------- 		
 			ELSIF (DRead.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(DRead.status, side, step, 'error dir read', ADR(EXPL));
@@ -341,7 +341,7 @@ PROGRAM _CYCLIC
 		//**********************************************************************************************
 		// Close directory information																	
 		//**********************************************************************************************
-		STP_READ_DIR_3:
+		EXP_READ_DIR_3:
 			// ---------------------------------------------------------------------------------------- 		
 			// Initialize read directory structure 														
 			DClose.enable 	:= 1;
@@ -367,7 +367,7 @@ PROGRAM _CYCLIC
 				IF(has_oversized_items) THEN
 					step := CreateError(50201, side, step, 'one or more names exceeds maximum length', ADR(EXPL));
 				ELSE
-					step := STP_WAIT;
+					step := EXP_WAIT;
 				END_IF
 			// ---------------------------------------------------------------------------------------- 		
 			ELSIF (DClose.status <> ERR_FUB_BUSY) THEN
@@ -376,7 +376,7 @@ PROGRAM _CYCLIC
 		//**********************************************************************************************
 		// Change directory 																			
 		//**********************************************************************************************
-		STP_DIR_CHANGE:
+		EXP_DIR_CHANGE:
 			// ---------------------------------------------------------------------------------------- 		
 			// Move one directory up																	
 			IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '..') THEN
@@ -401,11 +401,11 @@ PROGRAM _CYCLIC
 			EXPL.VIS[side].item_selected	:= 0;
 			EXPL.CMD[side].dir_change 		:= 0;
 			EXPL.CMD[side].refresh 			:= 1;
-			step							:= STP_WAIT;
+			step							:= EXP_WAIT;
 		//**********************************************************************************************
 		// Copy all items																				
 		//**********************************************************************************************
-		STP_COPY_ALL:
+		EXP_COPY_ALL:
 			// Show current state																		
 			animation := animation := WorkingStatus(ADR(EXPL), ADR('copying files...'), animation);
 						
@@ -417,14 +417,14 @@ PROGRAM _CYCLIC
 			END_IF
 			// Check first entry																		
 			IF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) = 0) THEN
-				step := STP_DIR_COPY;
+				step := EXP_DIR_COPY;
 			ELSE						
-				step := STP_FILE_COPY;
+				step := EXP_FILE_COPY;
 			END_IF
 		//**********************************************************************************************
 		// Copy files																					
 		//**********************************************************************************************
-		STP_FILE_COPY:
+		EXP_FILE_COPY:
 			// Show current state																		
 			animation := WorkingStatus(ADR(EXPL), ADR('copying file...'), animation);
 			
@@ -460,7 +460,7 @@ PROGRAM _CYCLIC
 								do_select := BOOL_TO_USINT(side) + 1;
 							END_IF
 							EXPL.CMD[side].copy	:= 0;
-							step := STP_WAIT;
+							step := EXP_WAIT;
 						// ---------------------------------------------------------------------------- 		
 						// Proceed with next file														
 						ELSIF (FCopy.status = OK) THEN
@@ -481,14 +481,14 @@ PROGRAM _CYCLIC
 				IF(COPY_AUTO_REFRESH = TRUE) THEN
 					EXPL.CMD[NOT side].refresh := 1;
 				END_IF
-				EXPL.CMD[side].copyall			:= 0;
+				EXPL.CMD[side].copy_all			:= 0;
 				EXPL.VIS[side].item_selected 	:= 0;
-				step							:= STP_WAIT;
+				step							:= EXP_WAIT;
 			END_IF
 		//**********************************************************************************************
 		// Copy directory																				
 		//**********************************************************************************************
-		STP_DIR_COPY:
+		EXP_DIR_COPY:
 			// Show current state																		
 			animation := WorkingStatus(ADR(EXPL), ADR('copying directory...'), animation);
 			
@@ -522,14 +522,14 @@ PROGRAM _CYCLIC
 								do_select := BOOL_TO_USINT(side) + 1;
 							END_IF
 							EXPL.CMD[side].copy	:= 0;
-							step := STP_WAIT;
+							step := EXP_WAIT;
 						// ---------------------------------------------------------------------------- 		
 						// Proceed with next directory													
 						ELSIF (DCopy.status = OK) THEN
 							EXPL.VIS[side].item_selected := EXPL.VIS[side].item_selected + 1;
 							// Switch to file copy when no more directory can be found					
 							IF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) <> 0) THEN
-								step := STP_FILE_COPY;
+								step := EXP_FILE_COPY;
 							END_IF
 						END_IF
 					ELSIF (DCopy.status <> ERR_FUB_BUSY) THEN
@@ -547,14 +547,14 @@ PROGRAM _CYCLIC
 				IF (COPY_AUTO_REFRESH = TRUE) THEN
 					EXPL.CMD[NOT side].refresh := 1;
 				END_IF
-				EXPL.CMD[side].copyall := 0;
+				EXPL.CMD[side].copy_all := 0;
 				EXPL.VIS[side].item_selected := 0;
-				step := STP_WAIT;
+				step := EXP_WAIT;
 			END_IF
 		//**********************************************************************************************
 		// Delete selected file																			
 		//**********************************************************************************************
-		STP_FILE_DELETE:
+		EXP_FILE_DELETE:
 			// Show current state																		
 			animation := WorkingStatus(ADR(EXPL), ADR('deleting file...'), animation);
 			
@@ -572,14 +572,14 @@ PROGRAM _CYCLIC
 				// Reset command and return to wait state												
 				EXPL.CMD[side].delete 	:= 0;
 				EXPL.CMD[side].refresh  := 1;
-				step := STP_WAIT;
+				step := EXP_WAIT;
 			ELSIF (FDelete.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(FDelete.status, side, step, 'error deleting file', ADR(EXPL));
 			END_IF
 		//**********************************************************************************************
 		// Create new directory																			
 		//**********************************************************************************************
-		STP_DIR_CREATE:
+		EXP_DIR_CREATE:
 			// Show current state																		
 			animation := WorkingStatus(ADR(EXPL), ADR('creating directory...'), animation);
 			
@@ -597,14 +597,14 @@ PROGRAM _CYCLIC
 				// Reset command and return to wait state												
 				EXPL.CMD[side].dir_create 	:= 0;
 				EXPL.CMD[side].refresh 		:= 1;
-				step := STP_WAIT;
+				step := EXP_WAIT;
 			ELSIF (DCreate.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(DCreate.status, side, step, 'error creating directory', ADR(EXPL));
 			END_IF
 		//**********************************************************************************************
 		// Delete selected directory																	
 		//**********************************************************************************************
-		STP_DIR_DELETE:
+		EXP_DIR_DELETE:
 			// Show current state																		
 			animation := WorkingStatus(ADR(EXPL), ADR('deleting directory...'), animation);
 			
@@ -622,7 +622,7 @@ PROGRAM _CYCLIC
 				// Reset command and return to wait state												
 				EXPL.CMD[side].delete := 0;
 				EXPL.CMD[side].refresh := 1;
-				step := STP_WAIT;
+				step := EXP_WAIT;
 			ELSIF (DDelete.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(DDelete.status, side, step, 'error deleting directory', ADR(EXPL));
 			END_IF

@@ -1,15 +1,4 @@
 (*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
-(*Local constants*)
-VAR CONSTANT
-	WAIT : USINT := 0; (*Function step: Wait for starting the Function chain*)
-	CREATE_NODE_ID_LIST : USINT := 1; (*Function step: Create a list of Node-IDs from all active USB devices*)
-	READ_DEVICE_DATA : USINT := 2; (*Function step: Read out the specific data from the Node-IDs*)
-	CHECK_DEVICE : USINT := 3; (*Function step: Check file device data*)
-	LINK_DEVICE : USINT := 4; (*Function step: Link file device*)
-	UNLINK_DEVICE : USINT := 5; (*Function step: Unlink the File Device from specific path*)
-	ERROR : USINT := 6; (*Function step: Jump to this step in every case of Error occuring in the Function chain*)
-END_VAR
-(*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
 (*Local functions*)
 VAR
 	TON_10ms_01 : TON_10ms;

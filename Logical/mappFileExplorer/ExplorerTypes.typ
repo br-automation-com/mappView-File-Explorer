@@ -10,30 +10,30 @@ TYPE
 	END_STRUCT;
 	expSTATE : 
 		(
-		STP_WAIT,
-		STP_READ_DIR,
-		STP_READ_DIR_1,
-		STP_READ_DIR_2,
-		STP_READ_DIR_3,
-		STP_DIR_CHANGE,
-		STP_COPY_ALL,
-		STP_FILE_COPY,
-		STP_FILE_DELETE,
-		STP_DIR_COPY,
-		STP_DIR_CREATE,
-		STP_DIR_DELETE
+		EXP_WAIT,
+		EXP_READ_DIR,
+		EXP_READ_DIR_1,
+		EXP_READ_DIR_2,
+		EXP_READ_DIR_3,
+		EXP_DIR_CHANGE,
+		EXP_COPY_ALL,
+		EXP_FILE_COPY,
+		EXP_FILE_DELETE,
+		EXP_DIR_COPY,
+		EXP_DIR_CREATE,
+		EXP_DIR_DELETE
 		);
 	expERR : 	STRUCT 
-		txt : STRING[100]; (* Error text *)
+		text : STRING[100]; (* Error text *)
 		no : UINT; (* Error number *)
-		step : expSTATE; (* Error step *)
+		state : expSTATE; (* Error step *)
 	END_STRUCT;
 	expCMD : 	STRUCT 
 		refresh : BOOL; (* Read directory and file names from devices *)
 		dir_change : BOOL; (* Change current directory *)
 		dir_create : BOOL; (* Create a new directory *)
 		copy : BOOL; (* Copy selected item from device a TO device b *)
-		copyall : BOOL; (* Copy all items from device a TO device b	*)
+		copy_all : BOOL; (* Copy all items from device a TO device b	*)
 		delete : BOOL; (* Delete selected file *)
 	END_STRUCT;
 	expPAR : 	STRUCT 
@@ -63,12 +63,19 @@ TYPE
 		ERR : expERR; (* Error structure *)
 		status : STRING[50]; (* Actual step	*)
 	END_STRUCT;
+	netSTATE : 
+		(
+		NET_WAIT, (*Function step: Wait for starting the Function chain*)
+		NET_LINK_DEVICE, (*Function step: Link file device*)
+		NET_UNLINK_DEVICE, (*Function step: Unlink the File Device from specific path*)
+		NET_ERROR (*Function step: Jump to this step in every case of Error occuring in the Function chain*)
+		);
 	netCMD : 	STRUCT 
-		Connect : BOOL := TRUE; (*Connect to network share*)
-		ErrorReset : BOOL; (*Reset error*)
+		connect : BOOL := TRUE; (*Connect to network share*)
+		error_reset : BOOL; (*Reset error*)
 	END_STRUCT;
 	netPAR : 	STRUCT 
-		state_machine : USINT; (*State machine*)
+		state_machine : netSTATE; (*State machine*)
 		server_name : STRING[80]; (*Use server name*)
 		server_ip : STRING[80] := '192.168.0.10'; (*or IP address*)
 		server_port : STRING[80]; (*Uses default port when empty*)
@@ -82,7 +89,7 @@ TYPE
 	END_STRUCT;
 	netERR : 	STRUCT 
 		no : UINT; (*Error number*)
-		state : UINT;
+		state : netSTATE;
 		text : STRING[80]; (*Error text*)
 		active : BOOL;
 	END_STRUCT;
@@ -91,19 +98,29 @@ TYPE
 		PAR : netPAR; (*Parameter structure*)
 		ERR : netERR; (*Error structure*)
 	END_STRUCT;
+	usbSTATE : 
+		(
+		USB_WAIT, (*Wait for starting the Function chain*)
+		USB_CREATE_NODE_ID_LIST, (*Create a list of Node-IDs from all active USB devices*)
+		USB_READ_DEVICE_DATA, (*Read out the specific data from the Node-IDs*)
+		USB_CHECK_DEVICE, (*Check file device data*)
+		USB_LINK_DEVICE, (*Link file device*)
+		USB_UNLINK_DEVICE, (*Unlink the File Device from specific path*)
+		USB_ERROR (*Jump to this step in every case of Error occuring in the Function chain*)
+		);
 	usbCMD : 	STRUCT 
-		AutoScan : BOOL := TRUE; (*Scan USB ports automatically*)
-		ErrorReset : BOOL; (*Reset error*)
+		auto_scan : BOOL := TRUE; (*Scan USB ports automatically*)
+		error_reset : BOOL; (*Reset error*)
 	END_STRUCT;
 	usbPAR : 	STRUCT 
-		state_machine : USINT; (*State machine*)
+		state_machine : usbSTATE; (*State machine*)
 		ignore_dongle : BOOL := TRUE; (*Ignoe B&R license dongle*)
 		refresh_interval : UINT := 300; (*Intervall timer for USB device refresh*)
 		is_connected : BOOL; (*Shows if a USB stick is connected*)
 	END_STRUCT;
 	usbERR : 	STRUCT 
 		no : UINT; (*Error number*)
-		state : UINT;
+		state : usbSTATE;
 		text : STRING[80]; (*Error text*)
 		active : BOOL;
 	END_STRUCT;
