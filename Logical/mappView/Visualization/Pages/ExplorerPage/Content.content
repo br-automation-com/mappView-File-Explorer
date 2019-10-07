@@ -102,7 +102,7 @@
           <Widgets>
             <Widget xsi:type="widgets.brease.CheckBox" id="chkUSBenable" top="3" left="-1" width="236" zIndex="0" imageAlign="right" text="Enable USB auto detect" textAlign="right" />
             <Widget xsi:type="widgets.brease.Label" id="labUSBintervall" top="68" left="19" width="186" zIndex="1" text="Polling interval" textAlign="right" />
-            <Widget xsi:type="widgets.brease.NumericInput" id="numUSBintervall" top="68" left="209" zIndex="2" format="{'metric':{'decimalPlaces':0,'minimumIntegerDigits':1},'imperial':{'decimalPlaces':1,'minimumIntegerDigits':1},'imperial-us':{'decimalPlaces':1,'minimumIntegerDigits':1}}" />
+            <Widget xsi:type="widgets.brease.NumericInput" id="numUSBintervall" top="68" left="209" zIndex="2" format="{'metric':{'decimalPlaces':0,'minimumIntegerDigits':1},'imperial':{'decimalPlaces':1,'minimumIntegerDigits':1},'imperial-us':{'decimalPlaces':1,'minimumIntegerDigits':1}}" maxValue="10000" />
             <Widget xsi:type="widgets.brease.CheckBox" id="chkUSBdongle" top="33" left="-1" width="236" zIndex="3" imageAlign="right" text="Ignore license dongle" textAlign="right" />
             <Widget xsi:type="widgets.brease.Label" id="labUSBunit" top="68" left="319" width="91" zIndex="4" text="* 10ms" textAlign="left" />
             <Widget xsi:type="widgets.brease.Label" id="labUSBErrorText" top="113" left="38" width="76" zIndex="5" text="Error Text" textAlign="right" />

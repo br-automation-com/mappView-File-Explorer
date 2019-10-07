@@ -1,3 +1,6 @@
+Version 0.6
+- Changed upper limit of USB polling intervall
+
 Version 0.5
 - Main task ported to structure text
 - Allow oversized names for files and folders
