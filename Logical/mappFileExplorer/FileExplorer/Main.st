@@ -6,9 +6,7 @@
 //	Error numbers:																						
 //	50000		Selected item name is empty																
 //	50001		This is not a valid item name															
-//	50010		Device is not defined																	
-//	50011		Item list is not defined																
-//	50012		Maximum entry parameter is 0															
+//	50010		Device is not defined																															
 //	50100		Maximum number of files reached															
 //	50200		File name exceeds maximum length														
 //	50201		Directory name exceeds maximum length													
