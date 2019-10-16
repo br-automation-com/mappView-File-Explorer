@@ -10,11 +10,11 @@
 
 <a name="Introduction"></a>
 ## Introduction
-This is a sample project for a file Explorer with mappView. It allows you to copy and delete files between multiple locations.
+This is a sample project for a file Explorer with mappView. It allows you to delete and copy files or directories between two locations. Navigate through the folder structure by double tapping on a folder name. Access USB sticks and network shares and use them like local folders.
 
 ![](Logical/mappView/Resources/Media/screenshot_main.png)
 
-Also see [**How to import the user management into an existing project.**](Logical/mappFileExplorer/HowToImport.pdf) Download the latest release from [**here.**](../../releases)
+Also see [**How to import the user management into an existing project.**](Logical/mappFileExplorer/HowToImport.pdf) Download the latest release from [**here.**](../../releases) When upgrading from a previous version make sure to delete the files that were imported before.
 
 <a name="Requirements"></a>
 ## Requirements
@@ -26,7 +26,7 @@ Recommended task class is #8 with a 10ms cycle time.
 
 <a name="Description"></a>
 ## Description
-The sample consists of three tasks and a mappView sample page. The task FileExplorer handles the majority of all functions. The two additional helper tasks USBdevice and NETdevice allow the connection of USB sticks and network devices. The USBdevice tasks auto detects connected USB sticks and automatically mounts these so they can be accessed from the FileExploer. The sample page shows all available functions and can be used as a starting point. The following functions are currently supported.
+The sample consists of three tasks and a mappView sample page. The task FileExplorer handles the files and folder operations as well as the navigation. The two additional helper tasks USBdevice and NETdevice allow the connection of USB sticks and network devices. The USBdevice tasks auto detects and mounts connected USB sticks. The sample page shows all available functions and can be used as a starting point. The following functions are currently supported.
 
 * Copy one or all files or folders
 * Delete one or all files or folders
@@ -55,13 +55,13 @@ The task and mappView visualization use an interface to communicate that can als
 	* VIS				Data specific for the visualization
 	  * item_selected		File or folder that is selected in mappView
 	  * enable_copy_delete		Enables/Disables the buttons to copy or delete a file
-	  * enable_refresh_create	Enables/Disables the buttons to create or refreash a folder
+	  * enable_refresh_create	Enables/Disables the buttons to create or refresh a folder
 	  * double_click_dir_change	Helper variable to detect double click on itelm list
-	  * device_list			Same information as PAR->device_list but formated for mappView  
+	  * device_list			Same information as PAR->device_list but formatted for mappView  
 	* ERR		Information about errors
-	  * txt		Error text
-	  * nr		Error number
-	  * step	State where the error occured
+	  * text	Error text
+	  * no		Error number
+	  * state	State where the error occured
 
 <a name="Pre-Configuration"></a>
 ## Pre-Configuration
@@ -74,31 +74,40 @@ The sample can be pre-configured through the following constants located in mapp
 
 <a name="Post-Configuration"></a>
 ## Configuration at runtime
-The following settings can be changed during runtime. For details about the network settings see the Automation Help (6bc04f87-a564-42fe-be38-060045eb83d6).
+<img align="right" src="Logical/mappView/Resources/Media/screenshot_cfg.png" alt="" width="400"/>
 
-![](Logical/mappView/Resources/Media/screenshot_cfg.png)
+The following settings can be changed during runtime for USB and network connection. For details about the network settings see the Automation Help (6bc04f87-a564-42fe-be38-060045eb83d6).
+<br/><br/><br/><br/>
 
 <a name="Limitations"></a>
 ## Limitations
 * The sample is not yet multi client capable.
 * There is no extra message box when files or folders are deleted.
-* The network needs up to two minutes to time out if the corresponding is not available. This time must also be considerred when the server address is corrected. Even in this case it can take a few minutes to connect to the correct server.
+* The network needs up to two minutes to time out if the share is not available. This time must also be considerred when the server address is corrected. Even in this case it can take a few minutes to connect to the correct server.
+* USB and network connection does not work when the target is in simulation mode
 
 <a name="Errors"></a>
 ## Error messages
-	50000		Selected item name is empty										
-	50001		This is not a valid item name											
-	50010		Device is not defined												
-	50011		Item list is not defined											
-	50012		Maximum entry parameter is 0											
-	50100		Maximum number of files reached		-> increase value of ITEM_LIST_NUN					
-	50200		File name exceeds maximum length	-> increase value of MAX_ITEM_SIZE					
-	50201		Directory name exceeds maximum length	-> increase value of MAX_ITEM_SIZE					
-	50202		Directory path exceeds maximum length	-> increase value of DIR_PATH_SIZE			
-	50203		Directory path critical error
+The sample generates the following list of error messages. All other error numbers are generated from inlcuded libraries that can be found in the Automation Studio help.
+
+| No | Constant | Text | Solution
+|---|---|---|---|
+| 50000 |  | Selected item name is empty |  |
+| 50001 |  | This is not a valid item name |  |
+| 50010 |  | Device is not defined |  |
+| 50100 |  | Maximum number of files reached | Increase value of ITEM_LIST_NUN |
+| 50200 |  | File name exceeds maximum length | Increase value of MAX_ITEM_SIZE |
+| 50201 |  | Directory name exceeds maximum length | Increase value of MAX_ITEM_SIZE |			
+| 50202 |  | Directory path exceeds maximum length| Increase value of DIR_PATH_SIZE |
+| 50203 |  | Directory path critical error |  |	
 
 <a name="Revision-History"></a>
 ## Revision History
+#### Version 0.5
+- Main task ported to structure text
+- Allow oversized names for files and folders
+- Fixed variables types
+- Applied python naming convention to all code
 
 #### Version 0.2
 - Added configuration for network connections
