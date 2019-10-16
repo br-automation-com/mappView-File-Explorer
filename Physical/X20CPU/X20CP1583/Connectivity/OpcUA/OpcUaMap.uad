@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<OpcUaSource FileVersion="4" ArVersion="B4.53">
+<OpcUaSource FileVersion="4" ArVersion="D4.52">
   <Aliases>
     <ACLAliases>
       <ACL Id="1">
@@ -16,8 +16,6 @@
   <DefaultView AclId="2">
     <Module Name="&lt;Default&gt;">
       <GlobalVariables Name="Global Variables">
-        <Variable Name="ClientInfo" EnableArrayElements="True" />
-        <Variable Name="ClientInfoCurrent" />
         <Variable Name="NET" AutomaticEnable="True">
           <Variable Name="CMD" />
           <Variable Name="PAR" />

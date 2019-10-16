@@ -9,6 +9,4 @@ VAR
 	EXPL : expMAIN;
 	NET : netMAIN;
 	USB : usbMAIN;
-	ClientInfoCurrent : ClientInfoType;
-	ClientInfo : ARRAY[0..4] OF ClientInfoType;
 END_VAR

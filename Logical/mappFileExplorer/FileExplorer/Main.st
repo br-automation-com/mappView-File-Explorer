@@ -71,11 +71,11 @@ PROGRAM _CYCLIC
 	//--------------------------------------------------------------------------------------------------
 	// Check if parameters are valid																	
 	IF (EXPL.PAR[side].device_active = '') THEN		
-		step := CreateError(50010, side, step, 'device is not defined', ADR(EXPL));
+		step := CreateError(ERR_DEVICE_UNDEFINED, side, step, 'device is not defined', ADR(EXPL));
 		RETURN;
 	END_IF
 	IF (brsstrlen(ADR(EXPL.PAR[side].dir_path)) >= DIR_PATH_SIZE) THEN
-		step := CreateError(50203, side, step, 'Directory path critical error', ADR(EXPL));
+		step := CreateError(ERR_PATH_CRITICAL, side, step, 'Directory path critical error', ADR(EXPL));
 		RETURN;
 	END_IF
 	// ------------------------------------------------------------------------------------------------ 
@@ -134,13 +134,13 @@ PROGRAM _CYCLIC
 				// ------------------------------------------------------------------------------------ 		
 				// Check if directory name is empty														
 				IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '') THEN	
-				step := CreateError(50000, side, step, 'directory name is empty', ADR(EXPL));
+				step := CreateError(ERR_EMPTY_ITEM, side, step, 'directory name is empty', ADR(EXPL));
 			// Check if directory name is valid														
 			ELSIF((brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) <> 0) AND (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] <> '..'))  THEN 
-				step := CreateError(50001, side, step, 'this is not a valid directory name', ADR(EXPL));
+				step := CreateError(ERR_INVALID_ITEM_NAME, side, step, 'this is not a valid directory name', ADR(EXPL));
 			// Check if new directory name fits into string											
 			ELSIF(brsstrlen(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected])) - 5 + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= DIR_PATH_SIZE) THEN 
-				step := CreateError(50202, side, step, 'directory path exceeds maximum length', ADR(EXPL));
+				step := CreateError(ERR_PATH_EXCEEDS_MAX, side, step, 'directory path exceeds maximum length', ADR(EXPL));
 			ELSE 
 				step := EXP_DIR_CHANGE;
 				END_IF
@@ -151,13 +151,13 @@ PROGRAM _CYCLIC
 				// ------------------------------------------------------------------------------------ 		
 				// Check if new directory name is empty													
 				IF (EXPL.PAR[side].dir_name = '') THEN
-					step := CreateError(50000, side, step, 'directory name is empty', ADR(EXPL));
+					step := CreateError(ERR_EMPTY_ITEM, side, step, 'directory name is empty', ADR(EXPL));
 				// Check if new directory name fits into path string									
 				ELSIF(brsstrlen(ADR(EXPL.PAR[side].dir_name)) + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= DIR_PATH_SIZE) THEN
-					step := CreateError(50202, side, step, 'directory path name exceeds maximum length', ADR(EXPL));
+					step := CreateError(ERR_PATH_EXCEEDS_MAX, side, step, 'directory path name exceeds maximum length', ADR(EXPL));
 				// Check if new directory name fits into directory name string						
 				ELSIF(brsstrlen(ADR(EXPL.PAR[side].dir_name)) + 5 >= MAX_ITEM_SIZE) THEN
-					step := CreateError(50201, side, step, 'directory name exceeds maximum length', ADR(EXPL));
+					step := CreateError(ERR_DIR_EXCEEDS_MAX, side, step, 'directory name exceeds maximum length', ADR(EXPL));
 				ELSE 
 					step := EXP_DIR_CREATE;
 				END_IF
@@ -168,7 +168,7 @@ PROGRAM _CYCLIC
 				// ------------------------------------------------------------------------------------ 		
 				// Make sure that user chooses a valid item												
 				IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '..') THEN
-					step := CreateError(50001, side, step, 'this is not a valid item name', ADR(EXPL));
+					step := CreateError(ERR_INVALID_ITEM_NAME, side, step, 'this is not a valid item name', ADR(EXPL));
 				ELSIF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) = 0)	THEN
 					step := EXP_DIR_COPY;
 				ELSE																														
@@ -186,13 +186,13 @@ PROGRAM _CYCLIC
 			// ------------------------------------------------------------------------------------ 		
 				// Check if directory name is empty														
 				IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '')	THEN
-					step := CreateError(50000, side, step, 'item name is empty', ADR(EXPL));
+					step := CreateError(ERR_EMPTY_ITEM, side, step, 'item name is empty', ADR(EXPL));
 				// Check if new directory name fits into string											
 				ELSIF(brsstrlen(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected])) + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= DIR_PATH_SIZE + MAX_ITEM_SIZE) THEN
-					step := CreateError(50202, side, step, 'directory path exceeds maximum length', ADR(EXPL));
+					step := CreateError(ERR_PATH_EXCEEDS_MAX, side, step, 'directory path exceeds maximum length', ADR(EXPL));
 				// Make sure that user chooses a valid item												
 				ELSIF(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '..') THEN
-					step := CreateError(50001, side, step, 'this is not a valid item name', ADR(EXPL));
+					step := CreateError(ERR_INVALID_ITEM_NAME, side, step, 'this is not a valid item name', ADR(EXPL));
 				// Delete a directory																	
 				ELSIF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) = 0)	THEN
 					step := EXP_DIR_DELETE;
@@ -328,7 +328,7 @@ PROGRAM _CYCLIC
 						END_IF
 					END_IF
 				ELSE 
-					step := CreateError(50100, side, step, 'maximum number of files reached', ADR(EXPL));
+					step := CreateError(ERR_MAX_FILES_REACHED, side, step, 'maximum number of files reached', ADR(EXPL));
 				END_IF
 			ELSIF (DRead.status = fiERR_NO_MORE_ENTRIES) THEN 
 				step := EXP_READ_DIR_3;
@@ -363,7 +363,7 @@ PROGRAM _CYCLIC
 				EXPL.CMD[side].refresh	:= 0;
 				DClose.ident			:= 0;
 				IF(has_oversized_items) THEN
-					step := CreateError(50201, side, step, 'one or more names exceeds maximum length', ADR(EXPL));
+					step := CreateError(ERR_NAME_EXCEEDS_MAX, side, step, 'one or more names exceeds maximum length', ADR(EXPL));
 				ELSE
 					step := EXP_WAIT;
 				END_IF
@@ -467,10 +467,10 @@ PROGRAM _CYCLIC
 							step := CreateError(FCopy.status, side, step, 'error copying file', ADR(EXPL));
 						END_IF
 					ELSE 
-						step := CreateError(50200, side, step, 'file name exceeds maximum length', ADR(EXPL));
+						step := CreateError(ERR_NAME_EXCEEDS_MAX, side, step, 'file name exceeds maximum length', ADR(EXPL));
 					END_IF
 				ELSE 
-					step := CreateError(50000, side, step, 'file name is empty', ADR(EXPL));
+					step := CreateError(ERR_EMPTY_ITEM, side, step, 'file name is empty', ADR(EXPL));
 				END_IF
 			// ---------------------------------------------------------------------------------------- 		
 			// Finish copy all																			
@@ -533,10 +533,10 @@ PROGRAM _CYCLIC
 					ELSIF (DCopy.status <> ERR_FUB_BUSY) THEN
 						step := CreateError(DCopy.status, side, step, 'error copying directory', ADR(EXPL));
 					ELSE 
-						step := CreateError(50202, side, step, 'directory path name exceeds maximum length', ADR(EXPL));
+						step := CreateError(ERR_PATH_EXCEEDS_MAX, side, step, 'directory path name exceeds maximum length', ADR(EXPL));
 					END_IF
 				ELSE 
-					step := CreateError(50000, side, step, 'directory name is empty', ADR(EXPL));
+					step := CreateError(ERR_EMPTY_ITEM, side, step, 'directory name is empty', ADR(EXPL));
 				END_IF
 			// ---------------------------------------------------------------------------------------- 		
 			// Finish copy all																			
