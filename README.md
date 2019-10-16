@@ -92,14 +92,14 @@ The sample generates the following list of error messages. All other error numbe
 
 | No | Constant | Text | Solution
 |---|---|---|---|
-| 50000 |  | Selected item name is empty |  |
-| 50001 |  | This is not a valid item name |  |
-| 50010 |  | Device is not defined |  |
-| 50100 |  | Maximum number of files reached | Increase value of ITEM_LIST_NUN |
-| 50200 |  | File name exceeds maximum length | Increase value of MAX_ITEM_SIZE |
-| 50201 |  | Directory name exceeds maximum length | Increase value of MAX_ITEM_SIZE |			
-| 50202 |  | Directory path exceeds maximum length| Increase value of DIR_PATH_SIZE |
-| 50203 |  | Directory path critical error |  |	
+| 50000 | ERR_EMPTY_ITEM | Selected item name is empty |  |
+| 50001 | ERR_INVALID_ITEM_NAME | This is not a valid item name |  |
+| 50010 | ERR_DEVICE_UNDEFINED | Device is not defined |  |
+| 50100 | ERR_MAX_FILES_REACHED | Maximum number of files reached | Increase value of ITEM_LIST_NUN |
+| 50200 | ERR_NAME_EXCEEDS_MAX | File name exceeds maximum length | Increase value of MAX_ITEM_SIZE |
+| 50201 | ERR_DIR_EXCEEDS_MAX | Directory name exceeds maximum length | Increase value of MAX_ITEM_SIZE |
+| 50202 | ERR_PATH_EXCEEDS_MAX | Directory path exceeds maximum length| Increase value of DIR_PATH_SIZE |
+| 50203 | ERR_PATH_CRITICAL | Directory path critical error | Increase value of DIR_PATH_SIZE |	
 
 <a name="Revision-History"></a>
 ## Revision History
