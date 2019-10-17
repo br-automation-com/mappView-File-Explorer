@@ -297,7 +297,7 @@ PROGRAM _CYCLIC
 								brsmemset(ADR(tmp_str1), 0, SIZEOF(tmp_str1));
 								brsmemcpy(ADR(tmp_str1), ADR(lDirReadData.Filename), brsstrlen(ADR(lDirReadData.Filename)));
 								// -------------------------------------------------------------------- 		
-								// Append file size														
+								// Generate file size														
 								IF (lDirReadData.Filelength > 999999) THEN
 									brsitoa((lDirReadData.Filelength/1000000), ADR(tmp_str2));
 									brsstrcat(ADR(tmp_str2), ADR('M'));
@@ -307,13 +307,12 @@ PROGRAM _CYCLIC
 								ELSE
 									brsitoa((lDirReadData.Filelength), ADR(tmp_str2));
 								END_IF
-								brsmemcpy(ADR(tmp_str1) + MAX_ITEM_SIZE - brsstrlen(ADR(tmp_str2)) - 1, ADR(tmp_str2), brsstrlen(ADR(tmp_str2)));
 								InsertRecName(ADR(EXPL), tmp_str1, tmp_str2, side);
 								EXPL.DAT[side].item_num := EXPL.DAT[side].item_num + 1;
 							ELSE
 								has_oversized_items := TRUE;
 							END_IF
-							// ---------------------------------------------------------------------------- 		
+						// ---------------------------------------------------------------------------- 		
 						// Read directory information													
 						ELSIF (brsstrcmp(ADR(lDirReadData.Filename), ADR('.')) <> 0 AND brsstrcmp(ADR(lDirReadData.Filename), ADR('..')) <> 0 AND brsstrcmp(ADR(lDirReadData.Filename), ADR('System Volume Information')) <> 0) THEN		
 							IF (brsstrlen(ADR(lDirReadData.Filename)) < MAX_ITEM_SIZE-5) THEN
