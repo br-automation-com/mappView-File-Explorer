@@ -45,7 +45,7 @@ TYPE
 	END_STRUCT;
 	expDAT : 	STRUCT 
 		item_list : ARRAY[0..ITEM_LIST_NUM]OF STRING[MAX_ITEM_SIZE]; (* List with file names	*)
-		item_size : ARRAY[0..ITEM_LIST_NUM]OF STRING[MAX_SIZE_SIZE]; (* List with file names *)
+		item_size : ARRAY[0..ITEM_LIST_NUM]OF STRING[MAX_SIZE_SIZE]; (* List with file sizes*)
 		item_num : UINT; (* Number OF files	*)
 	END_STRUCT;
 	expVIS : 	STRUCT 
@@ -58,8 +58,8 @@ TYPE
 	expMAIN : 	STRUCT 
 		CMD : ARRAY[0..1]OF expCMD; (* Command structure *)
 		PAR : ARRAY[0..1]OF expPAR; (* Parameter structure *)
-		DAT : ARRAY[0..1]OF expDAT;
-		VIS : ARRAY[0..1]OF expVIS;
+		DAT : ARRAY[0..1]OF expDAT; (*Data structure*)
+		VIS : ARRAY[0..1]OF expVIS; (*Visualization structure*)
 		ERR : expERR; (* Error structure *)
 		status : STRING[50]; (* Actual step	*)
 	END_STRUCT;
