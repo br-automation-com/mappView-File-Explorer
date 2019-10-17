@@ -103,6 +103,16 @@ The sample generates the following list of error messages. All other error numbe
 
 <a name="Revision-History"></a>
 ## Revision History
+
+#### Version 0.6
+- Changed upper limit of USB polling intervall
+- Removed obsolete error numbers
+- Replaced error numbers with constants
+- Removed obsolete variables
+- Fixed old_filter variable size
+- Fixed file size added to file name
+- Disable file device and filter during operation
+
 #### Version 0.5
 - Main task ported to structure text
 - Allow oversized names for files and folders
