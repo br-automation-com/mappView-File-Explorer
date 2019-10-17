@@ -227,5 +227,29 @@
 <Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_refresh_create" attribute="value" />
 <Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="flyConfiguration" attribute="enable" />
 </Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbDeviceB" attribute="enable" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbDeviceA" attribute="enable" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnClearFilterB" attribute="enable" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtFilterA" attribute="enable" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtFilterB" attribute="enable" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnClearFilterA" attribute="enable" />
+</Binding>
 </Bindings>
 </BindingsSet>
