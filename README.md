@@ -105,7 +105,7 @@ The sample generates the following list of error messages. All other error numbe
 ## Revision History
 
 #### Version 0.6
-- Changed upper limit of USB polling intervall
+- Changed upper limit of USB polling interval
 - Removed obsolete error numbers
 - Replaced error numbers with constants
 - Removed obsolete variables
