@@ -253,9 +253,7 @@ PROGRAM _CYCLIC
 		//**********************************************************************************************
 		// Open directory 																				
 		//**********************************************************************************************
-		EXP_READ_DIR_1:
-			// ---------------------------------------------------------------------------------------- 		
-			// Set values and get device dir															
+		EXP_READ_DIR_1:															
 			DOpen.enable 	:= 1;
 			DOpen.pDevice	:= ADR(EXPL.PAR[side].device_active);
 			DOpen.pName 	:= ADR(EXPL.PAR[side].dir_path);
@@ -272,9 +270,7 @@ PROGRAM _CYCLIC
 		//**********************************************************************************************
 		// Read file directory information																
 		//**********************************************************************************************
-	 	EXP_READ_DIR_2:
-			// ---------------------------------------------------------------------------------------- 		
-			// Initialize read directory structure 														
+	 	EXP_READ_DIR_2:													
 			DRead.enable 	:= 1;
 			DRead.ident		:= DOpen.ident;
 			DRead.pData 	:= ADR(lDirReadData);
@@ -288,7 +284,7 @@ PROGRAM _CYCLIC
 				// Verify that we still have space in list												
 				IF (EXPL.DAT[side].item_num < SIZEOF(EXPL.DAT[side].item_list)/SIZEOF(EXPL.DAT[side].item_list[0])) THEN
 					// -------------------------------------------------------------------------------- 		
-					// Verify that extension is equal to filter											
+					// Make sure file name contains filter											
 					IF (brsstrlen(ADR(EXPL.PAR[side].item_filter)) = 0 OR IsInstr(ADR(lDirReadData.Filename), ADR(EXPL.PAR[side].item_filter))) THEN
 						// ---------------------------------------------------------------------------- 		
 						// Read file information														
@@ -338,9 +334,7 @@ PROGRAM _CYCLIC
 		//**********************************************************************************************
 		// Close directory information																	
 		//**********************************************************************************************
-		EXP_READ_DIR_3:
-			// ---------------------------------------------------------------------------------------- 		
-			// Initialize read directory structure 														
+		EXP_READ_DIR_3:													
 			DClose.enable 	:= 1;
 			DClose.ident	:= DOpen.ident;
 			DClose();
