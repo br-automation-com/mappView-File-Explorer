@@ -5,7 +5,7 @@ FUNCTION IsInstr : BOOL
 		string2 : UDINT;
 	END_VAR
 	VAR
-		lx : UDINT;
+		idx : UDINT;
 	END_VAR
 END_FUNCTION
 
@@ -27,8 +27,8 @@ FUNCTION InsertRecName : BOOL
 		side : BOOL;
 	END_VAR
 	VAR
-		lx : DINT;
-		ly : DINT;
+		idx : DINT;
+		idy : DINT;
 		lSort : DINT;
 	END_VAR
 END_FUNCTION

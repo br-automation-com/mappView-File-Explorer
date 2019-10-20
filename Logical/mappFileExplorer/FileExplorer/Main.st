@@ -234,7 +234,7 @@ PROGRAM _CYCLIC
 			DInfo();
 						
 			// ---------------------------------------------------------------------------------------- 		
-			// ->Success																																				
+			// OK																																				
 			IF (DInfo.status = OK) THEN
 				step := EXP_READ_DIR_1;
 			// ---------------------------------------------------------------------------------------- 		
@@ -247,6 +247,7 @@ PROGRAM _CYCLIC
 			ELSIF (DInfo.status = fiERR_DEVICE_MANAGER) THEN 
 				EXPL.DAT[side].item_list[0] := 'not connected';
 				step := CreateError(DInfo.status, side, step, 'check device name and path', ADR(EXPL));
+			// Error
 			ELSIF (DInfo.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(DInfo.status, side, step, 'error dir info', ADR(EXPL));			
 			END_IF
@@ -260,10 +261,11 @@ PROGRAM _CYCLIC
 			DOpen();
 						
 			// ---------------------------------------------------------------------------------------- 		
-			// ->Success																																				
+			// OK																																				
 			IF (DOpen.status = OK) THEN
 				has_oversized_items := FALSE;
 				step := EXP_READ_DIR_2;
+			// Error
 			ELSIF (DOpen.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(DOpen.status, side, step, 'error dir open', ADR(EXPL));			
 			END_IF;
@@ -278,7 +280,7 @@ PROGRAM _CYCLIC
 			DRead();
 										
 			// ---------------------------------------------------------------------------------------- 		
-			// ->Success																																				
+			// OK																																				
 			IF (DRead.status = OK) THEN
 				// ------------------------------------------------------------------------------------ 		
 				// Verify that we still have space in list												
@@ -286,22 +288,22 @@ PROGRAM _CYCLIC
 					// -------------------------------------------------------------------------------- 		
 					// Make sure file name contains filter											
 					IF (brsstrlen(ADR(EXPL.PAR[side].item_filter)) = 0 OR IsInstr(ADR(lDirReadData.Filename), ADR(EXPL.PAR[side].item_filter))) THEN
+						brsmemset(ADR(tmp_str1), 0, SIZEOF(tmp_str1));
 						// ---------------------------------------------------------------------------- 		
 						// Read file information														
 						IF (lDirReadData.Mode = fiFILE) THEN					
 							IF (brsstrlen(ADR(lDirReadData.Filename)) < MAX_ITEM_SIZE) THEN
-								brsmemset(ADR(tmp_str1), 0, SIZEOF(tmp_str1));
-								brsmemcpy(ADR(tmp_str1), ADR(lDirReadData.Filename), brsstrlen(ADR(lDirReadData.Filename)));
+								brsstrcpy(ADR(tmp_str1), ADR(lDirReadData.Filename));
 								// -------------------------------------------------------------------- 		
 								// Generate file size														
 								IF (lDirReadData.Filelength > 999999) THEN
-									brsitoa((lDirReadData.Filelength/1000000), ADR(tmp_str2));
+									brsitoa(lDirReadData.Filelength/1000000, ADR(tmp_str2));
 									brsstrcat(ADR(tmp_str2), ADR('M'));
 								ELSIF (lDirReadData.Filelength > 999) THEN
-									brsitoa((lDirReadData.Filelength/1000), ADR(tmp_str2));
+									brsitoa(lDirReadData.Filelength/1000, ADR(tmp_str2));
 									brsstrcat(ADR(tmp_str2), ADR('K'));
 								ELSE
-									brsitoa((lDirReadData.Filelength), ADR(tmp_str2));
+									brsitoa(lDirReadData.Filelength, ADR(tmp_str2));
 								END_IF
 								InsertRecName(ADR(EXPL), tmp_str1, tmp_str2, side);
 								EXPL.DAT[side].item_num := EXPL.DAT[side].item_num + 1;
@@ -325,9 +327,10 @@ PROGRAM _CYCLIC
 				ELSE 
 					step := CreateError(ERR_MAX_FILES_REACHED, side, step, 'maximum number of files reached', ADR(EXPL));
 				END_IF
+			// Last entry reached
 			ELSIF (DRead.status = fiERR_NO_MORE_ENTRIES) THEN 
 				step := EXP_READ_DIR_3;
-			// ---------------------------------------------------------------------------------------- 		
+			// Error		
 			ELSIF (DRead.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(DRead.status, side, step, 'error dir read', ADR(EXPL));
 			END_IF
@@ -340,7 +343,7 @@ PROGRAM _CYCLIC
 			DClose();
 										
 			// ---------------------------------------------------------------------------------------- 		
-			// ->Success																																				
+			// OK																																				
 			IF (DClose.status = OK) THEN
 				// Select item after copy->refresh														
 				IF(do_select <> 0) THEN
@@ -360,7 +363,7 @@ PROGRAM _CYCLIC
 				ELSE
 					step := EXP_WAIT;
 				END_IF
-			// ---------------------------------------------------------------------------------------- 		
+			// Error 		
 			ELSIF (DClose.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(DClose.status, side, step, 'error dir close', ADR(EXPL));
 			END_IF
@@ -441,7 +444,7 @@ PROGRAM _CYCLIC
 						FCopy();
 														
 						// ---------------------------------------------------------------------------- 		
-						// ->Success																																	
+						// OK																																	
 						IF (FCopy.status = OK AND EXPL.CMD[side].copy = 1) THEN
 							// Select entry, reset command and refresh directory						
 							IF(COPY_AUTO_REFRESH = TRUE) THEN
@@ -459,9 +462,11 @@ PROGRAM _CYCLIC
 						ELSIF (FCopy.status <> ERR_FUB_BUSY) THEN
 							step := CreateError(FCopy.status, side, step, 'error copying file', ADR(EXPL));
 						END_IF
+					// File name is too long
 					ELSE 
 						step := CreateError(ERR_NAME_EXCEEDS_MAX, side, step, 'file name exceeds maximum length', ADR(EXPL));
 					END_IF
+				// File name  is empty
 				ELSE 
 					step := CreateError(ERR_EMPTY_ITEM, side, step, 'file name is empty', ADR(EXPL));
 				END_IF
@@ -503,7 +508,7 @@ PROGRAM _CYCLIC
 						DCopy();
 													
 						// ---------------------------------------------------------------------------- 		
-						// ->Success																																	
+						// OK																																	
 						IF (DCopy.status = OK AND EXPL.CMD[side].copy = 1) THEN
 							// Reset command and refresh directory										
 							IF(COPY_AUTO_REFRESH = TRUE) THEN
@@ -523,11 +528,14 @@ PROGRAM _CYCLIC
 								step := EXP_FILE_COPY;
 							END_IF
 						END_IF
+					// Error
 					ELSIF (DCopy.status <> ERR_FUB_BUSY) THEN
 						step := CreateError(DCopy.status, side, step, 'error copying directory', ADR(EXPL));
+					// Directory name is too long
 					ELSE 
 						step := CreateError(ERR_PATH_EXCEEDS_MAX, side, step, 'directory path name exceeds maximum length', ADR(EXPL));
 					END_IF
+				// Directory name is empty
 				ELSE 
 					step := CreateError(ERR_EMPTY_ITEM, side, step, 'directory name is empty', ADR(EXPL));
 				END_IF
@@ -558,12 +566,13 @@ PROGRAM _CYCLIC
 			FDelete();
 										
 			// ---------------------------------------------------------------------------------------- 		
-			// ->Success																																				
+			// OK																																				
 			IF (FDelete.status = OK) THEN
 				// Reset command and return to wait state												
 				EXPL.CMD[side].delete 	:= 0;
 				EXPL.CMD[side].refresh  := 1;
 				step := EXP_WAIT;
+			// Error
 			ELSIF (FDelete.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(FDelete.status, side, step, 'error deleting file', ADR(EXPL));
 			END_IF
@@ -583,12 +592,13 @@ PROGRAM _CYCLIC
 			DCreate();
 										
 			// ---------------------------------------------------------------------------------------- 		
-			// ->Success																																				
+			// OK																																				
 			IF (DCreate.status = OK) THEN
 				// Reset command and return to wait state												
 				EXPL.CMD[side].dir_create 	:= 0;
 				EXPL.CMD[side].refresh 		:= 1;
 				step := EXP_WAIT;
+			// Error
 			ELSIF (DCreate.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(DCreate.status, side, step, 'error creating directory', ADR(EXPL));
 			END_IF
@@ -608,12 +618,13 @@ PROGRAM _CYCLIC
 			DDelete();
 										
 			// ---------------------------------------------------------------------------------------- 		
-			// ->Success																																				
+			// OK																																				
 			IF (DDelete.status = OK) THEN
 				// Reset command and return to wait state												
 				EXPL.CMD[side].delete := 0;
 				EXPL.CMD[side].refresh := 1;
 				step := EXP_WAIT;
+			// Error
 			ELSIF (DDelete.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(DDelete.status, side, step, 'error deleting directory', ADR(EXPL));
 			END_IF

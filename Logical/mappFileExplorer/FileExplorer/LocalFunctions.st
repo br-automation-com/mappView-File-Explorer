@@ -88,56 +88,56 @@ END_FUNCTION
 FUNCTION InsertRecName
 	// Set up start values for iteration																
 	IF (EXPL.DAT[side].item_num <> 0) THEN 
-		ly := EXPL.DAT[side].item_num - 1;
+		idy := EXPL.DAT[side].item_num - 1;
 	END_IF
-	lx := ly;
+	idx := idy;
 	
 	// Start itteration	search																			
-	WHILE (ly > 1) DO
+	WHILE (idy > 1) DO
 		// Check current entry																			
-		lSort := brsstrcmp(ADR(new_name), ADR(EXPL.DAT[side].item_list[ly]));
+		lSort := brsstrcmp(ADR(new_name), ADR(EXPL.DAT[side].item_list[idy]));
 		// Solve new search range																		
-		IF (ly MOD 2 = 0) THEN
-			ly := ly / 2;
+		IF (idy MOD 2 = 0) THEN
+			idy := idy / 2;
 		ELSE				
-			ly := ly / 2 + 1;
+			idy := idy / 2 + 1;
 		END_IF
 		// New range is lower or higher than current													
 		IF (lSort > 0) THEN
-			lx := lx + ly;
-			IF (lx > UINT_TO_INT(EXPL.DAT[side].item_num)) THEN
-				lx := EXPL.DAT[side].item_num;  
+			idx := idx + idy;
+			IF (idx > UINT_TO_INT(EXPL.DAT[side].item_num)) THEN
+				idx := EXPL.DAT[side].item_num;  
 			END_IF
 		ELSE
-			lx := lx - ly;
-			IF (lx < 1) THEN
-				lx := 1;
+			idx := idx - idy;
+			IF (idx < 1) THEN
+				idx := 1;
 			END_IF
 		END_IF		
 	END_WHILE;
 			
 	// New entry is this, next or previous 																
-	lSort := brsstrcmp(ADR(new_name), ADR(EXPL.DAT[side].item_list[lx]));
-	IF (lSort > 0 AND lx <> UINT_TO_INT(EXPL.DAT[side].item_num)) THEN 
-		lx := lx +1;
-	ELSIF (lx > 0) THEN
-		lSort := brsstrcmp(ADR(new_name), ADR(EXPL.DAT[side].item_list[lx-1]));
+	lSort := brsstrcmp(ADR(new_name), ADR(EXPL.DAT[side].item_list[idx]));
+	IF (lSort > 0 AND idx <> UINT_TO_INT(EXPL.DAT[side].item_num)) THEN 
+		idx := idx +1;
+	ELSIF (idx > 0) THEN
+		lSort := brsstrcmp(ADR(new_name), ADR(EXPL.DAT[side].item_list[idx-1]));
 		IF (lSort < 0) THEN 
-			lx := lx - 1;
+			idx := idx - 1;
 		END_IF
 	END_IF
 	
 	// Force ".." at beginning of list	 																
-	IF (lx = 0 AND EXPL.DAT[side].item_list[0] = '..') THEN
-		lx := lx + 1;
+	IF (idx = 0 AND EXPL.DAT[side].item_list[0] = '..') THEN
+		idx := idx + 1;
 	END_IF
 	// Move all data entrys backwards and fill in new entry												
-	brsmemmove(ADR(EXPL.DAT[side].item_list[lx+1]),ADR(EXPL.DAT[side].item_list[lx]), (EXPL.DAT[side].item_num - lx) * SIZEOF(EXPL.DAT[side].item_list[0]));
-	brsstrcpy(ADR(EXPL.DAT[side].item_list[lx]), ADR(new_name));
+	brsmemmove(ADR(EXPL.DAT[side].item_list[idx+1]),ADR(EXPL.DAT[side].item_list[idx]), (EXPL.DAT[side].item_num - idx) * SIZEOF(EXPL.DAT[side].item_list[0]));
+	brsstrcpy(ADR(EXPL.DAT[side].item_list[idx]), ADR(new_name));
 
 	// Create data structure for vis size listbox															
-	brsmemmove(ADR(EXPL.DAT[side].item_size[lx+1]),ADR(EXPL.DAT[side].item_size[lx]), (EXPL.DAT[side].item_num - lx) * SIZEOF(EXPL.DAT[side].item_size[0]));
-	brsstrcpy(ADR(EXPL.DAT[side].item_size[lx]), ADR(size));
+	brsmemmove(ADR(EXPL.DAT[side].item_size[idx+1]),ADR(EXPL.DAT[side].item_size[idx]), (EXPL.DAT[side].item_num - idx) * SIZEOF(EXPL.DAT[side].item_size[0]));
+	brsstrcpy(ADR(EXPL.DAT[side].item_size[idx]), ADR(size));
 	
 	InsertRecName := TRUE;
 END_FUNCTION
@@ -147,8 +147,8 @@ END_FUNCTION
 //******************************************************************************************************
 FUNCTION IsInstr
 	IF (brsstrlen(string1) > brsstrlen(string2)) THEN
-		FOR lx:=0 TO brsstrlen(string1) - brsstrlen(string2) DO
-			IF (brsmemcmp(string1 + lx, string2, brsstrlen(string2)) = 0) THEN
+		FOR idx:=0 TO brsstrlen(string1) - brsstrlen(string2) DO
+			IF (brsmemcmp(string1 + idx, string2, brsstrlen(string2)) = 0) THEN
 				IsInstr := TRUE;
 				EXIT;
 			END_IF
