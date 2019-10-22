@@ -13,7 +13,7 @@
         <Widget xsi:type="widgets.brease.Button" id="btnRefreshA" top="473" left="164" width="140" height="40" zIndex="1" text="Refresh" cornerRadius="10px" />
         <Widget xsi:type="widgets.brease.DropDownBox" id="ddbDeviceA" top="13" left="74" width="200" zIndex="3" dataProvider="[]" />
         <Widget xsi:type="widgets.brease.Label" id="labDeviceA" top="13" left="14" width="55" zIndex="4" text="Device" textAlign="right" />
-        <Widget xsi:type="widgets.brease.Label" id="labItemsA" top="468" left="299" width="99" zIndex="7" text="Items" textAlign="right" />
+        <Widget xsi:type="widgets.brease.Label" id="labItemsA" top="468" left="339" width="60" zIndex="7" text="Items" textAlign="right" />
         <Widget xsi:type="widgets.brease.NumericOutput" id="numItemsA" top="468" left="399" width="60" zIndex="8" format="{'metric':{'decimalPlaces':0,'minimumIntegerDigits':1},'imperial':{'decimalPlaces':0,'minimumIntegerDigits':1},'imperial-us':{'decimalPlaces':0,'minimumIntegerDigits':1}}" borderWidth="1px" cornerRadius="5px" padding="0px 5px 0px 5px" />
         <Widget xsi:type="widgets.brease.Table" id="tblDirectoryA" top="93" left="9" width="450" height="337" zIndex="11">
           <Widgets>
@@ -35,7 +35,7 @@
         <Widget xsi:type="widgets.brease.Button" id="btnRefreshB" top="478" left="169" width="140" height="40" zIndex="2" text="Refresh" cornerRadius="10px" />
         <Widget xsi:type="widgets.brease.DropDownBox" id="ddbDeviceB" top="13" left="79" width="200" zIndex="5" dataProvider="[]" />
         <Widget xsi:type="widgets.brease.Label" id="labDeviceB" top="13" left="15" width="60" zIndex="6" text="Device" textAlign="right" />
-        <Widget xsi:type="widgets.brease.Label" id="labItemsB" top="473" left="314" width="94" zIndex="9" text="Items" textAlign="right" />
+        <Widget xsi:type="widgets.brease.Label" id="labItemsB" top="473" left="344" width="60" zIndex="9" text="Items" textAlign="right" />
         <Widget xsi:type="widgets.brease.NumericOutput" id="numItemsB" top="473" left="404" width="60" zIndex="10" format="{'metric':{'decimalPlaces':0,'minimumIntegerDigits':1},'imperial':{'decimalPlaces':0,'minimumIntegerDigits':1},'imperial-us':{'decimalPlaces':0,'minimumIntegerDigits':1}}" borderWidth="1px" cornerRadius="5px" padding="0px 5px 0px 5px" />
         <Widget xsi:type="widgets.brease.Table" id="tblDirectoryB" top="98" left="14" width="450" height="337" zIndex="12">
           <Widgets>
