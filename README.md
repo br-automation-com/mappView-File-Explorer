@@ -83,12 +83,12 @@ The following settings can be changed during runtime for USB and network connect
 ## Limitations
 * The sample is not yet multi client capable.
 * There is no extra message box when files or folders are deleted.
-* The network needs up to two minutes to time out if the share is not available. This time must also be considerred when the server address is corrected. Even in this case it can take a few minutes to connect to the correct server.
+* The network needs up to two minutes to time out if the share is not available. This time must also be considered when the server address is corrected. Even in this case it can take a few minutes to connect to the correct server.
 * USB and network connection does not work when the target is in simulation mode
 
 <a name="Errors"></a>
 ## Error messages
-The sample generates the following list of error messages. All other error numbers are generated from inlcuded libraries that can be found in the Automation Studio help.
+The sample generates the following list of error messages. All other error numbers are generated from included libraries that can be found in the Automation Studio help.
 
 | No | Constant | Text | Solution
 |---|---|---|---|
