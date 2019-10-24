@@ -93,7 +93,7 @@ FUNCTION InsertRecName
 	idx := idy;
 	
 	// Start iteration	search																			
-	WHILE (ly > 1) DO
+	WHILE (idy > 1) DO
 		// Check current entry																			
 		lSort := brsstrcmp(ADR(new_name), ADR(EXPL.DAT[side].item_list[idy]));
 		// Solve new search range																		
@@ -136,8 +136,8 @@ FUNCTION InsertRecName
 	brsstrcpy(ADR(EXPL.DAT[side].item_list[idx]), ADR(new_name));
 
 	// Create data structure for vis size list															
-	brsmemmove(ADR(EXPL.DAT[side].item_size[lx+1]),ADR(EXPL.DAT[side].item_size[lx]), (EXPL.DAT[side].item_num - lx) * SIZEOF(EXPL.DAT[side].item_size[0]));
-	brsstrcpy(ADR(EXPL.DAT[side].item_size[lx]), ADR(size));
+	brsmemmove(ADR(EXPL.DAT[side].item_size[idx+1]),ADR(EXPL.DAT[side].item_size[idx]), (EXPL.DAT[side].item_num - idx) * SIZEOF(EXPL.DAT[side].item_size[0]));
+	brsstrcpy(ADR(EXPL.DAT[side].item_size[idx]), ADR(size));
 	
 	InsertRecName := TRUE;
 END_FUNCTION
