@@ -1,9 +1,9 @@
 VAR CONSTANT
-	DIR_PATH_SIZE : UINT := 200; (* Maximum length for the complete path *)
-	ITEM_LIST_NUM : UINT := 50; (* Maximum number if files and folders that can be listed *)
-	MAX_ITEM_SIZE : USINT := 50; (* Maximum length for a file or folder name *)
-	MAX_SIZE_SIZE : USINT := 15; (* Maximum length for a file or folder size*)
-	DEVICE_LIST : ARRAY[0..4] OF STRING[40] := ['USER','SYSTEM','USB_DEVICE','NET_DEVICE','']; (* List if predefined devices *)
+	EXPL_DIR_PATH_LENGTH : UINT := 200; (* Maximum length for the complete path *)
+	EXPL_LIST_NUM : UINT := 100; (* Maximum number if files and folders that can be listed *)
+	EXPL_ITEM_LENGTH : USINT := 50; (* Maximum length for a file or folder name *)
+	EXPL_SIZE_LENGTH : USINT := 15; (* Maximum length for a file or folder size*)
+	EXPL_DEVICE_LIST : ARRAY[0..4] OF STRING[40] := ['USER','SYSTEM','USB_DEVICE','NET_DEVICE','']; (* List if predefined devices *)
 END_VAR
 VAR
 	EXPL : expMAIN;

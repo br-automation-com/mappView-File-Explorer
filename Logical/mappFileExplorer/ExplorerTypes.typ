@@ -39,13 +39,13 @@ TYPE
 	expPAR : 	STRUCT 
 		device_active : STRING[40]; (*Active device name *)
 		device_list : ARRAY[0..4]OF STRING[40]; (*List of all devices*)
-		item_filter : STRING[MAX_ITEM_SIZE]; (* Only show files with this extension	*)
-		dir_name : STRING[MAX_ITEM_SIZE]; (* Directory name for create *)
-		dir_path : STRING[DIR_PATH_SIZE]; (* Current directory path	*)
+		item_filter : STRING[EXPL_ITEM_LENGTH]; (* Only show files with this extension	*)
+		dir_name : STRING[EXPL_ITEM_LENGTH]; (* Directory name for create *)
+		dir_path : STRING[EXPL_DIR_PATH_LENGTH]; (* Current directory path	*)
 	END_STRUCT;
 	expDAT : 	STRUCT 
-		item_list : ARRAY[0..ITEM_LIST_NUM]OF STRING[MAX_ITEM_SIZE]; (* List with file names	*)
-		item_size : ARRAY[0..ITEM_LIST_NUM]OF STRING[MAX_SIZE_SIZE]; (* List with file sizes*)
+		item_list : ARRAY[0..EXPL_LIST_NUM]OF STRING[EXPL_ITEM_LENGTH]; (* List with file names	*)
+		item_size : ARRAY[0..EXPL_LIST_NUM]OF STRING[EXPL_SIZE_LENGTH]; (* List with file sizes*)
 		item_num : UINT; (* Number OF files	*)
 	END_STRUCT;
 	expVIS : 	STRUCT 

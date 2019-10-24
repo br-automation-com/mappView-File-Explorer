@@ -11,12 +11,12 @@ VAR
 	step : expSTATE := (0); (* Main step index *)
 	animation : USINT := 0; (* Animation for working status	*)
 	do_select : USINT := 0; (* Select item after copying *)
-	old_filter : ARRAY[0..1] OF STRING[MAX_ITEM_SIZE]; (* Track filter change *)
+	old_filter : ARRAY[0..1] OF STRING[EXPL_ITEM_LENGTH]; (* Track filter change *)
 	has_oversized_items : BOOL;
-	tmp_str1 : STRING[DIR_PATH_SIZE]; (* Temporary STRING variable *)
-	tmp_str2 : STRING[DIR_PATH_SIZE]; (* Temporary STRING variable *)
-	tmp_str3 : STRING[DIR_PATH_SIZE]; (* Temporary STRING variable *)
-	tmp_str4 : STRING[DIR_PATH_SIZE]; (* Temporary STRING variable *)
+	tmp_str1 : STRING[EXPL_DIR_PATH_LENGTH]; (* Temporary STRING variable *)
+	tmp_str2 : STRING[EXPL_DIR_PATH_LENGTH]; (* Temporary STRING variable *)
+	tmp_str3 : STRING[EXPL_DIR_PATH_LENGTH]; (* Temporary STRING variable *)
+	tmp_str4 : STRING[EXPL_DIR_PATH_LENGTH]; (* Temporary STRING variable *)
 	lx : UDINT := 0; (* Index	*)
 	ly : UINT;
 	DoubleClickDirChange : TON_10ms;

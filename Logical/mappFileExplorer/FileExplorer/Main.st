@@ -15,8 +15,8 @@
 //******************************************************************************************************
 
 PROGRAM _INIT
-	brsmemcpy(ADR(EXPL.PAR[0].device_list), ADR(DEVICE_LIST), SIZEOF(DEVICE_LIST));
-	brsmemcpy(ADR(EXPL.PAR[1].device_list), ADR(DEVICE_LIST), SIZEOF(DEVICE_LIST));
+	brsmemcpy(ADR(EXPL.PAR[0].device_list), ADR(EXPL_DEVICE_LIST), SIZEOF(EXPL_DEVICE_LIST));
+	brsmemcpy(ADR(EXPL.PAR[1].device_list), ADR(EXPL_DEVICE_LIST), SIZEOF(EXPL_DEVICE_LIST));
 	brsstrcpy(ADR(EXPL.PAR[0].device_active), ADR(EXPL.PAR[0].device_list[0]));
 	brsstrcpy(ADR(EXPL.PAR[1].device_active), ADR(EXPL.PAR[1].device_list[0]));
 	 
@@ -74,7 +74,7 @@ PROGRAM _CYCLIC
 		step := CreateError(ERR_DEVICE_UNDEFINED, side, step, 'device is not defined', ADR(EXPL));
 		RETURN;
 	END_IF
-	IF (brsstrlen(ADR(EXPL.PAR[side].dir_path)) >= DIR_PATH_SIZE) THEN
+	IF (brsstrlen(ADR(EXPL.PAR[side].dir_path)) >= EXPL_DIR_PATH_LENGTH) THEN
 		step := CreateError(ERR_PATH_CRITICAL, side, step, 'Directory path critical error', ADR(EXPL));
 		RETURN;
 	END_IF
@@ -139,7 +139,7 @@ PROGRAM _CYCLIC
 			ELSIF((brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) <> 0) AND (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] <> '..'))  THEN 
 				step := CreateError(ERR_INVALID_ITEM_NAME, side, step, 'this is not a valid directory name', ADR(EXPL));
 			// Check if new directory name fits into string											
-			ELSIF(brsstrlen(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected])) - 5 + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= DIR_PATH_SIZE) THEN 
+			ELSIF(brsstrlen(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected])) - 5 + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= EXPL_DIR_PATH_LENGTH) THEN 
 				step := CreateError(ERR_PATH_EXCEEDS_MAX, side, step, 'directory path exceeds maximum length', ADR(EXPL));
 			ELSE 
 				step := EXP_DIR_CHANGE;
@@ -153,10 +153,10 @@ PROGRAM _CYCLIC
 				IF (EXPL.PAR[side].dir_name = '') THEN
 					step := CreateError(ERR_EMPTY_ITEM, side, step, 'directory name is empty', ADR(EXPL));
 				// Check if new directory name fits into path string									
-				ELSIF(brsstrlen(ADR(EXPL.PAR[side].dir_name)) + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= DIR_PATH_SIZE) THEN
+				ELSIF(brsstrlen(ADR(EXPL.PAR[side].dir_name)) + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= EXPL_DIR_PATH_LENGTH) THEN
 					step := CreateError(ERR_PATH_EXCEEDS_MAX, side, step, 'directory path name exceeds maximum length', ADR(EXPL));
 				// Check if new directory name fits into directory name string						
-				ELSIF(brsstrlen(ADR(EXPL.PAR[side].dir_name)) + 5 >= MAX_ITEM_SIZE) THEN
+				ELSIF(brsstrlen(ADR(EXPL.PAR[side].dir_name)) + 5 >= EXPL_ITEM_LENGTH) THEN
 					step := CreateError(ERR_DIR_EXCEEDS_MAX, side, step, 'directory name exceeds maximum length', ADR(EXPL));
 				ELSE 
 					step := EXP_DIR_CREATE;
@@ -188,7 +188,7 @@ PROGRAM _CYCLIC
 				IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '')	THEN
 					step := CreateError(ERR_EMPTY_ITEM, side, step, 'item name is empty', ADR(EXPL));
 				// Check if new directory name fits into string											
-				ELSIF(brsstrlen(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected])) + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= DIR_PATH_SIZE + MAX_ITEM_SIZE) THEN
+				ELSIF(brsstrlen(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected])) + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= EXPL_DIR_PATH_LENGTH + EXPL_ITEM_LENGTH) THEN
 					step := CreateError(ERR_PATH_EXCEEDS_MAX, side, step, 'directory path exceeds maximum length', ADR(EXPL));
 				// Make sure that user chooses a valid item												
 				ELSIF(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '..') THEN
@@ -292,7 +292,7 @@ PROGRAM _CYCLIC
 						// ---------------------------------------------------------------------------- 		
 						// Read file information														
 						IF (lDirReadData.Mode = fiFILE) THEN					
-							IF (brsstrlen(ADR(lDirReadData.Filename)) < MAX_ITEM_SIZE) THEN
+							IF (brsstrlen(ADR(lDirReadData.Filename)) < EXPL_ITEM_LENGTH) THEN
 								brsstrcpy(ADR(tmp_str1), ADR(lDirReadData.Filename));
 								// -------------------------------------------------------------------- 		
 								// Generate file size														
@@ -313,7 +313,7 @@ PROGRAM _CYCLIC
 						// ---------------------------------------------------------------------------- 		
 						// Read directory information													
 						ELSIF (brsstrcmp(ADR(lDirReadData.Filename), ADR('.')) <> 0 AND brsstrcmp(ADR(lDirReadData.Filename), ADR('..')) <> 0 AND brsstrcmp(ADR(lDirReadData.Filename), ADR('System Volume Information')) <> 0) THEN		
-							IF (brsstrlen(ADR(lDirReadData.Filename)) < MAX_ITEM_SIZE-5) THEN
+							IF (brsstrlen(ADR(lDirReadData.Filename)) < EXPL_ITEM_LENGTH-5) THEN
 								// Copy directory name													
 								tmp_str1 := '(DIR)';
 								brsstrcat(ADR(tmp_str1), ADR(lDirReadData.Filename));
@@ -430,7 +430,7 @@ PROGRAM _CYCLIC
 				IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] <> '') THEN
 					// -------------------------------------------------------------------------------- 
 					// Check if new file name fits into string											
-					IF(brsstrlen(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected])) < MAX_ITEM_SIZE) THEN
+					IF(brsstrlen(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected])) < EXPL_ITEM_LENGTH) THEN
 						// ---------------------------------------------------------------------------- 		
 						// Initialize copy structure													
 						CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str3));
@@ -494,7 +494,7 @@ PROGRAM _CYCLIC
 				IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] <> '') THEN
 					// -------------------------------------------------------------------------------- 		
 					// Check if new directory name fits into path string								
-					IF(brsstrlen(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected])) + brsstrlen(ADR(EXPL.PAR[NOT side].dir_path)) + 1 < DIR_PATH_SIZE) THEN
+					IF(brsstrlen(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected])) + brsstrlen(ADR(EXPL.PAR[NOT side].dir_path)) + 1 < EXPL_DIR_PATH_LENGTH) THEN
 						// ---------------------------------------------------------------------------- 		
 						// Initialize copy structure													
 						CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str3));
