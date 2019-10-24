@@ -42,7 +42,7 @@ END_FUNCTION
 // Create complete path string																			
 //******************************************************************************************************
 FUNCTION CreateCompletePath
-	brsmemset(ADR(tmp), 0, MAX_ITEM_SIZE);
+	brsmemset(ADR(tmp), 0, EXPL_ITEM_LENGTH);
 	brsstrcpy(return_path, ADR(path));
 	
 	// ------------------------------------------------------------------------------------------------ 		
@@ -131,12 +131,13 @@ FUNCTION InsertRecName
 	IF (idx = 0 AND EXPL.DAT[side].item_list[0] = '..') THEN
 		idx := idx + 1;
 	END_IF
-	// Move all data entrys backwards and fill in new entry												
-	brsmemmove(ADR(EXPL.DAT[side].item_list[idx+1]),ADR(EXPL.DAT[side].item_list[idx]), (EXPL.DAT[side].item_num - idx) * SIZEOF(EXPL.DAT[side].item_list[0]));
+	// Move all data entrys backwards and fill in new entry
+	IF(idx < EXPL_LIST_NUM) THEN
+		brsmemmove(ADR(EXPL.DAT[side].item_list[idx+1]),ADR(EXPL.DAT[side].item_list[idx]), (EXPL.DAT[side].item_num - idx) * SIZEOF(EXPL.DAT[side].item_list[0]));
+		brsmemmove(ADR(EXPL.DAT[side].item_size[idx+1]),ADR(EXPL.DAT[side].item_size[idx]), (EXPL.DAT[side].item_num - idx) * SIZEOF(EXPL.DAT[side].item_size[0]));
+	END_IF
 	brsstrcpy(ADR(EXPL.DAT[side].item_list[idx]), ADR(new_name));
-
 	// Create data structure for vis size list															
-	brsmemmove(ADR(EXPL.DAT[side].item_size[idx+1]),ADR(EXPL.DAT[side].item_size[idx]), (EXPL.DAT[side].item_num - idx) * SIZEOF(EXPL.DAT[side].item_size[0]));
 	brsstrcpy(ADR(EXPL.DAT[side].item_size[idx]), ADR(size));
 	
 	InsertRecName := TRUE;
