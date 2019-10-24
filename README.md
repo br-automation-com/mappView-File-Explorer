@@ -9,7 +9,7 @@ This is a sample project for a file Explorer with mappView. It allows you to del
 
 ![](Logical/mappView/Resources/Media/screenshot_main.png)
 
-See [**How to import the user management into an existing project.**](Logical/mappFileExplorer/HowToImport.pdf) Download the latest release from [**here.**](../../releases) When upgrading from a previous version make sure to delete the files that were imported before. Detailed information are avialbale in the [**Wiki**](https://github.com/stephan1827/mappView-File-Explorer/wiki).
+See [**How to import the user management into an existing project.**](Logical/mappFileExplorer/HowToImport.pdf) Download the latest release from [**here.**](../../releases) When upgrading from a previous version make sure to delete the files that were imported before. Detailed information are available in the [**Wiki**](https://github.com/stephan1827/mappView-File-Explorer/wiki).
 
 <a name="Requirements"></a>
 ## Requirements
