@@ -30,3 +30,4 @@ Recommended task class is #8 with a 10ms cycle time.
 - Fixed old_filter variable size
 - Fixed file size added to file name
 - Disable file device and filter during operation
+
