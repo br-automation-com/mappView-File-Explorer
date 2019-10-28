@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <EventBindingSet id="Explorer_eventbinding" xmlns="http://www.br-automation.com/iat2014/eventbinding/v2" xmlns:types="http://www.br-automation.com/iat2015/widgetTypes/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<Bindings>
 		<!-- Refresh directory data when page is loaded />-->
@@ -159,6 +159,18 @@
 				</Action>
 			</EventHandler>
 		</EventBinding>
+		
+		<!-- Rename file or folder on side A />-->
+		<EventBinding id="contentExplorer.btnExpRenameA.Click">
+			<Source contentRefId="contentExplorer" widgetRefId="btnExpRenameA" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[0].rename" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
 
 		<!-- //////////////////////////////////////////////// Events for side B //////////////////////////////////////////////////////////////////////// />-->
 		
@@ -252,6 +264,18 @@
 			<EventHandler>
 				<Action>
 					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[1].dir_create" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- Rename file or folder on side B />-->
+		<EventBinding id="contentExplorer.btnExpRenameB.Click">
+			<Source contentRefId="contentExplorer" widgetRefId="btnExpRenameB" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[1].rename" >
 						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
 					</Target>
 				</Action>

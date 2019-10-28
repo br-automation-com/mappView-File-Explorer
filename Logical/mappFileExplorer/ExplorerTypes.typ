@@ -19,9 +19,11 @@ TYPE
 		EXP_COPY_ALL,
 		EXP_FILE_COPY,
 		EXP_FILE_DELETE,
+		EXP_FILE_RENAME,
 		EXP_DIR_COPY,
 		EXP_DIR_CREATE,
-		EXP_DIR_DELETE
+		EXP_DIR_DELETE,
+		EXP_DIR_RENAME
 		);
 	expERR : 	STRUCT 
 		text : STRING[100]; (* Error text *)
@@ -35,13 +37,14 @@ TYPE
 		copy : BOOL; (* Copy selected item from device a TO device b *)
 		copy_all : BOOL; (* Copy all items from device a TO device b	*)
 		delete : BOOL; (* Delete selected file *)
+		rename : BOOL;
 	END_STRUCT;
 	expPAR : 	STRUCT 
 		device_active : STRING[40]; (*Active device name *)
 		device_list : ARRAY[0..4]OF STRING[40]; (*List of all devices*)
-		item_filter : STRING[EXPL_ITEM_LENGTH]; (* Only show files with this extension	*)
-		dir_name : STRING[EXPL_ITEM_LENGTH]; (* Directory name for create *)
-		dir_path : STRING[EXPL_DIR_PATH_LENGTH]; (* Current directory path	*)
+		item_filter : STRING[EXPL_ITEM_LENGTH]; (*Only show files with this extension	*)
+		new_name : STRING[EXPL_ITEM_LENGTH]; (*Name for for directory create and rename*)
+		dir_path : STRING[EXPL_DIR_PATH_LENGTH]; (*Current directory path	*)
 	END_STRUCT;
 	expDAT : 	STRUCT 
 		item_list : ARRAY[0..EXPL_LIST_NUM]OF STRING[EXPL_ITEM_LENGTH]; (* List with file names	*)

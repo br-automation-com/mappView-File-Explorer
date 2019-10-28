@@ -19,7 +19,6 @@ PROGRAM _INIT
 	brsmemcpy(ADR(EXPL.PAR[1].device_list), ADR(EXPL_DEVICE_LIST), SIZEOF(EXPL_DEVICE_LIST));
 	brsstrcpy(ADR(EXPL.PAR[0].device_active), ADR(EXPL.PAR[0].device_list[0]));
 	brsstrcpy(ADR(EXPL.PAR[1].device_active), ADR(EXPL.PAR[1].device_list[0]));
-	 
 END_PROGRAM
 
 PROGRAM _CYCLIC
@@ -95,7 +94,7 @@ PROGRAM _CYCLIC
 
 	// ------------------------------------------------------------------------------------------------ 
 	// Break if no command is set																		
-	IF (EXPL.CMD[side].refresh = 0 AND EXPL.CMD[side].dir_change = 0 AND EXPL.CMD[side].dir_create = 0 AND EXPL.CMD[side].copy = 0 AND EXPL.CMD[side].copy_all = 0 AND EXPL.CMD[side].delete = 0) THEN
+	IF (EXPL.CMD[side].refresh = 0 AND EXPL.CMD[side].dir_change = 0 AND EXPL.CMD[side].dir_create = 0 AND EXPL.CMD[side].copy = 0 AND EXPL.CMD[side].copy_all = 0 AND EXPL.CMD[side].delete = 0 AND EXPL.CMD[side].rename = 0) THEN
 		// -------------------------------------------------------------------------------------------- 
 		// Show current state																			
 		EXPL.status := 'Waiting...'; 
@@ -150,13 +149,13 @@ PROGRAM _CYCLIC
 			IF (EXPL.CMD[side].dir_create = 1) THEN
 				// ------------------------------------------------------------------------------------ 		
 				// Check if new directory name is empty													
-				IF (EXPL.PAR[side].dir_name = '') THEN
+				IF (EXPL.PAR[side].new_name = '') THEN
 					step := CreateError(ERR_EMPTY_ITEM, side, step, 'directory name is empty', ADR(EXPL));
 				// Check if new directory name fits into path string									
-				ELSIF(brsstrlen(ADR(EXPL.PAR[side].dir_name)) + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= EXPL_DIR_PATH_LENGTH) THEN
+				ELSIF(brsstrlen(ADR(EXPL.PAR[side].new_name)) + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= EXPL_DIR_PATH_LENGTH) THEN
 					step := CreateError(ERR_PATH_EXCEEDS_MAX, side, step, 'directory path name exceeds maximum length', ADR(EXPL));
 				// Check if new directory name fits into directory name string						
-				ELSIF(brsstrlen(ADR(EXPL.PAR[side].dir_name)) + 5 >= EXPL_ITEM_LENGTH) THEN
+				ELSIF(brsstrlen(ADR(EXPL.PAR[side].new_name)) + 5 >= EXPL_ITEM_LENGTH) THEN
 					step := CreateError(ERR_DIR_EXCEEDS_MAX, side, step, 'directory name exceeds maximum length', ADR(EXPL));
 				ELSE 
 					step := EXP_DIR_CREATE;
@@ -199,6 +198,22 @@ PROGRAM _CYCLIC
 				// Delete a file																		
 				ELSE																									
 					step := EXP_FILE_DELETE;
+				END_IF
+			END_IF
+			// ---------------------------------------------------------------------------------------- 
+			// Command rename																				
+			IF (EXPL.CMD[side].rename = 1) THEN 	
+				// ------------------------------------------------------------------------------------ 		
+				// Check if new directory name is empty													
+				IF (EXPL.PAR[side].new_name = '') THEN
+					step := CreateError(ERR_EMPTY_ITEM, side, step, 'new name is empty', ADR(EXPL));
+				// Make sure that user chooses a valid item												
+				ELSIF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '..') THEN
+					step := CreateError(ERR_INVALID_ITEM_NAME, side, step, 'this is not a valid item name', ADR(EXPL));
+				ELSIF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) = 0)	THEN
+					step := EXP_DIR_RENAME;
+				ELSE																														
+					step := EXP_FILE_RENAME;
 				END_IF
 			END_IF
 			// ---------------------------------------------------------------------------------------- 
@@ -577,6 +592,34 @@ PROGRAM _CYCLIC
 				step := CreateError(FDelete.status, side, step, 'error deleting file', ADR(EXPL));
 			END_IF
 		//**********************************************************************************************
+		// Rename selected file																			
+		//**********************************************************************************************
+		EXP_FILE_RENAME:
+			// Show current state																		
+			animation := WorkingStatus(ADR(EXPL), ADR('renaming file...'), animation);
+			
+			// ---------------------------------------------------------------------------------------- 		
+			// Initialize file delete structure 														
+			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str2));
+			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.PAR[side].new_name, ADR(tmp_str3));
+			FRename.enable		:= 1;
+			FRename.pDevice 	:= ADR(EXPL.PAR[side].device_active);
+			FRename.pName		:= ADR(tmp_str2);
+			FRename.pNewName	:= ADR(tmp_str3);
+			FRename();
+										
+			// ---------------------------------------------------------------------------------------- 		
+			// OK																																				
+			IF (FRename.status = OK) THEN
+				// Reset command and return to wait state												
+				EXPL.CMD[side].rename 	:= 0;
+				EXPL.CMD[side].refresh  := 1;
+				step := EXP_WAIT;
+				// Error
+			ELSIF (FRename.status <> ERR_FUB_BUSY) THEN
+				step := CreateError(FRename.status, side, step, 'error renaming file', ADR(EXPL));
+			END_IF			
+		//**********************************************************************************************
 		// Create new directory																			
 		//**********************************************************************************************
 		EXP_DIR_CREATE:
@@ -585,7 +628,7 @@ PROGRAM _CYCLIC
 			
 			// ---------------------------------------------------------------------------------------- 		
 			// Initialize directory create structure													
-			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.PAR[side].dir_name, ADR(tmp_str3));
+			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.PAR[side].new_name, ADR(tmp_str3));
 			DCreate.enable	:= 1;
 			DCreate.pDevice := ADR(EXPL.PAR[side].device_active);
 			DCreate.pName 	:= ADR(tmp_str3);
@@ -628,6 +671,34 @@ PROGRAM _CYCLIC
 			ELSIF (DDelete.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(DDelete.status, side, step, 'error deleting directory', ADR(EXPL));
 			END_IF
+		//**********************************************************************************************
+		// Rename selected directory																			
+		//**********************************************************************************************
+		EXP_DIR_RENAME:
+			// Show current state																		
+			animation := WorkingStatus(ADR(EXPL), ADR('renaming directory...'), animation);
+			
+			// ---------------------------------------------------------------------------------------- 		
+			// Initialize file delete structure 														
+			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str2));
+			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.PAR[side].new_name, ADR(tmp_str3));
+			DRename.enable		:= 1;
+			DRename.pDevice 	:= ADR(EXPL.PAR[side].device_active);
+			DRename.pName		:= ADR(tmp_str2);
+			DRename.pNewName	:= ADR(tmp_str3);
+			DRename();
+										
+			// ---------------------------------------------------------------------------------------- 		
+			// OK																																				
+			IF (DRename.status = OK) THEN
+				// Reset command and return to wait state												
+				EXPL.CMD[side].rename 	:= 0;
+				EXPL.CMD[side].refresh  := 1;
+				step := EXP_WAIT;
+				// Error
+			ELSIF (DRename.status <> ERR_FUB_BUSY) THEN
+				step := CreateError(DRename.status, side, step, 'error renaming directory', ADR(EXPL));
+			END_IF	
 	END_CASE
 	 
 END_PROGRAM

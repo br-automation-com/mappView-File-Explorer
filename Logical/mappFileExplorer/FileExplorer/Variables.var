@@ -30,9 +30,11 @@ VAR
 	DClose : DirClose;
 	FCopy : FileCopy;
 	FDelete : FileDelete;
+	FRename : FileRename;
 	DCopy : DirCopy;
 	DCreate : DirCreate;
 	DDelete : DirDeleteEx;
+	DRename : DirRename;
 	lDirReadData : fiDIR_READ_EX_DATA;
 END_VAR
 (*Local constants*)

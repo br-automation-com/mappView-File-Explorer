@@ -51,10 +51,7 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].item_selected" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="tblDirectoryB" attribute="selectedRow" />
 		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].dir_name" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirA" attribute="value" />
-		</Binding>
+		
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnCopyA" attribute="enable" />
@@ -87,10 +84,7 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].item_filter" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtFilterA" attribute="value" />
 		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[1].dir_name" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirB" attribute="value" />
-		</Binding>
+		
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].device_list" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbDeviceA" attribute="dataProvider" />
@@ -250,6 +244,14 @@
 <Binding mode="twoWay">
 <Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
 <Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnClearFilterA" attribute="enable" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].new_name" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirA" attribute="value" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[1].new_name" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirB" attribute="value" />
 </Binding>
 </Bindings>
 </BindingsSet>
