@@ -22,12 +22,8 @@ Recommended task class is #8 with a 10ms cycle time.
 <a name="Revision-History"></a>
 ## Revision History
 
-#### Version 0.6
-- Changed upper limit of USB polling interval
-- Removed obsolete error numbers
-- Replaced error numbers with constants
-- Removed obsolete variables
-- Fixed old_filter variable size
-- Fixed file size added to file name
-- Disable file device and filter during operation
+#### Version 0.7
+- New function rename file or folder
+- Fixed memory leak when last entry in list is used
+- Code optimizations
 
