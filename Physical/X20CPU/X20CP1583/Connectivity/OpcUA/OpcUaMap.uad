@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<OpcUaSource FileVersion="4" ArVersion="D4.52">
+<OpcUaSource FileVersion="4" ArVersion="B4.53">
   <Aliases>
     <ACLAliases>
       <ACL Id="1">
@@ -45,8 +45,6 @@
           </Variable>
         </Variable>
       </GlobalVariables>
-      <Task Name="USBdevice" />
-      <Task Name="NETdevice" />
       <Task Name="FileExplor">
         <Variable Name="step" />
       </Task>

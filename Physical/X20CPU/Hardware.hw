@@ -7,6 +7,7 @@
     </Connector>
     <Parameter ID="ConfigurationID" Value="Tmp_Explorer_V1_Config1" />
     <Parameter ID="UserPartitionSize" Value="200" />
+    <Parameter ID="VolatileGlobalPvSize" Value="200000" />
     <Parameter ID="Cyclic8Stack" Value="20000" />
     <Group ID="FileDevice1" />
     <Parameter ID="FileDeviceName1" Value="USER" />

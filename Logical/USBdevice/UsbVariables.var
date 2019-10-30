@@ -1,0 +1,3 @@
+VAR
+	USB : usbMAIN;
+END_VAR

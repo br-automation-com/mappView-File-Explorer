@@ -10,8 +10,8 @@
   <TaskClass Name="Cyclic#7" />
   <TaskClass Name="Cyclic#8">
     <Task Name="FileExplor" Source="mappFileExplorer.FileExplorer.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="USBdevice" Source="mappFileExplorer.USBdevice.prg" Memory="UserROM" Language="IEC" Debugging="true" />
-    <Task Name="NETdevice" Source="mappFileExplorer.NETdevice.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="NetDevice" Source="NETdevice.NetDevice.prg" Memory="UserROM" Language="IEC" Debugging="true" />
+    <Task Name="UsbDevice" Source="USBdevice.UsbDevice.prg" Memory="UserROM" Language="IEC" Debugging="true" />
   </TaskClass>
   <Binaries>
     <BinaryObject Name="udbdef" Source="" Memory="UserROM" Language="Binary" />
@@ -33,9 +33,9 @@
     <LibraryObject Name="AsBrStr" Source="Libraries.AsBrStr.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="AsUSB" Source="Libraries.AsUSB.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="standard" Source="Libraries.standard.lby" Memory="UserROM" Language="binary" Debugging="true" />
-    <LibraryObject Name="astime" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
-    <LibraryObject Name="asieccon" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="IecCheck" Source="Libraries.IecCheck.lby" Memory="UserROM" Language="IEC" Debugging="true" />
     <LibraryObject Name="sys_lib" Source="Libraries.sys_lib.lby" Memory="UserROM" Language="binary" Debugging="true" />
+    <LibraryObject Name="astime" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
+    <LibraryObject Name="asieccon" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
   </Libraries>
 </SwConfiguration>

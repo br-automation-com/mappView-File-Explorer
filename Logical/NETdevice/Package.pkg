@@ -2,10 +2,9 @@
 <?AutomationStudio Version=4.5.4.123 SP?>
 <Package xmlns="http://br-automation.co.at/AS/Package">
   <Objects>
-    <Object Type="File">ExplorerTypes.typ</Object>
-    <Object Type="File">ExplorerVariables.var</Object>
-    <Object Type="Program" Language="IEC">FileExplorer</Object>
+    <Object Type="File">NetTypes.typ</Object>
+    <Object Type="File">NetVariables.var</Object>
+    <Object Type="Program" Language="IEC">NetDevice</Object>
     <Object Type="File">changelog.txt</Object>
-    <Object Type="File">HowToImport.pdf</Object>
   </Objects>
 </Package>

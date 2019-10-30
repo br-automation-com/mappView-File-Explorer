@@ -7,6 +7,4 @@ VAR CONSTANT
 END_VAR
 VAR
 	EXPL : expMAIN;
-	NET : netMAIN;
-	USB : usbMAIN;
 END_VAR
