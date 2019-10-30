@@ -117,10 +117,20 @@
 			<Source contentRefId="contentExplorer" widgetRefId="btnDeleteA" xsi:type="widgets.brease.Button.Event" event="Click" />
 			<EventHandler>
 				<Action>
-					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[0].delete" >
-						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					<!-- Show message box before saving />-->					
+					<Target xsi:type="clientSystem.Action">
+						<Method xsi:type="clientSystem.Action.ShowMessageBox" type="YesNo" message="Delete selected item?" header="Item Delete" icon="Question"  />
 					</Target>
-				</Action>
+					<Result>
+						<ResultHandler condition="result = 1">
+							<Action>
+								<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[0].delete" >
+									<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+								</Target>
+							</Action>
+						</ResultHandler>
+					</Result>
+				</Action>	
 			</EventHandler>
 		</EventBinding>
 		
@@ -227,9 +237,19 @@
 			<Source contentRefId="contentExplorer" widgetRefId="btnDeleteB" xsi:type="widgets.brease.Button.Event" event="Click" />
 			<EventHandler>
 				<Action>
-					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[1].delete" >
-						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					<!-- Show message box before saving />-->					
+					<Target xsi:type="clientSystem.Action">
+						<Method xsi:type="clientSystem.Action.ShowMessageBox" type="YesNo" message="Delete selected item?" header="Item Delete" icon="Question"  />
 					</Target>
+					<Result>
+						<ResultHandler condition="result = 1">
+							<Action>
+								<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[1].delete" >
+									<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+								</Target>
+							</Action>
+						</ResultHandler>
+					</Result>
 				</Action>
 			</EventHandler>
 		</EventBinding>
