@@ -1,16 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BindingsSet xmlns="http://www.br-automation.com/iat2015/binding/engineering/v2" xmlns:be="http://www.br-automation.com/iat2015/bindingListEmbedded/engineering/v2" xmlns:bt="http://www.br-automation.com/iat2015/bindingListTypes/engineering/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Explorer_binding">
 	<Bindings>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_refresh_create" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="flyConfiguration" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnClearFilterB" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtFilterA" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnClearFilterA" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].new_name" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirA" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[1].new_name" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirB" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_copy_delete" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtFilterB" attribute="enable" />
+		</Binding>
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.status" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtStatus" attribute="value" />
 		</Binding>
-		
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.text" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtError" attribute="value" />
-		</Binding>
-		
+		</Binding>	
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[0].item_num" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numItemsA" attribute="value" />
@@ -50,8 +76,7 @@
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].item_selected" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="tblDirectoryB" attribute="selectedRow" />
-		</Binding>
-		
+		</Binding>	
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnCopyA" attribute="enable" />
@@ -84,7 +109,6 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].item_filter" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtFilterA" attribute="value" />
 		</Binding>
-		
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].device_list" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbDeviceA" attribute="dataProvider" />
@@ -114,8 +138,20 @@
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnRefreshB" attribute="enable" />
 		</Binding>
 		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.no" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numErrorNo" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_refresh_create" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnDirCreateB" attribute="enable" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.ERR.active" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnNETreset" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.enable_connect" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnNETconnect" attribute="enable" />
 		</Binding>
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.server_name" attribute="value" />
@@ -164,89 +200,38 @@
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.server_share" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNETserver_path" attribute="value" />
-		</Binding>
-		
+		</Binding>		
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.refresh_interval" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numUSBintervall" attribute="value" />
-		</Binding>
-		
-		
-		
-		
+		</Binding>	
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.state_machine" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbUSBstatus" attribute="selectedIndex" />
 		</Binding>
-	<Binding mode="oneWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.is_connected" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBconnected" attribute="value" />
-</Binding>
-
-<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.ignore_dongle" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="chkUSBdongle" attribute="value" />
-</Binding>
-<Binding mode="oneWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.text" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtUSBError" attribute="value" />
-</Binding>
-<Binding mode="oneWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.no" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numNETErrorNo1" attribute="value" />
-</Binding>
-<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.CMD.auto_scan" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="chkUSBenable" attribute="value" />
-</Binding>
-<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.enable_connect" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnNETconnect" attribute="enable" />
-</Binding>
-<Binding mode="oneWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.no" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numErrorNo" attribute="value" />
-</Binding>
-
-
-<Binding mode="oneWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.ERR.active" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnNETreset" attribute="enable" />
-</Binding>
-<Binding mode="oneWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.active" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBreset" attribute="enable" />
-</Binding>
-<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_refresh_create" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="flyConfiguration" attribute="enable" />
-</Binding>
-
-
-<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnClearFilterB" attribute="enable" />
-</Binding>
-<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtFilterA" attribute="enable" />
-</Binding>
-
-<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnClearFilterA" attribute="enable" />
-</Binding>
-<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].new_name" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirA" attribute="value" />
-</Binding>
-<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[1].new_name" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirB" attribute="value" />
-</Binding>
-<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_copy_delete" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtFilterB" attribute="enable" />
-</Binding>
-</Bindings>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.is_connected" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBconnected" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.ignore_dongle" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="chkUSBdongle" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.text" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtUSBError" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.no" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numUSBErrorNo" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.CMD.auto_scan" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="chkUSBenable" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.active" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBreset" attribute="enable" />
+		</Binding>
+	</Bindings>
 </BindingsSet>
