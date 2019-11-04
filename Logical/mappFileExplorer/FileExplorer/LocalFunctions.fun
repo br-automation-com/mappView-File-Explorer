@@ -51,3 +51,10 @@ FUNCTION CreateCompletePath : BOOL
 		tmp : STRING[EXPL_ITEM_LENGTH];
 	END_VAR
 END_FUNCTION
+
+FUNCTION String2DataProvider : BOOL
+	VAR_INPUT
+		SourceString : UDINT;
+		TargetString : UDINT;
+	END_VAR
+END_FUNCTION

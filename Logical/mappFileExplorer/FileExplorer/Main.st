@@ -1,8 +1,7 @@
 //******************************** B&R * Application TB-West *******************************************
 //	Function:	Mini explorer																			
-//	Autor:		S.Stricker																				
 //  Version:	1.00																					
-//	Changed:	26.09.2019																				
+//	Changed:	04.11.2019																				
 //	Error numbers:																						
 //	50000		Selected item name is empty																
 //	50001		This is not a valid item name															
@@ -36,11 +35,7 @@ PROGRAM _CYCLIC
 	brsmemset(ADR(EXPL.VIS[side].device_list), 0, SIZEOF(EXPL.VIS[side].device_list));
 	FOR lx := 0 TO SIZEOF(EXPL.VIS[side].device_list)/SIZEOF(EXPL.VIS[side].device_list[0]) - 1 DO 
 		IF (EXPL.PAR[side].device_list[lx] <> '') THEN
-			EXPL.VIS[side].device_list[lx] := '{"value":"';
-			brsstrcat(ADR(EXPL.VIS[side].device_list[lx]), ADR(EXPL.PAR[side].device_list[lx]));					
-			brsstrcat(ADR(EXPL.VIS[side].device_list[lx]), ADR('","text":"'));
-			brsstrcat(ADR(EXPL.VIS[side].device_list[lx]), ADR(EXPL.PAR[side].device_list[lx]));					
-			brsstrcat(ADR(EXPL.VIS[side].device_list[lx]), ADR('"}'));
+			String2DataProvider(ADR(EXPL.PAR[side].device_list[lx]), ADR(EXPL.VIS[side].device_list[lx]));
 		END_IF
 	END_FOR;
 
