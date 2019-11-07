@@ -191,7 +191,7 @@
 		</Binding>
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.is_linked" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBconnected1" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnNETconnected" attribute="value" />
 		</Binding>
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.state_machine" attribute="value" />
