@@ -23,7 +23,7 @@
         </Widget>
         <Widget xsi:type="widgets.brease.Label" id="labExpNewNameA" top="548" left="9" width="91" height="25" zIndex="26" text="New Name" textAlign="right" />
         <Widget xsi:type="widgets.brease.Button" id="btnExpRenameA" top="588" left="319" width="140" height="35" zIndex="27" text="Rename" cornerRadius="10px" />
-        <Widget xsi:type="widgets.brease.Button" id="btnViewFileA" top="460" left="229" height="35" zIndex="28" text="Open" cornerRadius="10px" />
+        <Widget xsi:type="widgets.brease.Button" id="btnViewFileA" top="460" left="229" height="35" zIndex="28" text="View" cornerRadius="10px" />
       </Widgets>
     </Widget>
     <Widget xsi:type="widgets.brease.GroupBox" id="grpFileExplorerB" top="125" left="715" width="480" height="670" zIndex="15" text="Side B">
@@ -49,7 +49,7 @@
         <Widget xsi:type="widgets.brease.Button" id="btnClearFilterB" top="43" left="429" width="30" zIndex="30" text="X" cornerRadius="5px" />
         <Widget xsi:type="widgets.brease.Label" id="labExpNewNameB" top="548" left="14" width="91" height="25" zIndex="31" text="New Name" textAlign="right" />
         <Widget xsi:type="widgets.brease.Button" id="btnExpRenameB" top="588" left="319" width="140" height="35" zIndex="32" text="Rename" cornerRadius="10px" />
-        <Widget xsi:type="widgets.brease.Button" id="btnViewFileB" top="460" left="234" height="35" zIndex="33" text="Open" cornerRadius="10px" />
+        <Widget xsi:type="widgets.brease.Button" id="btnViewFileB" top="460" left="234" height="35" zIndex="33" text="View" cornerRadius="10px" />
       </Widgets>
     </Widget>
     <Widget xsi:type="widgets.brease.GroupBox" id="grpFileExplorerStatus" top="5" left="5" width="1190" height="115" zIndex="1" text="Status">
