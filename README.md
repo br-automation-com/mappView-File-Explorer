@@ -22,10 +22,6 @@ Recommended task class is #8 with a 10ms cycle time.
 <a name="Revision-History"></a>
 ## Revision History
 
-#### Version 0.8
-- Added function for generating list box data provider
-- Fixed typos, cleaned up binding file
-- Created individual packages for NET and USB
-- Fixed enable/disable
-- Added message box before deleting an item
+#### Version 0.9
+- Added function to view files by double click or command
 
