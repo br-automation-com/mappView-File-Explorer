@@ -25,9 +25,9 @@ PROGRAM _CYCLIC
 	// ------------------------------------------------------------------------------------------------
 	// Set switches for HMI
 	IF(EXPL.DAT[side].item_num > 0) THEN
-		EXPL.VIS[side].enable_copy_delete := 1;
+		EXPL.VIS[side].enable_button_set_1 := 1;
 	ELSE
-		EXPL.VIS[side].enable_copy_delete := 0;
+		EXPL.VIS[side].enable_button_set_1 := 0;
 	END_IF
 
 	// ------------------------------------------------------------------------------------------------
@@ -41,24 +41,26 @@ PROGRAM _CYCLIC
 
 	// ------------------------------------------------------------------------------------------------
 	// Handle double click for directory change
-	IF(EXPL.VIS[side].double_click_dir_change > 0) THEN
+	IF(EXPL.VIS[side].double_click_event > 0) THEN
 		DoubleClickDirChange.PT := 50;
 		DoubleClickDirChange.IN := 1;
 		DoubleClickDirChange();
-		IF(EXPL.VIS[side].double_click_dir_change > 1) THEN
+		IF(EXPL.VIS[side].double_click_event > 1) THEN
 			DoubleClickDirChange.IN := 0;
 			DoubleClickDirChange();
-			EXPL.VIS[side].double_click_dir_change := 0;
+			EXPL.VIS[side].double_click_event := 0;
 			IF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) = 0 OR EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '..') THEN
 				EXPL.CMD[side].dir_change := 1;
+			ELSE
+				EXPL.CMD[side].view_file := 1;
 			END_IF
 		END_IF
 	END_IF
 	IF(DoubleClickDirChange.Q) THEN
 		DoubleClickDirChange.IN := 0;
 		DoubleClickDirChange();
-		IF(EXPL.VIS[side].double_click_dir_change > 0) THEN
-			EXPL.VIS[side].double_click_dir_change := EXPL.VIS[side].double_click_dir_change - 1;
+		IF(EXPL.VIS[side].double_click_event > 0) THEN
+			EXPL.VIS[side].double_click_event := EXPL.VIS[side].double_click_event - 1;
 		END_IF
 	END_IF
 
@@ -89,7 +91,7 @@ PROGRAM _CYCLIC
 
 	// ------------------------------------------------------------------------------------------------
 	// Break if no command is set
-	IF (EXPL.CMD[side].refresh = 0 AND EXPL.CMD[side].dir_change = 0 AND EXPL.CMD[side].dir_create = 0 AND EXPL.CMD[side].copy = 0 AND EXPL.CMD[side].copy_all = 0 AND EXPL.CMD[side].delete = 0 AND EXPL.CMD[side].rename = 0) THEN
+	IF (EXPL.CMD[side].refresh = 0 AND EXPL.CMD[side].dir_change = 0 AND EXPL.CMD[side].dir_create = 0 AND EXPL.CMD[side].copy = 0 AND EXPL.CMD[side].copy_all = 0 AND EXPL.CMD[side].delete = 0 AND EXPL.CMD[side].rename = 0 AND EXPL.CMD[side].view_file = 0) THEN
 		// --------------------------------------------------------------------------------------------
 		// Show current state
 		EXPL.status := 'Waiting...';
@@ -100,15 +102,15 @@ PROGRAM _CYCLIC
 		END_IF
 		side := NOT side;
 		// Enable buttons when command is active
-		EXPL.VIS[0].enable_refresh_create := 1;
-		EXPL.VIS[1].enable_refresh_create := 1;
+		EXPL.VIS[0].enable_button_set_2 := 1;
+		EXPL.VIS[1].enable_button_set_2 := 1;
 		RETURN;
 	END_IF
 	// Disable buttons when command is active
-	EXPL.VIS[0].enable_copy_delete := 0;
-	EXPL.VIS[1].enable_copy_delete := 0;
-	EXPL.VIS[0].enable_refresh_create := 0;
-	EXPL.VIS[1].enable_refresh_create := 0;
+	EXPL.VIS[0].enable_button_set_1 := 0;
+	EXPL.VIS[1].enable_button_set_1 := 0;
+	EXPL.VIS[0].enable_button_set_2 := 0;
+	EXPL.VIS[1].enable_button_set_2 := 0;
 	//**************************************************************************************************
 	// Cyclic Part
 	//**************************************************************************************************
@@ -175,6 +177,11 @@ PROGRAM _CYCLIC
 				step := EXP_COPY_ALL;
 			END_IF
 			// ----------------------------------------------------------------------------------------
+			// Command copy all
+			IF (EXPL.CMD[side].view_file = 1) THEN
+				step := EXP_FILE_VIEW;
+			END_IF
+			// ----------------------------------------------------------------------------------------
 			// Command delete
 			IF (EXPL.CMD[side].delete = 1) THEN
 			// ------------------------------------------------------------------------------------
@@ -213,14 +220,12 @@ PROGRAM _CYCLIC
 			END_IF
 			// ----------------------------------------------------------------------------------------
 			// Clear errors
-			IF (EXPL.CMD[side].refresh	= 1 OR EXPL.CMD[side].copy = 1 OR	EXPL.CMD[side].copy_all = 1 OR 	EXPL.CMD[side].dir_create = 1 OR EXPL.CMD[side].delete = 1) THEN
-				EXPL.ERR.text	:= '';
-				EXPL.ERR.no   	:= 0;
-				EXPL.ERR.state 	:= 0;
+			IF (EXPL.CMD[side].refresh	= 1 OR EXPL.CMD[side].copy = 1 OR	EXPL.CMD[side].copy_all = 1 OR 	EXPL.CMD[side].dir_create = 1 OR EXPL.CMD[side].delete = 1 OR EXPL.CMD[side].view_file = 1) THEN
+				brsmemset(ADR(EXPL.ERR), 0, SIZEOF(EXPL.ERR));
 			END_IF
 
-		//**********************************************************************************************
-		// Read directory information
+			//**********************************************************************************************
+			// Read directory information
 		//**********************************************************************************************
 		EXP_READ_DIR:
 			// Show current state
@@ -615,6 +620,27 @@ PROGRAM _CYCLIC
 				step := CreateError(FRename.status, side, step, 'error renaming file', ADR(EXPL));
 			END_IF
 		//**********************************************************************************************
+		// View selected file
+		//**********************************************************************************************
+		EXP_FILE_VIEW:		
+			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str1));
+			FOR lx:=0 TO SIZEOF(EXPL_VIEW_FILTER)/SIZEOF(EXPL_VIEW_FILTER[0]) - 1 DO
+				IF(brsstrlen(ADR(tmp_str1)) >= brsstrlen(ADR(EXPL_VIEW_FILTER[lx])) AND EXPL_VIEW_FILTER[lx] <> '') THEN
+					// -------------------------------------------------------------------------------- 		
+					// Verify that file name contains filter											
+					IF(brsmemcmp(ADR(tmp_str1) + brsstrlen(ADR(tmp_str1)) - brsstrlen(ADR(EXPL_VIEW_FILTER[lx])) , ADR(EXPL_VIEW_FILTER[lx]), brsstrlen(ADR(EXPL_VIEW_FILTER[lx]))) = 0) THEN
+						EXPL.VIS[side].view_file_path := '/FileDevice:';
+						brsstrcat(ADR(EXPL.VIS[side].view_file_path), ADR(EXPL.PAR[side].device_active));
+						brsstrcat(ADR(EXPL.VIS[side].view_file_path), ADR(tmp_str1));
+						EXPL.CMD[side].view_file := FALSE;
+						EXPL.VIS[side].view_file := TRUE;
+						step := EXP_WAIT;
+						RETURN;
+					END_IF
+				END_IF
+			END_FOR;
+			step := CreateError(FRename.status, side, step, 'error this file extension is not supported for viewing', ADR(EXPL));	
+			//**********************************************************************************************
 		// Create new directory
 		//**********************************************************************************************
 		EXP_DIR_CREATE:

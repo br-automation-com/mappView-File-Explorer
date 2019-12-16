@@ -1,3 +1,6 @@
+Version 0.9
+- Added function to view files by double click or command
+
 Version 0.8
 - Added function for generating list box data provider
 - Fixed typos, cleaned up binding file

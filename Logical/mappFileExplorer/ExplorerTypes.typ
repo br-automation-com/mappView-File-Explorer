@@ -20,6 +20,7 @@ TYPE
 		EXP_FILE_COPY,
 		EXP_FILE_DELETE,
 		EXP_FILE_RENAME,
+		EXP_FILE_VIEW,
 		EXP_DIR_COPY,
 		EXP_DIR_CREATE,
 		EXP_DIR_DELETE,
@@ -36,6 +37,7 @@ TYPE
 		dir_create : BOOL; (* Create a new directory *)
 		copy : BOOL; (* Copy selected item from device a TO device b *)
 		copy_all : BOOL; (* Copy all items from device a TO device b	*)
+		view_file : BOOL;
 		delete : BOOL; (* Delete selected file *)
 		rename : BOOL;
 	END_STRUCT;
@@ -53,9 +55,11 @@ TYPE
 	END_STRUCT;
 	expVIS : 	STRUCT 
 		item_selected : UINT; (*Current selected file *)
-		enable_copy_delete : BOOL; (*Enable or disable buttons copy and delete*)
-		enable_refresh_create : BOOL; (*Enable or disable buttons refresh and create*)
-		double_click_dir_change : USINT; (*Helper variable for double click in item list*)
+		enable_button_set_1 : BOOL; (*Enable or disable buttons copy and delete*)
+		enable_button_set_2 : BOOL; (*Enable or disable buttons refresh and create*)
+		view_file_path : STRING[EXPL_DIR_PATH_LENGTH]; (*Full path for viewing file*)
+		view_file : BOOL; (*Show message box on error*)
+		double_click_event : USINT; (*Helper variable for double click in item list*)
 		device_list : ARRAY[0..4]OF STRING[80]; (* Device name *)
 	END_STRUCT;
 	expMAIN : 	STRUCT 

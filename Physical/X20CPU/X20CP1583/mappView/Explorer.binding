@@ -1,20 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <BindingsSet xmlns="http://www.br-automation.com/iat2015/binding/engineering/v2" xmlns:be="http://www.br-automation.com/iat2015/bindingListEmbedded/engineering/v2" xmlns:bt="http://www.br-automation.com/iat2015/bindingListTypes/engineering/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Explorer_binding">
 	<Bindings>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_refresh_create" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_2" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="flyConfiguration" attribute="enable" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_1" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnClearFilterB" attribute="enable" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_1" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtFilterA" attribute="enable" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_1" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnClearFilterA" attribute="enable" />
 		</Binding>
 		<Binding mode="twoWay">
@@ -26,7 +26,7 @@
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirB" attribute="value" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_copy_delete" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtFilterB" attribute="enable" />
 		</Binding>
 		<Binding mode="oneWay">
@@ -78,27 +78,27 @@
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="tblDirectoryB" attribute="selectedRow" />
 		</Binding>	
 		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_1" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnCopyA" attribute="enable" />
 		</Binding>
 		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_1" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnDeleteA" attribute="enable" />
 		</Binding>
 		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_copy_delete" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_1" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnCopyAllA" attribute="enable" />
 		</Binding>
 		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_copy_delete" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnCopyB" attribute="enable" />
 		</Binding>
 		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_copy_delete" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnCopyAllB" attribute="enable" />
 		</Binding>
 		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_copy_delete" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnDeleteB" attribute="enable" />
 		</Binding>
 		<Binding mode="twoWay">
@@ -126,15 +126,15 @@
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbDeviceB" attribute="selectedValue" />
 		</Binding>
 		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_refresh_create" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_2" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnDirCreateA" attribute="visible" />
 		</Binding>
 		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_refresh_create" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_2" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnRefreshA" attribute="visible" />
 		</Binding>
 		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_refresh_create" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_2" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnRefreshB" attribute="enable" />
 		</Binding>
 		<Binding mode="oneWay">
@@ -142,7 +142,7 @@
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numErrorNo" attribute="value" />
 		</Binding>
 		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_refresh_create" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_2" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnDirCreateB" attribute="enable" />
 		</Binding>
 		<Binding mode="oneWay">
@@ -233,5 +233,13 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.active" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBreset" attribute="enable" />
 		</Binding>
-	</Bindings>
+	<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnViewFileB" attribute="enable" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_1" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnViewFileA" attribute="enable" />
+</Binding>
+</Bindings>
 </BindingsSet>
