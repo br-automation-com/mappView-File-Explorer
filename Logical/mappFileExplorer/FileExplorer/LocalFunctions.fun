@@ -1,8 +1,31 @@
 
+FUNCTION ReplaceString : BOOL
+	VAR_INPUT
+		dataSTR : UDINT;
+		searchSTR : UDINT;
+		replaceSTR : UDINT;
+	END_VAR
+	VAR
+		idx : UDINT;
+	END_VAR
+END_FUNCTION
+
 FUNCTION IsInstr : BOOL
 	VAR_INPUT
 		string1 : UDINT;
 		string2 : UDINT;
+	END_VAR
+	VAR
+		idx : UDINT;
+	END_VAR
+END_FUNCTION
+
+FUNCTION FindInMem : UDINT
+	VAR_INPUT
+		data1 : UDINT;
+		len1 : UDINT;
+		data2 : UDINT;
+		len2 : UDINT;
 	END_VAR
 	VAR
 		idx : UDINT;
@@ -14,7 +37,7 @@ END_FUNCTION
 		nr : UINT;
 		side : BOOL;
 		step : expSTATE;
-		text : STRING[100];
+		text : STRING[150];
 		EXPL : REFERENCE TO expMAIN;
 	END_VAR
 END_FUNCTION

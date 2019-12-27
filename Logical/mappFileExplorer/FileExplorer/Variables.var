@@ -19,8 +19,17 @@ VAR
 	tmp_str4 : STRING[EXPL_DIR_PATH_LENGTH]; (* Temporary STRING variable *)
 	lx : UDINT := 0; (* Index	*)
 	ly : UINT;
-	DoubleClickDirChange : TON_10ms;
+	double_click_timer : TON_10ms;
 	device_active_old : ARRAY[0..1] OF STRING[40];
+	response_header : httpResponseHeader_t;
+	response_header_data : STRING[300];
+	download_timeout : TON_10ms;
+	upload_response : ARRAY[0..1] OF STRING[600];
+	file_name_start : UDINT;
+	file_name_len : UDINT;
+	file_data_start : UDINT;
+	file_data_len : UDINT;
+	file_name : STRING[100];
 END_VAR
 (*Local function calls*)
 VAR
@@ -28,6 +37,11 @@ VAR
 	DOpen : DirOpen;
 	DRead : DirReadEx;
 	DClose : DirClose;
+	FWrite : FileWrite;
+	FCreate : FileCreate;
+	FOpen : FileOpen;
+	FRead : FileReadEx;
+	FClose : FileClose;
 	FCopy : FileCopy;
 	FDelete : FileDelete;
 	FRename : FileRename;
@@ -36,6 +50,10 @@ VAR
 	DDelete : DirDeleteEx;
 	DRename : DirRename;
 	lDirReadData : fiDIR_READ_EX_DATA;
+	AsMemPartCreate_0 : AsMemPartCreate;
+	AsMemPartAllocClear_0 : AsMemPartAllocClear;
+	WebServiceUpload : ARRAY[0..1] OF httpService := [2((0))];
+	WebserviceDownload : httpService := (0);
 END_VAR
 (*Local constants*)
 VAR
@@ -47,4 +65,14 @@ VAR
 	ERR_DIR_EXCEEDS_MAX : UINT := 50201; (*Directory name exceeds maximum length*)
 	ERR_PATH_EXCEEDS_MAX : UINT := 50202; (*Directory path exceeds maximum length*)
 	ERR_PATH_CRITICAL : UINT := 50203; (*Directory path critical error*)
+	ERR_MEM_ALLOC : UINT := 50300; (*Memory allocation for file upload and download failed*)
+	ERR_MEM_DOWNLOAD : UINT := 50310; (*Size of download file exceeds maximum*)
+	ERR_TIMEOUT_DOWNLOAD : UINT := 50320; (*Download response timed out*)
+	ERR_DIR_DOWNLOAD : UINT := 50330; (*Directories can not be downloaded*)
+	ERR_POS_NAME_UPLOAD : UINT := 50400; (*Can not find filename in upload response*)
+	ERR_SIZE_NAME_UPLOAD : UINT := 50401; (*Can not determine end of filename in upload response*)
+	ERR_LEN_NAME_UPLOAD : UINT := 50402; (*Filename is too long in upload response*)
+	ERR_POS_DATA_UPLOAD : UINT := 50403; (*Can not find data in upload response*)
+	ERR_SIZE_DATA_UPLOAD : UINT := 50404; (*Can not determine end of data in upload response*)
+	ERR_MEM_UPLOAD : UINT := 50410; (*Size of upload file exceeds maximum size*)
 END_VAR

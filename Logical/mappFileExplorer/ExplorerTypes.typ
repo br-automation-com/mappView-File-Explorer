@@ -21,13 +21,23 @@ TYPE
 		EXP_FILE_DELETE,
 		EXP_FILE_RENAME,
 		EXP_FILE_VIEW,
+		EXP_FILE_DOWNLOAD,
+		EXP_FILE_DOWNLOAD_1,
+		EXP_FILE_DOWNLOAD_2,
+		EXP_FILE_DOWNLOAD_3,
+		EXP_FILE_DOWNLOAD_4,
+		EXP_FILE_UPLOAD,
+		EXP_FILE_UPLOAD_1,
+		EXP_FILE_UPLOAD_2,
+		EXP_FILE_UPLOAD_3,
+		EXP_FILE_UPLOAD_4,
 		EXP_DIR_COPY,
 		EXP_DIR_CREATE,
 		EXP_DIR_DELETE,
 		EXP_DIR_RENAME
 		);
 	expERR : 	STRUCT 
-		text : STRING[100]; (* Error text *)
+		text : STRING[150]; (* Error text *)
 		no : UINT; (* Error number *)
 		state : expSTATE; (* Error step *)
 	END_STRUCT;
@@ -40,6 +50,8 @@ TYPE
 		view_file : BOOL;
 		delete : BOOL; (* Delete selected file *)
 		rename : BOOL;
+		download : BOOL;
+		upload : BOOL;
 	END_STRUCT;
 	expPAR : 	STRUCT 
 		device_active : STRING[40]; (*Active device name *)
@@ -59,6 +71,8 @@ TYPE
 		enable_button_set_2 : BOOL; (*Enable or disable buttons refresh and create*)
 		view_file_path : STRING[EXPL_DIR_PATH_LENGTH]; (*Full path for viewing file*)
 		view_file : BOOL; (*Show message box on error*)
+		download_file_url : STRING[200]; (*File upload and download url*)
+		reload_upload : BOOL;
 		double_click_event : USINT; (*Helper variable for double click in item list*)
 		device_list : ARRAY[0..4]OF STRING[80]; (* Device name *)
 	END_STRUCT;

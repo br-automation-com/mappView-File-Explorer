@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?AutomationStudio Version="3.0.90.12"?>
+<Project xmlns="http://br-automation.co.at/AS/VC/Project">
+  <Property Name="EnableEvents" Value="False" />
+  <Property Name="SharedTargetResourceRoot" Value="" />
+  <SourceFiles>
+    <Source File="Languages.vcr" />
+    <Source File="TextGroups\AlarmAcknowledgeState.txtgrp" />
+    <Source File="TextGroups\AlarmBypassState.txtgrp" />
+    <Source File="TextGroups\AlarmEvent.txtgrp" />
+    <Source File="TextGroups\AlarmState.txtgrp" />
+    <Source File="TextGroups\DateTimeFormats.txtgrp" />
+    <Source File="TextGroups\httpURL_SDM.txtgrp" />
+    <Source File="UnitGroups\Length.vcug" />
+    <Source File="UnitGroups\Mass.vcug" />
+    <Source File="UnitGroups\Volume.vcug" />
+    <Source File="UnitGroups\Power.vcug" />
+    <Source File="UnitGroups\Memory.vcug" />
+    <Source File="UnitGroups\Pressure.vcug" />
+    <Source File="UnitGroups\Temperatures.vcug" />
+    <Source File="AlarmGroups\AlarmSystem.alcfg" />
+    <Source File="AlarmGroups\SystemAlarms.algrp" />
+    <Source File="DataSources\Internal.dso" />
+    <Source File="DataSources\DataSource.dso" />
+    <Source File="ControlVersion.cvinfo" />
+  </SourceFiles>
+</Project>

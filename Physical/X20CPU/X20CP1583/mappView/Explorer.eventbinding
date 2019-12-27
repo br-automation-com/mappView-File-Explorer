@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <EventBindingSet id="Explorer_eventbinding" xmlns="http://www.br-automation.com/iat2014/eventbinding/v2" xmlns:types="http://www.br-automation.com/iat2015/widgetTypes/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<Bindings>
+	<Bindings>		
 		<!-- //////////////////////////////////////////////// General events //////////////////////////////////////////////////////////////////////// />-->
 
 		<!-- Refresh directory data when page is loaded />-->
@@ -77,6 +77,43 @@
 		</EventBinding>
 		
 		<!-- //////////////////////////////////////////////// Events for side A //////////////////////////////////////////////////////////////////////// />-->
+
+		<!-- Download  button />-->
+		<EventBinding id="contentExplorer.btnDownloadFileA.Click">
+			<Source contentRefId="contentExplorer" widgetRefId="btnDownloadFileA" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[0].download" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- Reload upload button />-->
+		<EventBinding id="EXPL.VIS[0].reload_upload">
+			<Source xsi:type="opcUa.Event" refId="::AsGlobalPV:EXPL.VIS[0].reload_upload" event="ValueChanged" />
+			<EventHandler condition="newValue" >
+				<Sequence>
+					<!-- Set web viewer path />-->
+					<Step order="1">
+						<Action>              
+							<Target xsi:type="widgets.brease.WebViewer.Action" contentRefId="contentExplorer" widgetRefId="WebUploadA" >                                  
+								<Method xsi:type="widgets.brease.WebViewer.Action.Reload" />              
+							</Target>
+						</Action>
+					</Step>
+					<!-- Reset upload trigger button />-->
+					<Step order="2">
+						<Action>              
+							<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.VIS[0].reload_upload" >
+								<Method xsi:type="opcUa.NodeAction.SetValueBool" value="false" />
+							</Target>       
+						</Action>
+					</Step>
+				</Sequence>
+			</EventHandler>
+		</EventBinding>
 		
 		<!-- File open on button click />-->
 		<EventBinding id="contentExplorer.btnViewFileA.Click">
@@ -86,7 +123,7 @@
 					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[0].view_file" >
 						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
 					</Target>
-				</Action>			
+				</Action>	
 			</EventHandler>
 		</EventBinding>
 
@@ -248,6 +285,43 @@
 		</EventBinding>
 
 		<!-- //////////////////////////////////////////////// Events for side B //////////////////////////////////////////////////////////////////////// />-->
+		
+		<!-- Download  button />-->
+		<EventBinding id="contentExplorer.btnDownloadFileB.Click">
+			<Source contentRefId="contentExplorer" widgetRefId="btnDownloadFileB" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<EventHandler>
+				<Action>
+					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[1].download" >
+						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- Reload upload button />-->
+		<EventBinding id="EXPL.VIS[1].reload_upload">
+			<Source xsi:type="opcUa.Event" refId="::AsGlobalPV:EXPL.VIS[1].reload_upload" event="ValueChanged" />
+			<EventHandler condition="newValue" >
+				<Sequence>
+					<!-- Set web viewer path />-->
+					<Step order="1">
+						<Action>              
+							<Target xsi:type="widgets.brease.WebViewer.Action" contentRefId="contentExplorer" widgetRefId="WebUploadB" >                                  
+								<Method xsi:type="widgets.brease.WebViewer.Action.Reload" />              
+							</Target>
+						</Action>
+					</Step>
+					<!-- Reset upload trigger button />-->
+					<Step order="2">
+						<Action>              
+							<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.VIS[1].reload_upload" >
+								<Method xsi:type="opcUa.NodeAction.SetValueBool" value="false" />
+							</Target>       
+						</Action>
+					</Step>
+				</Sequence>
+			</EventHandler>
+		</EventBinding>
 		
 		<!-- File open on button click />-->
 		<EventBinding id="contentExplorer.btnViewFileB.Click">

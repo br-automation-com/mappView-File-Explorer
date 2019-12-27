@@ -233,13 +233,45 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.active" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBreset" attribute="enable" />
 		</Binding>
-	<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnViewFileB" attribute="enable" />
-</Binding>
-<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_1" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnViewFileA" attribute="enable" />
-</Binding>
-</Bindings>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnViewFileB" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_1" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnViewFileA" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_2" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="WebUploadA" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_2" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUploadFileA" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_1" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnDownloadFileA" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_2" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="WebUploadB" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_2" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUploadFileB" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnDownloadFileB" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].download_file_url" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="WebDownloadA" attribute="path" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].download_file_url" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="WebDownloadB" attribute="path" />
+		</Binding>
+	</Bindings>
 </BindingsSet>

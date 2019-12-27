@@ -20,13 +20,15 @@ FUNCTION CreateError
 	ELSIF (nr = fiERR_FILE_DEVICE) THEN
 		EXPL.ERR.text := 'device is not connected';
 	ELSIF (nr = fiERR_INVALID_PATH) THEN
-		EXPL.ERR.text := 'directory is too long or has invalid characters';
+		EXPL.ERR.text := 'directory is too long, does not exist or has invalid characters';
 	ELSIF (nr = fiERR_DIR_NOT_EXIST) THEN
 		EXPL.ERR.text := 'directory does not exist';
 	ELSIF (nr = fiERR_FILE_DEVICE) THEN
 		EXPL.ERR.text := 'directory path does not exist';
 	ELSIF (nr = fiERR_DIR_ALREADY_EXIST) THEN
-		EXPL.ERR.text := 'directory or file already exists';			
+		EXPL.ERR.text := 'directory or file already exists';
+	ELSIF (nr = fiERR_EXIST) THEN
+		EXPL.ERR.text := 'error uploading file already exists';
 	ELSE 
 		EXPL.ERR.text := text;
 	END_IF	
@@ -41,6 +43,8 @@ FUNCTION CreateError
 	// Set next step
 	IF (step = EXP_READ_DIR_2) THEN
 		CreateError := EXP_READ_DIR_3;
+	ELSIF(step = EXP_FILE_UPLOAD_2) THEN
+		CreateError := EXP_FILE_UPLOAD_3;
 	ELSE
 		// Reset all commands																				
 		brsmemset(ADR(EXPL.CMD[side]), 0, SIZEOF(EXPL.CMD[side]));
@@ -162,6 +166,36 @@ FUNCTION IsInstr
 		FOR idx:=0 TO brsstrlen(string1) - brsstrlen(string2) DO
 			IF (brsmemcmp(string1 + idx, string2, brsstrlen(string2)) = 0) THEN
 				IsInstr := TRUE;
+				EXIT;
+			END_IF
+		END_FOR;
+	END_IF
+END_FUNCTION
+
+//******************************************************************************************************
+// Find second data in first data																		
+//******************************************************************************************************
+FUNCTION FindInMem
+	IF (len1 > len2) THEN
+		FOR idx:=0 TO len1 - len2 DO
+			IF (brsmemcmp(data1 + idx, data2, len2) = 0) THEN
+				FindInMem := idx;
+				EXIT;
+			END_IF
+		END_FOR;
+	END_IF
+END_FUNCTION
+
+//******************************************************************************************************
+// Find and replace string																	
+//******************************************************************************************************
+FUNCTION ReplaceString
+	IF (brsstrlen(dataSTR) > brsstrlen(searchSTR)) THEN
+		FOR idx:=0 TO brsstrlen(dataSTR) - brsstrlen(searchSTR) DO
+			IF (brsmemcmp(dataSTR + idx, searchSTR, brsstrlen(searchSTR)) = 0) THEN
+				brsmemmove(dataSTR + idx + brsstrlen(replaceSTR), dataSTR + idx + brsstrlen(searchSTR), brsstrlen(dataSTR) - idx - brsstrlen(searchSTR));
+				brsmemcpy(dataSTR + idx, replaceSTR, brsstrlen(replaceSTR));
+				ReplaceString := TRUE;
 				EXIT;
 			END_IF
 		END_FOR;
