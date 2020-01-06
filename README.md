@@ -22,6 +22,8 @@ Recommended task class is #8 with a 10ms cycle time.
 <a name="Revision-History"></a>
 ## Revision History
 
-#### Version 0.9
-- Added function to view files by double click or command
+#### Version 1.0
+- Added support for file download over mappView
+- Added support for file upload over mappView
+- Code cleanup
 
