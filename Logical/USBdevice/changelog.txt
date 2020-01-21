@@ -1,2 +1,5 @@
+Version 0.2
+- Support for multiple usb sticks
+
 Version 0.1
 - First public release

@@ -21,7 +21,11 @@
           <Variable Name="PAR" />
           <Variable Name="ERR" />
         </Variable>
-        <Variable Name="USB" AutomaticEnable="True" />
+        <Variable Name="USB" AutomaticEnable="True">
+          <Variable Name="PAR">
+            <Variable Name="is_connected" EnableArrayElements="True" />
+          </Variable>
+        </Variable>
         <Variable Name="EXPL" AutomaticEnable="True">
           <Variable Name="CMD" EnableArrayElements="True" />
           <Variable Name="PAR" EnableArrayElements="True" />

@@ -5,7 +5,8 @@ TYPE
 		USB_WAIT, (*Wait for starting the Function chain*)
 		USB_CREATE_NODE_ID_LIST, (*Create a list of Node-IDs from all active USB devices*)
 		USB_READ_DEVICE_DATA, (*Read out the specific data from the Node-IDs*)
-		USB_CHECK_DEVICE, (*Check file device data*)
+		USB_CHECK_LINKED, (*Check if device is still connected*)
+		USB_LINK_NEW,
 		USB_LINK_DEVICE, (*Link file device*)
 		USB_UNLINK_DEVICE, (*Unlink the File Device from specific path*)
 		USB_ERROR (*Jump to this step in every case of Error occuring in the Function chain*)
@@ -18,7 +19,8 @@ TYPE
 		state_machine : usbSTATE; (*State machine*)
 		ignore_dongle : BOOL := TRUE; (*Ignoe B&R license dongle*)
 		refresh_interval : UINT := 300; (*Intervall timer for USB device refresh*)
-		is_connected : BOOL; (*Shows if a USB stick is connected*)
+		is_connected : ARRAY[1..USB_MAX_CNT]OF BOOL; (*Shows if a USB stick is connected*)
+		link_handle : ARRAY[1..USB_MAX_CNT]OF UDINT;
 	END_STRUCT;
 	usbERR : 	STRUCT 
 		no : UINT; (*Error number*)

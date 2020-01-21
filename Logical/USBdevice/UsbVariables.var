@@ -1,3 +1,6 @@
 VAR
 	USB : usbMAIN;
 END_VAR
+VAR CONSTANT
+	USB_MAX_CNT : USINT := 3; (*Maximum number of keys that are supported*)
+END_VAR

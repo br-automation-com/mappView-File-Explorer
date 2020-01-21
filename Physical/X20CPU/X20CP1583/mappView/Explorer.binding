@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <BindingsSet xmlns="http://www.br-automation.com/iat2015/binding/engineering/v2" xmlns:be="http://www.br-automation.com/iat2015/bindingListEmbedded/engineering/v2" xmlns:bt="http://www.br-automation.com/iat2015/bindingListTypes/engineering/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Explorer_binding">
 	<Bindings>
 		<Binding mode="twoWay">
@@ -205,13 +205,9 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.refresh_interval" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numUSBintervall" attribute="value" />
 		</Binding>	
-		<Binding mode="twoWay">
+		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.state_machine" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbUSBstatus" attribute="selectedIndex" />
-		</Binding>
-		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.is_connected" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBconnected" attribute="value" />
 		</Binding>
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.ignore_dongle" attribute="value" />
@@ -273,5 +269,25 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].download_file_url" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="WebDownloadB" attribute="path" />
 		</Binding>
-	</Bindings>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.is_connected[1]" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBconnected1" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.is_connected[2]" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBconnected2" attribute="value" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.is_connected[3]" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBconnected3" attribute="value" />
+		</Binding>
+	<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnExpRenameB" attribute="enable" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnExpRenameA" attribute="enable" />
+</Binding>
+</Bindings>
 </BindingsSet>

@@ -11,9 +11,21 @@ END_VAR
 (*Local variables*)
 VAR
 	device_param : STRING[80]; (*Connection path of USB device*)
-	usb_data : ARRAY[0..4] OF usbNode_typ; (*Data of all available USB devices*)
-	usb_data_linked : usbNode_typ; (*Data of the linked device*)
-	node_id_buffer : ARRAY[0..4] OF UDINT; (*Different nodeIDs saved in array-elements*)
+	device_name : STRING[40]; (*Connection path of USB device*)
+	usb_data : ARRAY[1..USB_MAX_CNT] OF usbNode_typ; (*Data of all available USB devices*)
+	usb_data_old : ARRAY[1..USB_MAX_CNT] OF usbNode_typ; (*Old data of all available USB devices*)
+	node_id_buffer : ARRAY[1..USB_MAX_CNT] OF UDINT; (*Different nodeIDs saved in array-elements*)
+	is_linked : BOOL;
 	node : USINT; (*Node number*)
 	idx : USINT;
+	tmpSTR : STRING[10];
+END_VAR
+(*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
+(*Local constants*)
+VAR CONSTANT
+	BRvendorId : UINT := 1615; (*B&R vendor id*)
+	BRproductId : UINT := 1001; (*B&R dongle product id*)
+END_VAR
+VAR
+	ERR_MAX_DEVICE : UINT := 50000; (*Maximum number of dongles reached*)
 END_VAR

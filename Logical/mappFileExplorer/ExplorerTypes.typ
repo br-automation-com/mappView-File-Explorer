@@ -55,7 +55,7 @@ TYPE
 	END_STRUCT;
 	expPAR : 	STRUCT 
 		device_active : STRING[40]; (*Active device name *)
-		device_list : ARRAY[0..4]OF STRING[40]; (*List of all devices*)
+		device_list : ARRAY[0..6]OF STRING[40]; (*List of all devices*)
 		item_filter : STRING[EXPL_ITEM_LENGTH]; (*Only show files with this extension	*)
 		new_name : STRING[EXPL_ITEM_LENGTH]; (*Name for for directory create and rename*)
 		dir_path : STRING[EXPL_DIR_PATH_LENGTH]; (*Current directory path	*)
