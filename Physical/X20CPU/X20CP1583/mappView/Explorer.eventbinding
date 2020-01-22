@@ -325,7 +325,7 @@
 		
 		<!-- File open on button click />-->
 		<EventBinding id="contentExplorer.btnViewFileB.Click">
-			<Source contentRefId="contentExplorer" widgetRefId="btnViewFileA" xsi:type="widgets.brease.Button.Event" event="Click" />
+			<Source contentRefId="contentExplorer" widgetRefId="btnViewFileB" xsi:type="widgets.brease.Button.Event" event="Click" />
 			<EventHandler>
 				<Action>
 					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[1].view_file" >
