@@ -44,16 +44,16 @@ TYPE
 		state : expSTATE; (* Error step *)
 	END_STRUCT;
 	expCMD : 	STRUCT 
-		refresh : BOOL; (* Read directory and file names from devices *)
-		dir_change : BOOL; (* Change current directory *)
-		dir_create : BOOL; (* Create a new directory *)
-		copy : BOOL; (* Copy selected item from device a TO device b *)
-		copy_all : BOOL; (* Copy all items from device a TO device b	*)
-		view_file : BOOL;
-		delete : BOOL; (* Delete selected file *)
-		rename : BOOL;
-		download : BOOL;
-		upload : BOOL;
+		refresh : BOOL; (*Read directory and file names from devices *)
+		dir_change : BOOL; (*Change current directory *)
+		dir_create : BOOL; (*Create a new directory *)
+		copy : BOOL; (*Copy selected item from device a TO device b *)
+		copy_all : BOOL; (*Copy all items from device a TO device b	*)
+		view_file : BOOL; (*View selected file in mappView*)
+		delete : BOOL; (*Delete selected file *)
+		rename : BOOL; (*Rename selected file*)
+		download : BOOL; (*Download selected file*)
+		upload : BOOL; (*Upload file to target*)
 	END_STRUCT;
 	expPAR : 	STRUCT 
 		device_active : STRING[40]; (*Active device name *)
