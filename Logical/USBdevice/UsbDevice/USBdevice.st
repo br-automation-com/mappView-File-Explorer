@@ -108,7 +108,7 @@ PROGRAM _CYCLIC
 			FOR idx:=1 TO USB_MAX_CNT DO
 				// Compare old and new data
 				IF(brsmemcmp(ADR(usb_data_old[node]), ADR(usb_data[idx]), SIZEOF(usb_data[idx])) = 0) AND 
-				  (USB.PAR.ignore_dongle = FALSE OR (usb_data[node].productId <> BRproductId AND usb_data[node].vendorId <> BRvendorId)) THEN
+				  (USB.PAR.ignore_dongle = FALSE OR (USB.PAR.ignore_dongle = TRUE AND usb_data[idx].productId <> BRproductId AND usb_data[idx].vendorId <> BRvendorId)) THEN
 					// Clear data, mark as linked and exit loop
 					brsmemset(ADR(usb_data[idx]), 0, SIZEOF(usb_data[idx]));
 					is_linked := TRUE;
