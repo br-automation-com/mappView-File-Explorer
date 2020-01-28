@@ -283,6 +283,34 @@
 				</Action>
 			</EventHandler>
 		</EventBinding>
+		
+		<!-- Opens overwrite message box for side A  />-->
+		<EventBinding id="OpenMessageBoxOverwriteA">
+			<Source xsi:type="opcUa.Event" refId="::AsGlobalPV:EXPL.VIS[0].upload_overwrite_request" event="ValueChanged" />
+			<EventHandler condition="newValue">
+				<Action>
+					<Target xsi:type="clientSystem.Action">
+						<Method xsi:type="clientSystem.Action.ShowMessageBox" type="YesNo" message="Item already exists. Do you want to overwrite it?" header="Overwrite?" icon="Question"  />
+					</Target>
+					<Result>
+						<ResultHandler condition="result = 1">
+							<Action>
+								<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.VIS[0].upload_overwrite_response" >
+									<Method xsi:type="opcUa.NodeAction.SetValueNumber" value="1" />
+								</Target>
+							</Action>
+						</ResultHandler>
+						<ResultHandler condition="result = 2">
+							<Action>
+								<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.VIS[0].upload_overwrite_response" >
+									<Method xsi:type="opcUa.NodeAction.SetValueNumber" value="2" />
+								</Target>
+							</Action>
+						</ResultHandler>
+					</Result>
+				</Action>
+			</EventHandler>
+		</EventBinding>
 
 		<!-- //////////////////////////////////////////////// Events for side B //////////////////////////////////////////////////////////////////////// />-->
 		
@@ -488,6 +516,34 @@
 					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.CMD[1].rename" >
 						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
 					</Target>
+				</Action>
+			</EventHandler>
+		</EventBinding>
+		
+		<!-- Opens overwrite message box for side A  />-->
+		<EventBinding id="OpenMessageBoxOverwriteB">
+			<Source xsi:type="opcUa.Event" refId="::AsGlobalPV:EXPL.VIS[1].upload_overwrite_request" event="ValueChanged" />
+			<EventHandler condition="newValue">
+				<Action>
+					<Target xsi:type="clientSystem.Action">
+						<Method xsi:type="clientSystem.Action.ShowMessageBox" type="YesNo" message="Item already exists. Do you want to overwrite it?" header="Overwrite?" icon="Question"  />
+					</Target>
+					<Result>
+						<ResultHandler condition="result = 1">
+							<Action>
+								<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.VIS[1].upload_overwrite_response" >
+									<Method xsi:type="opcUa.NodeAction.SetValueNumber" value="1" />
+								</Target>
+							</Action>
+						</ResultHandler>
+						<ResultHandler condition="result = 2">
+							<Action>
+								<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:EXPL.VIS[1].upload_overwrite_response" >
+									<Method xsi:type="opcUa.NodeAction.SetValueNumber" value="2" />
+								</Target>
+							</Action>
+						</ResultHandler>
+					</Result>
 				</Action>
 			</EventHandler>
 		</EventBinding>

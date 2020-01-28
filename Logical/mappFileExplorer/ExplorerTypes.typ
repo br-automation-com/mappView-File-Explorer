@@ -34,7 +34,9 @@ TYPE
 		EXP_DIR_COPY,
 		EXP_DIR_CREATE,
 		EXP_DIR_DELETE,
-		EXP_DIR_RENAME
+		EXP_DIR_RENAME,
+		EXP_OVERWRITE_1,
+		EXP_OVERWRITE_2
 		);
 	expERR : 	STRUCT 
 		text : STRING[150]; (* Error text *)
@@ -72,7 +74,9 @@ TYPE
 		view_file_path : STRING[EXPL_DIR_PATH_LENGTH]; (*Full path for viewing file*)
 		view_file : BOOL; (*Show message box on error*)
 		download_file_url : STRING[200]; (*File upload and download url*)
-		reload_upload : BOOL;
+		upload_overwrite_request : BOOL; (*Show message box to overwrite file*)
+		upload_overwrite_response : USINT; (*Response from message box overwrite file*)
+		reload_upload : BOOL; (*Reload upload button*)
 		double_click_event : USINT; (*Helper variable for double click in item list*)
 		device_list : ARRAY[0..4]OF STRING[80]; (* Device name *)
 	END_STRUCT;

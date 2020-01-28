@@ -210,10 +210,9 @@ PROGRAM _CYCLIC
 				// Make sure that user chooses a valid item
 				IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '..') THEN
 					step := CreateError(ERR_INVALID_ITEM_NAME, side, step, 'this is not a valid item name', ADR(EXPL));
-				ELSIF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) = 0)	THEN
-					step := EXP_DIR_COPY;
 				ELSE
-					step := EXP_FILE_COPY;
+					item_name := EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected];
+					step := EXP_OVERWRITE_1;
 				END_IF
 			END_IF
 			// ----------------------------------------------------------------------------------------
@@ -256,9 +255,11 @@ PROGRAM _CYCLIC
 					step := CreateError(ERR_INVALID_ITEM_NAME, side, step, 'this is not a valid item name', ADR(EXPL));
 				// Delete a directory
 				ELSIF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) = 0)	THEN
+					item_name := EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected];
 					step := EXP_DIR_DELETE;
 				// Delete a file
 				ELSE
+					item_name := EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected];
 					step := EXP_FILE_DELETE;
 				END_IF
 			END_IF
@@ -634,7 +635,7 @@ PROGRAM _CYCLIC
 
 			// ----------------------------------------------------------------------------------------
 			// Initialize file delete structure
-			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str3));
+			CreateCompletePath(EXPL.PAR[side].dir_path, item_name, ADR(tmp_str3));
 			FDelete.enable		:= 1;
 			FDelete.pDevice 	:= ADR(EXPL.PAR[side].device_active);
 			FDelete.pName		:= ADR(tmp_str3);
@@ -643,10 +644,15 @@ PROGRAM _CYCLIC
 			// ----------------------------------------------------------------------------------------
 			// OK
 			IF (FDelete.status = OK) THEN
-				// Reset command and return to wait state
-				EXPL.CMD[side].delete 	:= 0;
-				EXPL.CMD[side].refresh  := 1;
-				step := EXP_WAIT;
+				// Reset command delete and return to wait state
+				IF(EXPL.CMD[side].delete = TRUE) THEN
+					EXPL.CMD[side].delete 	:= 0;
+					EXPL.CMD[side].refresh  := 1;
+					step := EXP_WAIT;
+				// Proceed with command upload
+				ELSE
+					step := EXP_FILE_UPLOAD_1;
+				END_IF
 			// Error
 			ELSIF (FDelete.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(FDelete.status, side, step, 'error deleting file', ADR(EXPL));
@@ -863,10 +869,10 @@ PROGRAM _CYCLIC
 					file_name_len := FindInMem(AsMemPartAllocClear_0.mem+file_name_start, WebServiceUpload[side].requestDataLen-file_name_start, ADR('"$r$n'), brsstrlen(ADR('"$r$n')));
 					IF(file_name_len > 0) THEN
 						// Make sure file name is not too long
-						IF(file_name_len <= SIZEOF(file_name)) THEN
+						IF(file_name_len <= SIZEOF(item_name)) THEN
 							// Store file name
-							brsmemset(ADR(file_name), 0, SIZEOF(file_name));
-							brsmemcpy(ADR(file_name), AsMemPartAllocClear_0.mem+file_name_start, file_name_len);
+							brsmemset(ADR(item_name), 0, SIZEOF(item_name));
+							brsmemcpy(ADR(item_name), AsMemPartAllocClear_0.mem+file_name_start, file_name_len);
 							// Find start of data
 							file_data_start := FindInMem(AsMemPartAllocClear_0.mem, WebServiceUpload[side].requestDataLen, ADR('Content-Type:'), brsstrlen(ADR('Content-Type:'))) + brsstrlen(ADR('Content-Type:'));
 							IF(file_data_start > 0) THEN
@@ -875,7 +881,7 @@ PROGRAM _CYCLIC
 								file_data_len := FindInMem(AsMemPartAllocClear_0.mem+file_data_start, WebServiceUpload[side].requestDataLen-file_data_start, ADR('$r$n------'), brsstrlen(ADR('$r$n------')));
 								// When file name and data is correct procceed with saving data to file
 								IF(file_data_len > 0) THEN
-									step := EXP_FILE_UPLOAD_1;
+									step := EXP_OVERWRITE_1;
 									RETURN;
 								ELSE
 									step := CreateError(ERR_SIZE_DATA_UPLOAD, side, step, 'data end not found in upload response', ADR(EXPL));
@@ -909,13 +915,14 @@ PROGRAM _CYCLIC
 			EXPL.VIS[side].reload_upload := TRUE;
 			WebServiceUpload[side].enable := FALSE;
 			WebServiceUpload[side]();
+
 		//**********************************************************************************************
 		// Upload file
 		//**********************************************************************************************
 		EXP_FILE_UPLOAD_1:		
 			// ----------------------------------------------------------------------------------------
 			// Initialize file create structure
-			CreateCompletePath(EXPL.PAR[side].dir_path, file_name, ADR(tmp_str1));
+			CreateCompletePath(EXPL.PAR[side].dir_path, item_name, ADR(tmp_str1));
 			FCreate.enable	:= TRUE;
 			FCreate.pDevice := ADR(EXPL.PAR[side].device_active);
 			FCreate.pFile	:= ADR(tmp_str1);
@@ -1018,7 +1025,7 @@ PROGRAM _CYCLIC
 
 			// ----------------------------------------------------------------------------------------
 			// Initialize directory delete structure
-			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str3));
+			CreateCompletePath(EXPL.PAR[side].dir_path, item_name, ADR(tmp_str3));
 			DDelete.enable	:= 1;
 			DDelete.pDevice := ADR(EXPL.PAR[side].device_active);
 			DDelete.pName 	:= ADR(tmp_str3);
@@ -1063,6 +1070,55 @@ PROGRAM _CYCLIC
 			ELSIF (DRename.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(DRename.status, side, step, 'error renaming directory', ADR(EXPL));
 			END_IF
+		//**********************************************************************************************
+		// Overwrite file - Check if file exists
+		//**********************************************************************************************
+		EXP_OVERWRITE_1:					
+			// ----------------------------------------------------------------------------------------
+			// Checking for files with the same name
+			EXPL.VIS[side].upload_overwrite_response := 0;
+			
+			FOR lx:=0 TO EXPL.DAT[side].item_num DO	
+				IF((EXPL.CMD[side].copy = TRUE AND EXPL.DAT[NOT side].item_list[lx] = item_name) OR (EXPL.CMD[side].upload = TRUE AND EXPL.DAT[side].item_list[lx] = item_name)) THEN
+					EXPL.VIS[side].upload_overwrite_request	:= TRUE;
+					step := EXP_OVERWRITE_2;
+					RETURN;	 
+				END_IF;
+			END_FOR;
+			EXPL.VIS[side].upload_overwrite_response := YES;
+			step := EXP_OVERWRITE_2;
+		//**********************************************************************************************
+		// Overwrite file - Wait for message box response
+		//**********************************************************************************************
+		EXP_OVERWRITE_2:
+			// Overwrite file
+			IF(EXPL.VIS[side].upload_overwrite_response = YES) THEN
+				// Proceed with copy command
+				IF(EXPL.CMD[side].copy = TRUE) THEN
+					IF(brsmemcmp(ADR(item_name), ADR('(DIR)'), 5) = 0)	THEN
+						step := EXP_DIR_COPY;
+					ELSE
+						step := EXP_FILE_COPY;
+					END_IF
+				// Proceed with upload command
+				ELSE
+					step := EXP_FILE_DELETE;
+				END_IF
+				EXPL.VIS[side].upload_overwrite_request	:= FALSE;
+			// Do not overwrite file
+			ELSIF(EXPL.VIS[side].upload_overwrite_response = NO) THEN
+				// Reset upload command
+				brsmemset(AsMemPartAllocClear_0.mem, 0, EXPL_UPLOAD_DOWNLOAD_SIZE);
+				WebServiceUpload[side].enable := FALSE;
+				WebServiceUpload[side]();
+				EXPL.CMD[side].upload := 0;
+				EXPL.VIS[side].reload_upload := TRUE;
+				// Reset copy command				
+				EXPL.CMD[side].copy	:= 0;
+
+				EXPL.VIS[side].upload_overwrite_request	:= FALSE;
+				step := EXP_WAIT;
+			END_IF		
 	END_CASE
 
 END_PROGRAM

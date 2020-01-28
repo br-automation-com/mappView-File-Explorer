@@ -1,6 +1,7 @@
 Version 1.1
 - Fixed file open click event
 - Added support multiple USB sticks
+- Added message box when uploading or copying file that exists on target
 - Fixed button rename is not disabled when command is running
 
 Version 1.0
