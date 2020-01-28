@@ -22,8 +22,10 @@ Recommended task class is #8 with a 10ms cycle time.
 <a name="Revision-History"></a>
 ## Revision History
 
-#### Version 1.0
-- Added support for file download over mappView
-- Added support for file upload over mappView
-- Code cleanup
+#### Version 1.1
+- Fixed file open click event
+- Added support multiple USB sticks
+- Added message box when uploading or copying file that exists on target
+- Fixed button rename is not disabled when command is running
+
 
