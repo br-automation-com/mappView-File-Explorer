@@ -193,7 +193,7 @@ FUNCTION ReplaceString
 	IF (brsstrlen(dataSTR) > brsstrlen(searchSTR)) THEN
 		FOR idx:=0 TO brsstrlen(dataSTR) - brsstrlen(searchSTR) DO
 			IF (brsmemcmp(dataSTR + idx, searchSTR, brsstrlen(searchSTR)) = 0) THEN
-				brsmemmove(dataSTR + idx + brsstrlen(replaceSTR), dataSTR + idx + brsstrlen(searchSTR), brsstrlen(dataSTR) - idx - brsstrlen(searchSTR));
+				brsmemmove(dataSTR + idx + brsstrlen(replaceSTR), dataSTR + idx + brsstrlen(searchSTR), brsstrlen(dataSTR) - brsstrlen(searchSTR));
 				brsmemcpy(dataSTR + idx, replaceSTR, brsstrlen(replaceSTR));
 				ReplaceString := TRUE;
 				EXIT;
