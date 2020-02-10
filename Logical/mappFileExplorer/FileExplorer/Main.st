@@ -51,7 +51,7 @@ PROGRAM _CYCLIC
 	WebServiceUpload[side].pRequestData  	:= AsMemPartAllocClear_0.mem;
 	WebServiceUpload[side].requestDataSize 	:= EXPL_UPLOAD_DOWNLOAD_SIZE;
 	WebServiceUpload[side].pResponseData 	:= ADR(upload_response[side]);
-	WebServiceUpload[side].responseDataLen 	:= strlen(ADR(upload_response[side]));
+	WebServiceUpload[side].responseDataLen 	:= brsstrlen(ADR(upload_response[side]));
 	WebServiceUpload[side]();
 
 	// Reset send command 
