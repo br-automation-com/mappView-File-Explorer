@@ -1,3 +1,6 @@
+Version 1.2
+- Fixed download not working when downloading the same file again
+
 Version 1.1
 - Fixed file open click event
 - Added support multiple USB sticks

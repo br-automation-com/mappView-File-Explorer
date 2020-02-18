@@ -845,6 +845,7 @@ PROGRAM _CYCLIC
 				WebserviceDownload.send := TRUE;
 			// Sending data finished
 			ELSIF (WebserviceDownload.send = TRUE) THEN
+				EXPL.VIS[side].download_file_url := '';
 				WebserviceDownload.send := FALSE;
 				EXPL.CMD[side].download	:= 0;
 				step := EXP_WAIT;
