@@ -22,10 +22,8 @@ Recommended task class is #8 with a 10ms cycle time.
 <a name="Revision-History"></a>
 ## Revision History
 
-#### Version 1.1
-- Fixed file open click event
-- Added support multiple USB sticks
-- Added message box when uploading or copying file that exists on target
-- Fixed button rename is not disabled when command is running
+#### Version 1.2
+- Fixed download not working when downloading the same file again
+- Fixed upload not working with large files > 1 MB
 
 
