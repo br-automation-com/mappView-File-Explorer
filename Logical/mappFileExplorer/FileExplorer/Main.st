@@ -61,7 +61,16 @@ PROGRAM _CYCLIC
 	ELSIF(WebServiceUpload[side].status = ERR_OK AND WebServiceUpload[side].send = FALSE) THEN 
 		WebServiceUpload[side].send := TRUE;
 	// New upload data arrived
-	ELSIF(WebServiceUpload[side].send = FALSE AND WebServiceUpload[side].requestDataLen > 0) THEN
+	ELSIF(WebServiceUpload[side].send = FALSE AND WebServiceUpload[side].requestDataLen > 0 AND EXPL.CMD[side].upload = FALSE) THEN
+		// Add delay so that upload can finish
+		upload_delay.PT := WebServiceUpload[side].requestDataLen/100000*5;
+		upload_delay.IN := TRUE;
+		upload_delay();
+	END_IF
+	// Check new uploaded data
+	IF(upload_delay.Q AND EXPL.CMD[side].upload = FALSE) THEN
+		upload_delay.IN := FALSE;
+		upload_delay();
 		EXPL.CMD[side].upload := 1;
 	END_IF
 	
@@ -864,10 +873,10 @@ PROGRAM _CYCLIC
 			// Make sure data fits into memory
 			IF(WebServiceUpload[side].requestDataLen < EXPL_UPLOAD_DOWNLOAD_SIZE) THEN
 				// Find file name start
-				file_name_start := FindInMem(AsMemPartAllocClear_0.mem, WebServiceUpload[side].requestDataLen, ADR('filename="'), brsstrlen(ADR('filename="'))) + brsstrlen(ADR('filename="'));
+				file_name_start := FindInMem(AsMemPartAllocClear_0.mem, WebServiceUpload[side].requestDataLen, ADR('filename="'), brsstrlen(ADR('filename="')), FALSE) + brsstrlen(ADR('filename="'));
 				IF(file_name_start > 0) THEN
 					// Find end of file name
-					file_name_len := FindInMem(AsMemPartAllocClear_0.mem+file_name_start, WebServiceUpload[side].requestDataLen-file_name_start, ADR('"$r$n'), brsstrlen(ADR('"$r$n')));
+					file_name_len := FindInMem(AsMemPartAllocClear_0.mem+file_name_start, WebServiceUpload[side].requestDataLen-file_name_start, ADR('"$r$n'), brsstrlen(ADR('"$r$n')), FALSE);
 					IF(file_name_len > 0) THEN
 						// Make sure file name is not too long
 						IF(file_name_len <= SIZEOF(item_name)) THEN
@@ -875,11 +884,11 @@ PROGRAM _CYCLIC
 							brsmemset(ADR(item_name), 0, SIZEOF(item_name));
 							brsmemcpy(ADR(item_name), AsMemPartAllocClear_0.mem+file_name_start, file_name_len);
 							// Find start of data
-							file_data_start := FindInMem(AsMemPartAllocClear_0.mem, WebServiceUpload[side].requestDataLen, ADR('Content-Type:'), brsstrlen(ADR('Content-Type:'))) + brsstrlen(ADR('Content-Type:'));
+							file_data_start := FindInMem(AsMemPartAllocClear_0.mem, WebServiceUpload[side].requestDataLen, ADR('Content-Type:'), brsstrlen(ADR('Content-Type:')), FALSE) + brsstrlen(ADR('Content-Type:'));
 							IF(file_data_start > 0) THEN
 								// Find end of data
-								file_data_start := FindInMem(AsMemPartAllocClear_0.mem+file_data_start, WebServiceUpload[side].requestDataLen-file_data_start, ADR('$r$n$r$n'), brsstrlen(ADR('$r$n$r$n'))) + brsstrlen(ADR('$r$n$r$n'))+file_data_start;
-								file_data_len := FindInMem(AsMemPartAllocClear_0.mem+file_data_start, WebServiceUpload[side].requestDataLen-file_data_start, ADR('$r$n------'), brsstrlen(ADR('$r$n------')));
+								file_data_start := FindInMem(AsMemPartAllocClear_0.mem+file_data_start, WebServiceUpload[side].requestDataLen-file_data_start, ADR('$r$n$r$n'), brsstrlen(ADR('$r$n$r$n')), FALSE) + file_data_start;
+								file_data_len := FindInMem(AsMemPartAllocClear_0.mem+file_data_start, WebServiceUpload[side].requestDataLen-file_data_start, ADR('$r$n------'), brsstrlen(ADR('$r$n------')), TRUE);
 								// When file name and data is correct procceed with saving data to file
 								IF(file_data_len > 0) THEN
 									step := EXP_OVERWRITE_1;
@@ -1086,14 +1095,14 @@ PROGRAM _CYCLIC
 					RETURN;	 
 				END_IF;
 			END_FOR;
-			EXPL.VIS[side].upload_overwrite_response := YES;
+			EXPL.VIS[side].upload_overwrite_response := SKIP;
 			step := EXP_OVERWRITE_2;
 		//**********************************************************************************************
 		// Overwrite file - Wait for message box response
 		//**********************************************************************************************
 		EXP_OVERWRITE_2:
 			// Overwrite file
-			IF(EXPL.VIS[side].upload_overwrite_response = YES) THEN
+			IF(EXPL.VIS[side].upload_overwrite_response = YES OR EXPL.VIS[side].upload_overwrite_response = SKIP) THEN
 				// Proceed with copy command
 				IF(EXPL.CMD[side].copy = TRUE) THEN
 					IF(brsmemcmp(ADR(item_name), ADR('(DIR)'), 5) = 0)	THEN
@@ -1103,7 +1112,11 @@ PROGRAM _CYCLIC
 					END_IF
 				// Proceed with upload command
 				ELSE
-					step := EXP_FILE_DELETE;
+					IF(EXPL.VIS[side].upload_overwrite_response = SKIP) THEN
+						step := EXP_FILE_UPLOAD_1;
+					ELSE
+						step := EXP_FILE_DELETE;
+					END_IF
 				END_IF
 				EXPL.VIS[side].upload_overwrite_request	:= FALSE;
 			// Do not overwrite file

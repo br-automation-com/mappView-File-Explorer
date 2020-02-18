@@ -1,5 +1,6 @@
 Version 1.2
 - Fixed download not working when downloading the same file again
+- Fixed upload not working with large files > 1 MB
 
 Version 1.1
 - Fixed file open click event

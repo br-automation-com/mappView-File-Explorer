@@ -24,6 +24,7 @@ VAR
 	response_header : httpResponseHeader_t;
 	response_header_data : STRING[300];
 	download_timeout : TON_10ms;
+	upload_delay : TON_10ms;
 	upload_response : ARRAY[0..1] OF STRING[600];
 	file_name_start : UDINT;
 	file_name_len : UDINT;
@@ -59,6 +60,7 @@ END_VAR
 VAR CONSTANT
 	YES : USINT := 1;
 	NO : USINT := 2;
+	SKIP : USINT := 3;
 	ERR_EMPTY_ITEM : UINT := 50000; (*Selected item name is empty	*)
 	ERR_INVALID_ITEM_NAME : UINT := 50001; (*This is not a valid item name*)
 	ERR_DEVICE_UNDEFINED : UINT := 50010; (*Device is not defined*)

@@ -26,6 +26,7 @@ FUNCTION FindInMem : UDINT
 		len1 : UDINT;
 		data2 : UDINT;
 		len2 : UDINT;
+		direction : BOOL;
 	END_VAR
 	VAR
 		idx : UDINT;
