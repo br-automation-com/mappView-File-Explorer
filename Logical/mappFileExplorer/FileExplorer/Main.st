@@ -71,15 +71,15 @@ PROGRAM _CYCLIC
 	IF(upload_delay.Q AND EXPL.CMD[side].upload = FALSE) THEN
 		upload_delay.IN := FALSE;
 		upload_delay();
-		EXPL.CMD[side].upload := 1;
+		EXPL.CMD[side].upload := TRUE;
 	END_IF
 	
 	// ------------------------------------------------------------------------------------------------
 	// Set switches for HMI, these buttons are enabled if there is at least one file or directory
 	IF(EXPL.DAT[side].item_num > 0) THEN
-		EXPL.VIS[side].enable_button_set_1 := 1;
+		EXPL.VIS[side].enable_button_set_1 := TRUE;
 	ELSE
-		EXPL.VIS[side].enable_button_set_1 := 0;
+		EXPL.VIS[side].enable_button_set_1 := FALSE;
 	END_IF
 
 	// ------------------------------------------------------------------------------------------------
@@ -95,21 +95,21 @@ PROGRAM _CYCLIC
 	// Handle double click for directory change and file view
 	IF(EXPL.VIS[side].double_click_event > 0) THEN
 		double_click_timer.PT := 50;
-		double_click_timer.IN := 1;
+		double_click_timer.IN := TRUE;
 		double_click_timer();
 		IF(EXPL.VIS[side].double_click_event > 1) THEN
-			double_click_timer.IN := 0;
+			double_click_timer.IN := FALSE;
 			double_click_timer();
 			EXPL.VIS[side].double_click_event := 0;
 			IF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) = 0 OR EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '..') THEN
-				EXPL.CMD[side].dir_change := 1;
+				EXPL.CMD[side].dir_change := TRUE;
 			ELSE
-				EXPL.CMD[side].view_file := 1;
+				EXPL.CMD[side].view_file := TRUE;
 			END_IF
 		END_IF
 	END_IF
 	IF(double_click_timer.Q) THEN
-		double_click_timer.IN := 0;
+		double_click_timer.IN := FALSE;
 		double_click_timer();
 		IF(EXPL.VIS[side].double_click_event > 0) THEN
 			EXPL.VIS[side].double_click_event := EXPL.VIS[side].double_click_event - 1;
@@ -131,20 +131,20 @@ PROGRAM _CYCLIC
 	// Track filter change
 	IF (FILTER_AUTO_REFRESH AND brsstrcmp(ADR(old_filter[side]), ADR(EXPL.PAR[side].item_filter)) <> 0) THEN
 		brsstrcpy(ADR(old_filter[side]), ADR(EXPL.PAR[side].item_filter));
-		EXPL.CMD[side].refresh	:= 1;
+		EXPL.CMD[side].refresh	:= TRUE;
 	END_IF
 
 	// ------------------------------------------------------------------------------------------------
 	// Track device name change
 	IF(device_active_old[side] <> EXPL.PAR[side].device_active) THEN
 		EXPL.PAR[side].dir_path := '';
-		EXPL.CMD[side].refresh	:= 1;
+		EXPL.CMD[side].refresh	:= TRUE;
 	END_IF
 	device_active_old[side] := EXPL.PAR[side].device_active;
 
 	// ------------------------------------------------------------------------------------------------
 	// Stop here if no command is set
-	IF (EXPL.CMD[side].refresh = 0 AND EXPL.CMD[side].dir_change = 0 AND EXPL.CMD[side].dir_create = 0 AND EXPL.CMD[side].copy = 0 AND EXPL.CMD[side].copy_all = 0 AND EXPL.CMD[side].delete = 0 AND EXPL.CMD[side].rename = 0 AND EXPL.CMD[side].view_file = 0 AND EXPL.CMD[side].download = 0 AND EXPL.CMD[side].upload = 0) THEN
+	IF (EXPL.CMD[side].refresh = FALSE AND EXPL.CMD[side].dir_change = FALSE AND EXPL.CMD[side].dir_create = FALSE AND EXPL.CMD[side].copy = FALSE AND EXPL.CMD[side].copy_all = FALSE AND EXPL.CMD[side].delete = FALSE AND EXPL.CMD[side].rename = FALSE AND EXPL.CMD[side].view_file = FALSE AND EXPL.CMD[side].download = FALSE AND EXPL.CMD[side].upload = FALSE) THEN
 		// --------------------------------------------------------------------------------------------
 		// Show current state
 		EXPL.status := 'Waiting...';
@@ -155,16 +155,16 @@ PROGRAM _CYCLIC
 		END_IF
 		side := NOT side;
 		// Enable buttons when command is active
-		EXPL.VIS[0].enable_button_set_2 := 1;
-		EXPL.VIS[1].enable_button_set_2 := 1;
+		EXPL.VIS[0].enable_button_set_2 := TRUE;
+		EXPL.VIS[1].enable_button_set_2 := TRUE;
 		RETURN;
 	END_IF
 	
 	// Disable buttons when command is active
-	EXPL.VIS[0].enable_button_set_1 := 0;
-	EXPL.VIS[1].enable_button_set_1 := 0;
-	EXPL.VIS[0].enable_button_set_2 := 0;
-	EXPL.VIS[1].enable_button_set_2 := 0;
+	EXPL.VIS[0].enable_button_set_1 := FALSE;
+	EXPL.VIS[1].enable_button_set_1 := FALSE;
+	EXPL.VIS[0].enable_button_set_2 := FALSE;
+	EXPL.VIS[1].enable_button_set_2 := FALSE;
 	//**************************************************************************************************
 	// Cyclic Part
 	//**************************************************************************************************
@@ -175,12 +175,12 @@ PROGRAM _CYCLIC
 		EXP_WAIT:
 			// ----------------------------------------------------------------------------------------
 			// Refresh direcrory information
-			IF (EXPL.CMD[side].refresh = 1) THEN
+			IF (EXPL.CMD[side].refresh = TRUE) THEN
 				step := EXP_READ_DIR;
 			END_IF
 			// ----------------------------------------------------------------------------------------
 			// Change active directory
-			IF (EXPL.CMD[side].dir_change = 1) THEN
+			IF (EXPL.CMD[side].dir_change = TRUE) THEN
 				// ------------------------------------------------------------------------------------
 				// Check if directory name is empty
 				IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '') THEN
@@ -197,7 +197,7 @@ PROGRAM _CYCLIC
 			END_IF
 			// ----------------------------------------------------------------------------------------
 			// Create a new directory
-			IF (EXPL.CMD[side].dir_create = 1) THEN
+			IF (EXPL.CMD[side].dir_create = TRUE) THEN
 				// ------------------------------------------------------------------------------------
 				// Check if new directory name is empty
 				IF (EXPL.PAR[side].new_name = '') THEN
@@ -214,7 +214,7 @@ PROGRAM _CYCLIC
 			END_IF
 			// ----------------------------------------------------------------------------------------
 			// Copy one file
-			IF (EXPL.CMD[side].copy = 1) THEN
+			IF (EXPL.CMD[side].copy = TRUE) THEN
 				// ------------------------------------------------------------------------------------
 				// Make sure that user chooses a valid item
 				IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '..') THEN
@@ -226,17 +226,17 @@ PROGRAM _CYCLIC
 			END_IF
 			// ----------------------------------------------------------------------------------------
 			// Copy all files and folders in this directory
-			IF (EXPL.CMD[side].copy_all = 1) THEN
+			IF (EXPL.CMD[side].copy_all = TRUE) THEN
 				step := EXP_COPY_ALL;
 			END_IF
 			// ----------------------------------------------------------------------------------------
 			// View selected file
-			IF (EXPL.CMD[side].view_file = 1) THEN
+			IF (EXPL.CMD[side].view_file = TRUE) THEN
 				step := EXP_FILE_VIEW;
 			END_IF
 			// ----------------------------------------------------------------------------------------
 			// Download selected file
-			IF (EXPL.CMD[side].download = 1) THEN
+			IF (EXPL.CMD[side].download = TRUE) THEN
 				// Make sure download is not directory
 				IF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) <> 0) THEN
 					EXPL.VIS[side].download_file_url := '';
@@ -247,7 +247,7 @@ PROGRAM _CYCLIC
 			END_IF
 			// ----------------------------------------------------------------------------------------
 			// Upload a new file
-			IF (EXPL.CMD[side].upload = 1) THEN
+			IF (EXPL.CMD[side].upload = TRUE) THEN
 				step := EXP_FILE_UPLOAD;
 			END_IF
 			// ----------------------------------------------------------------------------------------
@@ -274,7 +274,7 @@ PROGRAM _CYCLIC
 			END_IF
 			// ----------------------------------------------------------------------------------------
 			// Rename file or directory
-			IF (EXPL.CMD[side].rename = 1) THEN
+			IF (EXPL.CMD[side].rename = TRUE) THEN
 				// ------------------------------------------------------------------------------------
 				// Check if new directory name is empty
 				IF (EXPL.PAR[side].new_name = '') THEN
@@ -313,7 +313,7 @@ PROGRAM _CYCLIC
 			END_IF
 			// ----------------------------------------------------------------------------------------
 			// Set parameters and get device dir
-			DInfo.enable 	:= 1;
+			DInfo.enable 	:= TRUE;
 			DInfo.pDevice	:= ADR(EXPL.PAR[side].device_active);
 			DInfo.pPath 	:= ADR(EXPL.PAR[side].dir_path);
 			DInfo();
@@ -340,7 +340,7 @@ PROGRAM _CYCLIC
 		// Open directory
 		//**********************************************************************************************
 		EXP_READ_DIR_1:
-			DOpen.enable 	:= 1;
+			DOpen.enable 	:= TRUE;
 			DOpen.pDevice	:= ADR(EXPL.PAR[side].device_active);
 			DOpen.pName 	:= ADR(EXPL.PAR[side].dir_path);
 			DOpen();
@@ -358,7 +358,7 @@ PROGRAM _CYCLIC
 		// Read file directory information
 		//**********************************************************************************************
 	 	EXP_READ_DIR_2:
-			DRead.enable 	:= 1;
+			DRead.enable 	:= TRUE;
 			DRead.ident		:= DOpen.ident;
 			DRead.pData 	:= ADR(lDirReadData);
 			DRead.data_len 	:= SIZEOF(lDirReadData);
@@ -423,7 +423,7 @@ PROGRAM _CYCLIC
 		// Close directory information
 		//**********************************************************************************************
 		EXP_READ_DIR_3:
-			DClose.enable 	:= 1;
+			DClose.enable 	:= TRUE;
 			DClose.ident	:= DOpen.ident;
 			DClose();
 
@@ -441,7 +441,7 @@ PROGRAM _CYCLIC
 					do_select := 0;
 				END_IF
 				// Reset command and return to wait state
-				EXPL.CMD[side].refresh	:= 0;
+				EXPL.CMD[side].refresh	:= FALSE;
 				DClose.ident			:= 0;
 				IF(has_oversized_items) THEN
 					step := CreateError(ERR_NAME_EXCEEDS_MAX, side, step, 'one or more names exceeds maximum length', ADR(EXPL));
@@ -479,7 +479,7 @@ PROGRAM _CYCLIC
 			// Reset command and return to wait state
 			EXPL.VIS[side].item_selected	:= 0;
 			EXPL.CMD[side].dir_change 		:= 0;
-			EXPL.CMD[side].refresh 			:= 1;
+			EXPL.CMD[side].refresh 			:= TRUE;
 			step							:= EXP_WAIT;
 		//**********************************************************************************************
 		// Copy all items
@@ -533,12 +533,12 @@ PROGRAM _CYCLIC
 						IF (FCopy.status = OK AND EXPL.CMD[side].copy = 1) THEN
 							// Select entry, reset command and refresh directory
 							IF(COPY_AUTO_REFRESH = TRUE) THEN
-								EXPL.CMD[NOT side].refresh := 1;
+								EXPL.CMD[NOT side].refresh := TRUE;
 							END_IF
 							IF(COPY_AUTO_SELECT = TRUE) THEN
 								do_select := BOOL_TO_USINT(side) + 1;
 							END_IF
-							EXPL.CMD[side].copy	:= 0;
+							EXPL.CMD[side].copy	:= FALSE;
 							step := EXP_WAIT;
 						// ----------------------------------------------------------------------------
 						// Proceed with next file
@@ -560,9 +560,9 @@ PROGRAM _CYCLIC
 			ELSE
 				// Reset command and refresh directory
 				IF(COPY_AUTO_REFRESH = TRUE) THEN
-					EXPL.CMD[NOT side].refresh := 1;
+					EXPL.CMD[NOT side].refresh := TRUE;
 				END_IF
-				EXPL.CMD[side].copy_all			:= 0;
+				EXPL.CMD[side].copy_all			:= FALSE;
 				EXPL.VIS[side].item_selected 	:= 0;
 				step							:= EXP_WAIT;
 			END_IF
@@ -597,12 +597,12 @@ PROGRAM _CYCLIC
 						IF (DCopy.status = OK AND EXPL.CMD[side].copy = 1) THEN
 							// Reset command and refresh directory
 							IF(COPY_AUTO_REFRESH = TRUE) THEN
-								EXPL.CMD[NOT side].refresh := 1;
+								EXPL.CMD[NOT side].refresh := TRUE;
 							END_IF
 							IF (COPY_AUTO_SELECT = TRUE) THEN
 								do_select := BOOL_TO_USINT(side) + 1;
 							END_IF
-							EXPL.CMD[side].copy	:= 0;
+							EXPL.CMD[side].copy	:= FALSE;
 							step := EXP_WAIT;
 						// ----------------------------------------------------------------------------
 						// Proceed with next directory
@@ -629,9 +629,9 @@ PROGRAM _CYCLIC
 			ELSE
 				// Reset command and refresh directory
 				IF (COPY_AUTO_REFRESH = TRUE) THEN
-					EXPL.CMD[NOT side].refresh := 1;
+					EXPL.CMD[NOT side].refresh := TRUE;
 				END_IF
-				EXPL.CMD[side].copy_all := 0;
+				EXPL.CMD[side].copy_all := FALSE;
 				EXPL.VIS[side].item_selected := 0;
 				step := EXP_WAIT;
 			END_IF
@@ -645,7 +645,7 @@ PROGRAM _CYCLIC
 			// ----------------------------------------------------------------------------------------
 			// Initialize file delete structure
 			CreateCompletePath(EXPL.PAR[side].dir_path, item_name, ADR(tmp_str3));
-			FDelete.enable		:= 1;
+			FDelete.enable		:= TRUE;
 			FDelete.pDevice 	:= ADR(EXPL.PAR[side].device_active);
 			FDelete.pName		:= ADR(tmp_str3);
 			FDelete();
@@ -655,8 +655,8 @@ PROGRAM _CYCLIC
 			IF (FDelete.status = OK) THEN
 				// Reset command delete and return to wait state
 				IF(EXPL.CMD[side].delete = TRUE) THEN
-					EXPL.CMD[side].delete 	:= 0;
-					EXPL.CMD[side].refresh  := 1;
+					EXPL.CMD[side].delete 	:= FALSE;
+					EXPL.CMD[side].refresh  := TRUE;
 					step := EXP_WAIT;
 				// Proceed with command upload
 				ELSE
@@ -677,7 +677,7 @@ PROGRAM _CYCLIC
 			// Initialize file delete structure
 			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str2));
 			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.PAR[side].new_name, ADR(tmp_str3));
-			FRename.enable		:= 1;
+			FRename.enable		:= TRUE;
 			FRename.pDevice 	:= ADR(EXPL.PAR[side].device_active);
 			FRename.pName		:= ADR(tmp_str2);
 			FRename.pNewName	:= ADR(tmp_str3);
@@ -687,8 +687,8 @@ PROGRAM _CYCLIC
 			// OK
 			IF (FRename.status = OK) THEN
 				// Reset command and return to wait state
-				EXPL.CMD[side].rename 	:= 0;
-				EXPL.CMD[side].refresh  := 1;
+				EXPL.CMD[side].rename 	:= FALSE;
+				EXPL.CMD[side].refresh  := TRUE;
 				step := EXP_WAIT;
 				// Error
 			ELSIF (FRename.status <> ERR_FUB_BUSY) THEN
@@ -783,7 +783,7 @@ PROGRAM _CYCLIC
 			// ----------------------------------------------------------------------------------------
 			// OK
 			IF (FClose.status = OK) THEN
-				download_timeout.IN := 0;
+				download_timeout.IN := FALSE;
 				download_timeout();
 				step := EXP_FILE_DOWNLOAD_3;
 			// Error
@@ -820,7 +820,7 @@ PROGRAM _CYCLIC
 			
 			// ----------------------------------------------------------------------------------------
 			// Timeout if file is not pulled from browser
-			download_timeout.IN := 1;
+			download_timeout.IN := TRUE;
 			download_timeout.PT := 300;
 			download_timeout();
 			IF(download_timeout.Q) THEN
@@ -836,9 +836,8 @@ PROGRAM _CYCLIC
 				WebserviceDownload.send := TRUE;
 			// Sending data finished
 			ELSIF (WebserviceDownload.send = TRUE) THEN
-				WebserviceDownload.send := FALSE;
 				step := EXP_FILE_DOWNLOAD_4;
-			// Error
+				// Error
 			ELSIF (WebserviceDownload.status <> ERR_FUB_BUSY AND WebserviceDownload.status <> OK) THEN
 				step := CreateError(WebserviceDownload.status, side, step, 'error sending web response', ADR(EXPL));
 			END_IF
@@ -846,17 +845,18 @@ PROGRAM _CYCLIC
 		// Download file - web service
 		//**********************************************************************************************
 		EXP_FILE_DOWNLOAD_4:			
-			WebserviceDownload();
+			WebserviceDownload();			
+			download_timeout();
+			IF(download_timeout.Q) THEN
+				step := CreateError(ERR_TIMEOUT_DOWNLOAD, side, step, 'error download response timed out', ADR(EXPL));
+			END_IF
 			
 			// ----------------------------------------------------------------------------------------
-			// Start sending data
-			IF (WebserviceDownload.status = OK AND WebserviceDownload.send = FALSE) THEN
-				WebserviceDownload.send := TRUE;
-			// Sending data finished
-			ELSIF (WebserviceDownload.send = TRUE) THEN
+			// Finish sending data
+			IF (WebserviceDownload.phase = httpPHASE_WAITING) THEN
 				EXPL.VIS[side].download_file_url := '';
 				WebserviceDownload.send := FALSE;
-				EXPL.CMD[side].download	:= 0;
+				EXPL.CMD[side].download	:= FALSE;
 				step := EXP_WAIT;
 			// Error
 			ELSIF (WebserviceDownload.status <> ERR_FUB_BUSY) THEN
@@ -992,7 +992,7 @@ PROGRAM _CYCLIC
 				brsmemset(AsMemPartAllocClear_0.mem, 0, EXPL_UPLOAD_DOWNLOAD_SIZE);
 				WebServiceUpload[side].enable := FALSE;
 				WebServiceUpload[side]();
-				EXPL.CMD[side].upload := 0;
+				EXPL.CMD[side].upload := FALSE;
 				EXPL.CMD[side].refresh := 1;
 				EXPL.VIS[side].reload_upload := TRUE;
 				step := EXP_WAIT;
@@ -1019,8 +1019,8 @@ PROGRAM _CYCLIC
 			// OK
 			IF (DCreate.status = OK) THEN
 				// Reset command and return to wait state
-				EXPL.CMD[side].dir_create 	:= 0;
-				EXPL.CMD[side].refresh 		:= 1;
+				EXPL.CMD[side].dir_create 	:= FALSE;
+				EXPL.CMD[side].refresh 		:= TRUE;
 				step := EXP_WAIT;
 			// Error
 			ELSIF (DCreate.status <> ERR_FUB_BUSY) THEN
@@ -1036,7 +1036,7 @@ PROGRAM _CYCLIC
 			// ----------------------------------------------------------------------------------------
 			// Initialize directory delete structure
 			CreateCompletePath(EXPL.PAR[side].dir_path, item_name, ADR(tmp_str3));
-			DDelete.enable	:= 1;
+			DDelete.enable	:= TRUE;
 			DDelete.pDevice := ADR(EXPL.PAR[side].device_active);
 			DDelete.pName 	:= ADR(tmp_str3);
 			DDelete();
@@ -1045,8 +1045,8 @@ PROGRAM _CYCLIC
 			// OK
 			IF (DDelete.status = OK) THEN
 				// Reset command and return to wait state
-				EXPL.CMD[side].delete := 0;
-				EXPL.CMD[side].refresh := 1;
+				EXPL.CMD[side].delete := FALSE;
+				EXPL.CMD[side].refresh := TRUE;
 				step := EXP_WAIT;
 			// Error
 			ELSIF (DDelete.status <> ERR_FUB_BUSY) THEN
@@ -1063,7 +1063,7 @@ PROGRAM _CYCLIC
 			// Initialize file delete structure
 			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str2));
 			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.PAR[side].new_name, ADR(tmp_str3));
-			DRename.enable		:= 1;
+			DRename.enable		:= TRUE;
 			DRename.pDevice 	:= ADR(EXPL.PAR[side].device_active);
 			DRename.pName		:= ADR(tmp_str2);
 			DRename.pNewName	:= ADR(tmp_str3);
@@ -1073,8 +1073,8 @@ PROGRAM _CYCLIC
 			// OK
 			IF (DRename.status = OK) THEN
 				// Reset command and return to wait state
-				EXPL.CMD[side].rename 	:= 0;
-				EXPL.CMD[side].refresh  := 1;
+				EXPL.CMD[side].rename 	:= FALSE;
+				EXPL.CMD[side].refresh  := TRUE;
 				step := EXP_WAIT;
 				// Error
 			ELSIF (DRename.status <> ERR_FUB_BUSY) THEN
@@ -1125,10 +1125,10 @@ PROGRAM _CYCLIC
 				brsmemset(AsMemPartAllocClear_0.mem, 0, EXPL_UPLOAD_DOWNLOAD_SIZE);
 				WebServiceUpload[side].enable := FALSE;
 				WebServiceUpload[side]();
-				EXPL.CMD[side].upload := 0;
+				EXPL.CMD[side].upload := FALSE;
 				EXPL.VIS[side].reload_upload := TRUE;
 				// Reset copy command				
-				EXPL.CMD[side].copy	:= 0;
+				EXPL.CMD[side].copy	:= FALSE;
 
 				EXPL.VIS[side].upload_overwrite_request	:= FALSE;
 				step := EXP_WAIT;
