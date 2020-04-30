@@ -13,24 +13,27 @@ VAR
 	do_select : USINT := 0; (*Select item after copying *)
 	old_filter : ARRAY[0..1] OF STRING[EXPL_ITEM_LENGTH]; (*Track filter change *)
 	has_oversized_items : BOOL;
-	tmp_str1 : STRING[EXPL_DIR_PATH_LENGTH]; (*Temporary STRING variable *)
-	tmp_str2 : STRING[EXPL_DIR_PATH_LENGTH]; (*Temporary STRING variable *)
-	tmp_str3 : STRING[EXPL_DIR_PATH_LENGTH]; (*Temporary STRING variable *)
-	tmp_str4 : STRING[EXPL_DIR_PATH_LENGTH]; (*Temporary STRING variable *)
-	lx : UDINT := 0; (*Index	*)
-	ly : UINT; (*Index*)
-	double_click_timer : TON_10ms; (*Timer for item double click*)
-	device_active_old : ARRAY[0..1] OF STRING[40]; (*Track selected device change*)
-	response_header : httpResponseHeader_t; (*Response header for download*)
-	response_header_data : STRING[300]; (*Response data for download*)
-	download_timeout : TON_10ms; (*Timer for download*)
-	upload_delay : TON_10ms; (*Add delay so upload can finish*)
-	upload_response : ARRAY[0..1] OF STRING[600]; (*Upload response header*)
-	file_name_start : UDINT; (*Identify file name start*)
-	file_name_len : UDINT; (*Identify file name length*)
-	file_data_start : UDINT; (*Identify file data start*)
-	file_data_len : UDINT; (*Identify file name length*)
-	item_name : STRING[EXPL_DIR_PATH_LENGTH]; (*Name of the selected item*)
+	tmp_str1 : STRING[EXPL_DIR_PATH_LENGTH]; (* Temporary STRING variable *)
+	tmp_str2 : STRING[EXPL_DIR_PATH_LENGTH]; (* Temporary STRING variable *)
+	tmp_str3 : STRING[EXPL_DIR_PATH_LENGTH]; (* Temporary STRING variable *)
+	tmp_str4 : STRING[EXPL_DIR_PATH_LENGTH]; (* Temporary STRING variable *)
+	lx : UDINT := 0; (* Index	*)
+	ly : UINT;
+	lz : UINT;
+	double_click_timer : TON_10ms;
+	device_active_old : ARRAY[0..1] OF STRING[40];
+	response_header : httpResponseHeader_t;
+	response_header_data : STRING[300];
+	download_timeout : TON_10ms;
+	upload_delay : TON_10ms;
+	upload_response : ARRAY[0..1] OF STRING[600];
+	file_name_start : UDINT;
+	file_name_len : UDINT;
+	file_data_start : UDINT;
+	file_data_len : UDINT;
+	dir_path : STRING[EXPL_DIR_PATH_LENGTH];
+	device_active : STRING[40];
+	item_name : STRING[EXPL_DIR_PATH_LENGTH];
 END_VAR
 (*Local function calls*)
 VAR
@@ -51,11 +54,13 @@ VAR
 	DDelete : DirDeleteEx;
 	DRename : DirRename;
 	DMemInfo : DevMemInfo;
+	DevLink_0 : DevLink;
 	lDirReadData : fiDIR_READ_EX_DATA;
 	AsMemPartCreate_0 : AsMemPartCreate;
 	AsMemPartAllocClear_0 : AsMemPartAllocClear;
 	WebServiceUpload : ARRAY[0..1] OF httpService := [2((0))];
 	WebserviceDownload : httpService := (0);
+	zipArchive_0 : zipArchive;
 END_VAR
 (*Local constants*)
 VAR CONSTANT
@@ -73,7 +78,7 @@ VAR CONSTANT
 	ERR_MEM_ALLOC : UINT := 50300; (*Memory allocation for file upload and download failed*)
 	ERR_MEM_DOWNLOAD : UINT := 50310; (*Size of download file exceeds maximum*)
 	ERR_TIMEOUT_DOWNLOAD : UINT := 50320; (*Download response timed out*)
-	ERR_DIR_DOWNLOAD : UINT := 50330; (*Directories can not be downloaded*)
+	ERR_DIR_DOWNLOAD_INVALID : UINT := 50331; (*This is not a valid directory*)
 	ERR_POS_NAME_UPLOAD : UINT := 50400; (*Can not find filename in upload response*)
 	ERR_SIZE_NAME_UPLOAD : UINT := 50401; (*Can not determine end of filename in upload response*)
 	ERR_LEN_NAME_UPLOAD : UINT := 50402; (*Filename is too long in upload response*)

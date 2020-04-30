@@ -41,6 +41,16 @@ PROGRAM _INIT
 	<input type="file" id="file-upload" style="display:none;" onchange="form.submit()" name="file_selected" content-type="application/octet-stream" />
 	</form><body></html> ';
 	WebServiceUpload[1].pServiceName := ADR('uploadB.html');
+
+	// ----------------------------------------------------------------------------------------
+	// Connect to user device for temporary files used with download all
+	REPEAT
+		DevLink_0.enable := 1;
+		DevLink_0.pDevice := ADR('TMP_USER');  
+		DevLink_0.pParam := ADR('/DEVICE=F:');  
+		DevLink_0;
+		UNTIL DevLink_0.status <> ERR_FUB_BUSY
+	END_REPEAT;
 END_PROGRAM
 
 PROGRAM _CYCLIC
@@ -188,7 +198,7 @@ PROGRAM _CYCLIC
 				// ------------------------------------------------------------------------------------
 				// Check if directory name is empty
 				IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '') THEN
-				step := CreateError(ERR_EMPTY_ITEM, side, step, 'directory name is empty', ADR(EXPL));
+					step := CreateError(ERR_EMPTY_ITEM, side, step, 'directory name is empty', ADR(EXPL));
 				// Check if directory name is valid
 				ELSIF((brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) <> 0) AND (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] <> '..'))  THEN
 					step := CreateError(ERR_INVALID_ITEM_NAME, side, step, 'this is not a valid directory name', ADR(EXPL));
@@ -239,14 +249,24 @@ PROGRAM _CYCLIC
 				step := EXP_FILE_VIEW;
 			END_IF
 			// ----------------------------------------------------------------------------------------
-			// Download selected file
+			// Download selected file or directory
 			IF (EXPL.CMD[side].download = TRUE) THEN
-				// Make sure download is not directory
-				IF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) <> 0) THEN
-					EXPL.VIS[side].download_file_url := '';
-					step := EXP_FILE_DOWNLOAD;
+				EXPL.VIS[side].download_file_url := '';
+				item_name := EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected];
+				// Make sure selected entry is valid
+				IF(brsmemcmp(ADR(item_name), ADR('..'), 2) <> 0) THEN
+					// Check if selected item is a single file
+					IF(brsmemcmp(ADR(item_name), ADR('(DIR)'), 5) <> 0) THEN
+						device_active := EXPL.PAR[side].device_active;
+						dir_path := EXPL.PAR[side].dir_path;
+						step := EXP_FILE_DOWNLOAD;
+					// Selected item is a directory
+					ELSE
+						ReplaceString(ADR(item_name), ADR('(DIR)'), ADR(''));
+						step := EXP_FILE_DOWNLOAD_DIR;
+					END_IF
 				ELSE
-					step := CreateError(ERR_DIR_DOWNLOAD, side, step, 'downloading a directory is not supported', ADR(EXPL));
+					step := CreateError(ERR_DIR_DOWNLOAD_INVALID, side, step, 'item is not a valid directory', ADR(EXPL));
 				END_IF
 			END_IF
 			// ----------------------------------------------------------------------------------------
@@ -260,13 +280,13 @@ PROGRAM _CYCLIC
 				// Check if directory name is empty
 				IF (EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '')	THEN
 					step := CreateError(ERR_EMPTY_ITEM, side, step, 'item name is empty', ADR(EXPL));
-				// Check if new directory name fits into string
+					// Check if new directory name fits into string
 				ELSIF(brsstrlen(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected])) + brsstrlen(ADR(EXPL.PAR[side].dir_path)) + 1 >= EXPL_DIR_PATH_LENGTH + EXPL_ITEM_LENGTH) THEN
 					step := CreateError(ERR_PATH_EXCEEDS_MAX, side, step, 'directory path exceeds maximum length', ADR(EXPL));
-				// Make sure that a valid item was selected
+					// Make sure that a valid item was selected
 				ELSIF(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected] = '..') THEN
 					step := CreateError(ERR_INVALID_ITEM_NAME, side, step, 'this is not a valid item name', ADR(EXPL));
-				// Delete a directory
+					// Delete a directory
 				ELSIF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) = 0)	THEN
 					item_name := EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected];
 					step := EXP_DIR_DELETE;
@@ -755,9 +775,9 @@ PROGRAM _CYCLIC
 		EXP_FILE_DOWNLOAD:						
 			// ----------------------------------------------------------------------------------------
 			// Initialize file open structure
-			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str1));
+			CreateCompletePath(dir_path, item_name, ADR(tmp_str1));
 			FOpen.enable	:= TRUE;
-			FOpen.pDevice 	:= ADR(EXPL.PAR[side].device_active);
+			FOpen.pDevice 	:= ADR(device_active);
 			FOpen.pFile		:= ADR(tmp_str1);
 			FOpen();
 			
@@ -776,10 +796,15 @@ PROGRAM _CYCLIC
 					tmp_str1 := 'download file exceeds maximum buffer size of ';
 					brsitoa(EXPL_UPLOAD_DOWNLOAD_SIZE, ADR(tmp_str2));
 					brsstrcat(ADR(tmp_str1), ADR(tmp_str2));
-					brsstrcat(ADR(tmp_str1), ADR(' bytes'));				
-					step := CreateError(ERR_MEM_DOWNLOAD, side, step, tmp_str1, ADR(EXPL));
+					brsstrcat(ADR(tmp_str1), ADR(' bytes'));	
+					// Delete old zip file before generating an error
+					IF(IsInstr(ADR(item_name), ADR('.tar.gz'))) THEN
+						step := EXP_FILE_DOWNLOAD_5;
+					ELSE
+						step := CreateError(ERR_MEM_DOWNLOAD, side, step, tmp_str1, ADR(EXPL));
+					END_IF
 				END_IF;
-			// Error
+				// Error
 			ELSIF (FOpen.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(FOpen.status, side, step, 'error opening file for download', ADR(EXPL));
 			END_IF
@@ -830,8 +855,8 @@ PROGRAM _CYCLIC
 			// ----------------------------------------------------------------------------------------
 			// Create response header
 			response_header_data :=  'Content-Type: application/octet-stream; Content-Transfer-Encoding: binary; Content-Disposition: attachment; filename="';
-			brsstrcpy(ADR(tmp_str1), ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]));
-			ReplaceString(ADR(tmp_str1), ADR(' '), ADR('%20'), FALSE);
+			brsstrcpy(ADR(tmp_str1), ADR(item_name));
+			ReplaceString(ADR(tmp_str1), ADR(' '), ADR('%20'));
 			brsstrcat(ADR(response_header_data), ADR(tmp_str1));
 			brsstrcat(ADR(response_header_data), ADR('"'));
 			
@@ -854,7 +879,7 @@ PROGRAM _CYCLIC
 			// ----------------------------------------------------------------------------------------
 			// Timeout if file is not pulled from browser
 			download_timeout.IN := TRUE;
-			download_timeout.PT := 300;
+			download_timeout.PT := 300 + FOpen.filelen/10000;
 			download_timeout();
 			IF(download_timeout.Q) THEN
 				step := CreateError(ERR_TIMEOUT_DOWNLOAD, side, step, 'error download response timed out', ADR(EXPL));
@@ -863,7 +888,7 @@ PROGRAM _CYCLIC
 			// ----------------------------------------------------------------------------------------
 			// Set URL
 			IF (WebserviceDownload.status = ERR_FUB_BUSY AND EXPL.VIS[side].download_file_url = '') THEN
-				brsstrcat(ADR(EXPL.VIS[side].download_file_url), ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]));
+				brsstrcat(ADR(EXPL.VIS[side].download_file_url), ADR(item_name));
 			// Start sending data
 			ELSIF (WebserviceDownload.status = OK AND WebserviceDownload.send = FALSE AND EXPL.VIS[side].download_file_url <> '') THEN
 				WebserviceDownload.send := TRUE;
@@ -873,7 +898,7 @@ PROGRAM _CYCLIC
 				// Error
 			ELSIF (WebserviceDownload.status <> ERR_FUB_BUSY AND WebserviceDownload.status <> OK) THEN
 				step := CreateError(WebserviceDownload.status, side, step, 'error sending web response', ADR(EXPL));
-			END_IF
+			END_IF			
 		//**********************************************************************************************
 		// Download file - web service
 		//**********************************************************************************************
@@ -889,13 +914,78 @@ PROGRAM _CYCLIC
 			IF (WebserviceDownload.phase = httpPHASE_WAITING) THEN
 				EXPL.VIS[side].download_file_url := '';
 				WebserviceDownload.send := FALSE;
-				EXPL.CMD[side].download	:= FALSE;
-				step := EXP_WAIT;
-			// Error
+				// Download is a directory
+				IF(IsInstr(ADR(item_name), ADR('.tar.gz'))) THEN
+					step := EXP_FILE_DOWNLOAD_5;
+				// Download is a single file
+				ELSE
+					EXPL.CMD[side].download	:= FALSE;
+					step := EXP_WAIT;
+				END_IF
+				// Error
 			ELSIF (WebserviceDownload.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(WebserviceDownload.status, side, step, 'error sending web response', ADR(EXPL));
+			END_IF			
+		//**********************************************************************************************
+		// Delete old zip file after download
+		//**********************************************************************************************
+		EXP_FILE_DOWNLOAD_5:
+			// Show current state
+			animation := WorkingStatus(ADR(EXPL), ADR('deleting old zip file...'), animation);
+
+			// ----------------------------------------------------------------------------------------
+			// Initialize file delete structure
+			FDelete.enable		:= TRUE;
+			FDelete.pDevice 	:= ADR('TMP_USER');
+			FDelete.pName		:= ADR(item_name);
+			FDelete();
+
+			// ----------------------------------------------------------------------------------------
+			// OK
+			IF (FDelete.status = OK) THEN
+				// Generate error when file was too large
+				IF(FOpen.filelen > EXPL_UPLOAD_DOWNLOAD_SIZE) THEN
+					step := CreateError(ERR_MEM_DOWNLOAD, side, step, tmp_str1, ADR(EXPL));
+				// Finish directory download
+				ELSE
+					EXPL.CMD[side].download	:= FALSE;
+					step := EXP_WAIT;
+				END_IF
+			// Error
+			ELSIF (FDelete.status <> ERR_FUB_BUSY) THEN
+				step := CreateError(FDelete.status, side, step, 'error deleting old zip file', ADR(EXPL));
 			END_IF
+		//**********************************************************************************************
+		// Download all files
+		//**********************************************************************************************
+		EXP_FILE_DOWNLOAD_DIR:
+			// Show current state
+			animation := WorkingStatus(ADR(EXPL), ADR('processing directory...'), animation);
+			tmp_str1 := item_name;
+			brsstrcat(ADR(tmp_str1), ADR('.tar.gz'));
 			
+			// ----------------------------------------------------------------------------------------
+			// Initialize file zip structure
+			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str2));
+			zipArchive_0.enable := 1;
+			zipArchive_0.pArchiveDevice := ADR('TMP_USER'); 
+			zipArchive_0.pArchiveFile := ADR(tmp_str1);
+			zipArchive_0.pSrcDevice := ADR(EXPL.PAR[side].device_active);
+			zipArchive_0.pSrcFile := ADR(tmp_str2);
+			zipArchive_0.pOptions := ADR('/COMPRESSION_LEVEL=7');
+			zipArchive_0();
+	
+			// ----------------------------------------------------------------------------------------
+			// OK
+			IF (zipArchive_0.status = OK) THEN
+				item_name := tmp_str1;
+				device_active := 'TMP_USER';
+				dir_path := '';
+				step := EXP_FILE_DOWNLOAD;
+			// Error
+			ELSIF (zipArchive_0.status <> ERR_FUB_BUSY) THEN
+				step := CreateError(zipArchive_0.status, side, step, 'error creating zip file', ADR(EXPL));
+			END_IF
 		//**********************************************************************************************
 		// Upload file - verify parameters
 		//**********************************************************************************************
@@ -958,7 +1048,6 @@ PROGRAM _CYCLIC
 			EXPL.VIS[side].reload_upload := TRUE;
 			WebServiceUpload[side].enable := FALSE;
 			WebServiceUpload[side]();
-
 		//**********************************************************************************************
 		// Upload file
 		//**********************************************************************************************

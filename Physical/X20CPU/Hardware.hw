@@ -10,10 +10,10 @@
     <Parameter ID="VolatileGlobalPvSize" Value="200000" />
     <Group ID="FileDevice1" />
     <Parameter ID="FileDeviceName1" Value="USER" />
-    <Parameter ID="FileDevicePath1" Value="f:\" />
+    <Parameter ID="FileDevicePath1" Value="F:\" />
     <Group ID="FileDevice2" />
     <Parameter ID="FileDeviceName2" Value="SYSTEM" />
-    <Parameter ID="FileDevicePath2" Value="c:\" />
+    <Parameter ID="FileDevicePath2" Value="C:\" />
     <Group ID="FtpUser1" />
     <Parameter ID="FtpUsername1" Value="br" />
     <Parameter ID="FtpUserPassword1" Value="B9fKGuUbjkGCgEptWUpgQ1eJbLeEvMYqPBCteWUIcCw=" />

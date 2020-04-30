@@ -213,7 +213,7 @@ PROGRAM _CYCLIC
 				// Clear data 		
 				brsmemset(ADR(usb_data_old[node]), 0, SIZEOF(usb_data_old[node]));
 				USB.PAR.is_connected[node] := FALSE;
-				USB.PAR.link_handle[node] := FALSE;
+				USB.PAR.link_handle[node] := 0;
 				// Find next linked device
 				WHILE(node < USB_MAX_CNT AND usb_data_old[node].interfaceClass = 0) DO
 					node := node + 1;
