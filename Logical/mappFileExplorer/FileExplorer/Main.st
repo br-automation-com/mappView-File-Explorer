@@ -381,11 +381,11 @@ PROGRAM _CYCLIC
 								brsstrcpy(ADR(tmp_str1), ADR(lDirReadData.Filename));
 								// --------------------------------------------------------------------
 								// Generate file size
-								IF (lDirReadData.Filelength > 999999) THEN
-									brsitoa(lDirReadData.Filelength/1000000, ADR(tmp_str2));
+								IF (lDirReadData.Filelength > 1048576) THEN
+									brsitoa(lDirReadData.Filelength/1048576, ADR(tmp_str2));
 									brsstrcat(ADR(tmp_str2), ADR('M'));
-								ELSIF (lDirReadData.Filelength > 999) THEN
-									brsitoa(lDirReadData.Filelength/1000, ADR(tmp_str2));
+								ELSIF (lDirReadData.Filelength > 1024) THEN
+									brsitoa(lDirReadData.Filelength/1024, ADR(tmp_str2));
 									brsstrcat(ADR(tmp_str2), ADR('K'));
 								ELSE
 									brsitoa(lDirReadData.Filelength, ADR(tmp_str2));
