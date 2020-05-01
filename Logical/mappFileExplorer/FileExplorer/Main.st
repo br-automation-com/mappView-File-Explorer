@@ -817,7 +817,7 @@ PROGRAM _CYCLIC
 			// Create response header
 			response_header_data :=  'Content-Type: application/octet-stream; Content-Transfer-Encoding: binary; Content-Disposition: attachment; filename="';
 			brsstrcpy(ADR(tmp_str1), ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]));
-			ReplaceString(ADR(tmp_str1), ADR(' '), ADR('%20'));
+			ReplaceString(ADR(tmp_str1), ADR(' '), ADR('%20'), FALSE);
 			brsstrcat(ADR(response_header_data), ADR(tmp_str1));
 			brsstrcat(ADR(response_header_data), ADR('"'));
 			
