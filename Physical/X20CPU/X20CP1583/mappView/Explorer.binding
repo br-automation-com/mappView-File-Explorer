@@ -5,18 +5,9 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_2" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="flyConfiguration" attribute="enable" />
 		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_1" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnClearFilterB" attribute="enable" />
-		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_1" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtFilterA" attribute="enable" />
-		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_1" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnClearFilterA" attribute="enable" />
-		</Binding>
+		
+		
+		
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].new_name" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirA" attribute="value" />
@@ -25,10 +16,7 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[1].new_name" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirB" attribute="value" />
 		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtFilterB" attribute="enable" />
-		</Binding>
+		
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.status" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtStatus" attribute="value" />

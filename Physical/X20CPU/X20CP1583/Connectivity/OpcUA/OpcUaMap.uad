@@ -3,10 +3,12 @@
   <Aliases>
     <ACLAliases>
       <ACL Id="1">
-        <ACE RoleId="2" RoleName="Everyone" Access="0x015F" />
+        <ACE RoleId="1" RoleName="Everyone" Access="0x015F" />
+        <ACE RoleId="2" RoleName="Administrator" Access="0x015F" />
       </ACL>
       <ACL Id="2">
-        <ACE RoleId="2" RoleName="Everyone" Access="0x017F" />
+        <ACE RoleId="1" RoleName="Everyone" Access="0x017F" />
+        <ACE RoleId="2" RoleName="Administrator" Access="0x017F" />
       </ACL>
     </ACLAliases>
     <EURangeViolationAliases />

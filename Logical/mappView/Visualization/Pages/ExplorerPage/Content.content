@@ -9,7 +9,7 @@
         <Widget xsi:type="widgets.brease.TextInput" id="txtNewDirA" top="558" left="95" width="395" height="28" zIndex="20" fontSize="14px" />
         <Widget xsi:type="widgets.brease.Button" id="btnDirCreateA" top="593" left="254" width="110" zIndex="21" text="New folder" cornerRadius="5px" />
         <Widget xsi:type="widgets.brease.Label" id="labFilterA" top="43" left="13" width="56" height="27" zIndex="24" text="Filter" textAlign="right" />
-        <Widget xsi:type="widgets.brease.TextInput" id="txtFilterA" top="45" left="74" width="366" height="22" zIndex="25" fontSize="14px" />
+        <Widget xsi:type="widgets.brease.TextInput" id="txtFilterA" top="45" left="74" width="366" height="25" zIndex="25" fontSize="14px" padding="0px 5px 0px 5px" />
         <Widget xsi:type="widgets.brease.Button" id="btnRefreshA" top="473" left="254" width="110" zIndex="1" text="Refresh" cornerRadius="5px" />
         <Widget xsi:type="widgets.brease.DropDownBox" id="ddbDeviceA" top="8" left="74" width="200" zIndex="3" dataProvider="[]" maxVisibleEntries="6" />
         <Widget xsi:type="widgets.brease.Label" id="labDeviceA" top="8" left="14" width="55" zIndex="4" text="Device" textAlign="right" />
@@ -40,7 +40,7 @@
         <Widget xsi:type="widgets.brease.TextInput" id="txtNewDirB" top="558" left="100" width="385" height="28" zIndex="24" />
         <Widget xsi:type="widgets.brease.Button" id="btnDirCreateB" top="593" left="249" width="110" zIndex="25" text="New folder" cornerRadius="5px" />
         <Widget xsi:type="widgets.brease.Label" id="labFilterB" top="45" left="19" width="56" height="22" zIndex="28" text="Filter" textAlign="right" />
-        <Widget xsi:type="widgets.brease.TextInput" id="txtFilterB" top="45" left="79" width="366" height="22" zIndex="29" fontSize="14px" />
+        <Widget xsi:type="widgets.brease.TextInput" id="txtFilterB" top="45" left="79" width="366" height="25" zIndex="29" fontSize="14px" padding="0px 5px 0px 5px" />
         <Widget xsi:type="widgets.brease.Label" id="labDirPathB" top="408" left="9" width="40" height="15" zIndex="16" text="Path" textAlign="right" fontSize="14px" />
         <Widget xsi:type="widgets.brease.TextOutput" id="txtDirPathB" top="403" left="55" width="435" height="25" zIndex="17" borderWidth="1px" cornerRadius="5px" borderStyle="solid" fontSize="14px" padding="0px 5px 0px 5px" />
         <Widget xsi:type="widgets.brease.Button" id="btnRefreshB" top="473" left="249" width="110" zIndex="2" text="Refresh" cornerRadius="5px" />
