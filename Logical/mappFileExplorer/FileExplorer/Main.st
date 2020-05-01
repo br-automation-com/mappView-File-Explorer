@@ -430,6 +430,26 @@ PROGRAM _CYCLIC
 			// ----------------------------------------------------------------------------------------
 			// OK
 			IF (DClose.status = OK) THEN
+				DClose.ident := 0;
+				step := EXP_READ_DIR_4;
+			// Error
+			ELSIF (DClose.status <> ERR_FUB_BUSY) THEN
+				step := CreateError(DClose.status, side, step, 'error dir close', ADR(EXPL));
+			END_IF
+		//**********************************************************************************************
+		// Get device memory information
+		//**********************************************************************************************
+		EXP_READ_DIR_4:
+			DMemInfo.enable 	:= TRUE;
+			DMemInfo.pDevice	:= ADR(EXPL.PAR[side].device_active);
+			DMemInfo();
+
+			// ----------------------------------------------------------------------------------------
+			// OK
+			IF (DMemInfo.status = OK) THEN
+				// Transfer device memory information
+				EXPL.DAT[side].device_free := UDINT_TO_INT(DMemInfo.freemem/1048576);
+				EXPL.DAT[side].device_size := UDINT_TO_INT(DMemInfo.memsize/1048576);
 				// Select item after copy->refresh
 				IF(do_select <> 0) THEN
 					FOR ly:=0 TO EXPL.DAT[NOT USINT_TO_BOOL(do_select-1)].item_num DO
@@ -442,15 +462,14 @@ PROGRAM _CYCLIC
 				END_IF
 				// Reset command and return to wait state
 				EXPL.CMD[side].refresh	:= FALSE;
-				DClose.ident			:= 0;
 				IF(has_oversized_items) THEN
 					step := CreateError(ERR_NAME_EXCEEDS_MAX, side, step, 'one or more names exceeds maximum length', ADR(EXPL));
 				ELSE
 					step := EXP_WAIT;
 				END_IF
-			// Error
-			ELSIF (DClose.status <> ERR_FUB_BUSY) THEN
-				step := CreateError(DClose.status, side, step, 'error dir close', ADR(EXPL));
+				// Error
+			ELSIF (DMemInfo.status <> ERR_FUB_BUSY) THEN
+				step := CreateError(DMemInfo.status, side, step, 'error reading device memory information', ADR(EXPL));
 			END_IF
 		//**********************************************************************************************
 		// Change directory

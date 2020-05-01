@@ -50,6 +50,7 @@ VAR
 	DCreate : DirCreate;
 	DDelete : DirDeleteEx;
 	DRename : DirRename;
+	DMemInfo : DevMemInfo;
 	lDirReadData : fiDIR_READ_EX_DATA;
 	AsMemPartCreate_0 : AsMemPartCreate;
 	AsMemPartAllocClear_0 : AsMemPartAllocClear;

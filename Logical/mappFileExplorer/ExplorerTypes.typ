@@ -15,6 +15,7 @@ TYPE
 		EXP_READ_DIR_1,
 		EXP_READ_DIR_2,
 		EXP_READ_DIR_3,
+		EXP_READ_DIR_4,
 		EXP_DIR_CHANGE,
 		EXP_COPY_ALL,
 		EXP_FILE_COPY,
@@ -63,9 +64,11 @@ TYPE
 		dir_path : STRING[EXPL_DIR_PATH_LENGTH]; (*Current directory path	*)
 	END_STRUCT;
 	expDAT : 	STRUCT 
-		item_list : ARRAY[0..EXPL_LIST_NUM]OF STRING[EXPL_ITEM_LENGTH]; (* List with file names	*)
-		item_size : ARRAY[0..EXPL_LIST_NUM]OF STRING[EXPL_SIZE_LENGTH]; (* List with file sizes*)
-		item_num : UINT; (* Number OF files	*)
+		item_list : ARRAY[0..EXPL_LIST_NUM]OF STRING[EXPL_ITEM_LENGTH]; (*List with file names	*)
+		item_size : ARRAY[0..EXPL_LIST_NUM]OF STRING[EXPL_SIZE_LENGTH]; (*List with file sizes*)
+		item_num : UINT; (*Number of files	 displayed*)
+		device_free : UINT; (*Free memory on device in MB*)
+		device_size : UINT; (*Total memory size of device in MB*)
 	END_STRUCT;
 	expVIS : 	STRUCT 
 		item_selected : UINT; (*Current selected file *)

@@ -281,13 +281,29 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.is_connected[3]" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBconnected3" attribute="value" />
 		</Binding>
-	<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnExpRenameB" attribute="enable" />
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnExpRenameB" attribute="enable" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnExpRenameA" attribute="enable" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[0].device_free" attribute="node" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numMemInfo1A" attribute="node" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[0].device_size" attribute="node" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numMemInfo2A" attribute="node" />
+		</Binding>
+	<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[1].device_free" attribute="node" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numMemInfobB1" attribute="node" />
 </Binding>
-<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnExpRenameA" attribute="enable" />
+<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[1].device_size" attribute="node" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numMemInfoB2" attribute="node" />
 </Binding>
 </Bindings>
 </BindingsSet>
