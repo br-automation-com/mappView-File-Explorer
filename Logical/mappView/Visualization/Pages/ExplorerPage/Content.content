@@ -83,10 +83,10 @@
         <Widget xsi:type="widgets.brease.ToggleButton" id="btnUSBconnected3" top="33" left="1099" width="35" height="35" zIndex="10" mouseDownText="3" text="3" backGroundGradient="linear-gradient(to bottom,#F7F7F7 0%,#f60909 100%)" disabledBackGroundGradient="linear-gradient(to bottom,#F7F7F7 0%,#f60909 100%)" checkedBackGroundGradient="linear-gradient(to bottom, #4A4A4A 0%,#29920c 100%)" disabledCheckedBackGroundGradient="linear-gradient(to bottom, #4A4A4A 0%,#29920c 100%)" enable="false" />
       </Widgets>
     </Widget>
-    <Widget xsi:type="widgets.brease.Button" id="btnCopyA" top="305" left="525" width="150" height="40" zIndex="11" text="Copy &gt;" cornerRadius="10px" />
-    <Widget xsi:type="widgets.brease.Button" id="btnCopyAllA" top="360" left="525" width="150" height="40" zIndex="12" text="Copy All &gt;" cornerRadius="10px" />
-    <Widget xsi:type="widgets.brease.Button" id="btnCopyB" top="505" left="525" width="150" height="40" zIndex="13" text="&lt; Copy" cornerRadius="10px" />
-    <Widget xsi:type="widgets.brease.Button" id="btnCopyAllB" top="570" left="525" width="150" height="40" zIndex="14" text="&lt; Copy All" cornerRadius="10px" />
+    <Widget xsi:type="widgets.brease.Button" id="btnCopyA" top="270" left="525" width="150" height="40" zIndex="11" text="Copy &gt;" cornerRadius="10px" />
+    <Widget xsi:type="widgets.brease.Button" id="btnCopyAllA" top="320" left="525" width="150" height="40" zIndex="12" text="Copy All &gt;" cornerRadius="10px" />
+    <Widget xsi:type="widgets.brease.Button" id="btnCopyB" top="430" left="525" width="150" height="40" zIndex="13" text="&lt; Copy" cornerRadius="10px" />
+    <Widget xsi:type="widgets.brease.Button" id="btnCopyAllB" top="480" left="525" width="150" height="40" zIndex="14" text="&lt; Copy All" cornerRadius="10px" />
     <Widget xsi:type="widgets.brease.Button" id="btnClearFilterA" top="205" left="460" width="30" zIndex="16" text="X" cornerRadius="5px" />
     <Widget xsi:type="widgets.brease.FlyOut" id="flyConfiguration" top="0" left="520" width="600" height="700" zIndex="17" autoClose="true" buttonOffset="10" docking="bottom" text="Configuration" buttonWidth="150" buttonCornerRadius="10px" fontSize="16px">
       <Widgets>
