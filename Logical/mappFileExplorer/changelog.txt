@@ -5,6 +5,7 @@ Version 1.3
 - Fixed filter text field and button is disabled when no files are visible
 - Fixed file size calculation
 - Fixed ReplaceString function call
+- Fixed error is not showing up in wait state
 
 Version 1.2
 - Fixed download not working when downloading the same file again

@@ -165,6 +165,10 @@ PROGRAM _CYCLIC
 	EXPL.VIS[1].enable_button_set_1 := FALSE;
 	EXPL.VIS[0].enable_button_set_2 := FALSE;
 	EXPL.VIS[1].enable_button_set_2 := FALSE;
+	
+	// Clear errors on new command
+	brsmemset(ADR(EXPL.ERR), 0, SIZEOF(EXPL.ERR));
+	
 	//**************************************************************************************************
 	// Cyclic Part
 	//**************************************************************************************************
@@ -290,9 +294,6 @@ PROGRAM _CYCLIC
 					step := EXP_FILE_RENAME;
 				END_IF
 			END_IF
-
-			// Clear errors on new command
-			brsmemset(ADR(EXPL.ERR), 0, SIZEOF(EXPL.ERR));
 
 		//**********************************************************************************************
 		// Read directory information
