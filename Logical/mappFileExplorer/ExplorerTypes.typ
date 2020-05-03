@@ -81,7 +81,7 @@ TYPE
 		upload_overwrite_response : USINT; (*Response from message box overwrite file*)
 		reload_upload : BOOL; (*Reload upload button*)
 		double_click_event : USINT; (*Helper variable for double click in item list*)
-		device_list : ARRAY[0..4]OF STRING[80]; (* Device name *)
+		device_list : ARRAY[0..6]OF STRING[80]; (* Device name *)
 	END_STRUCT;
 	expMAIN : 	STRUCT 
 		CMD : ARRAY[0..1]OF expCMD; (* Command structure *)
