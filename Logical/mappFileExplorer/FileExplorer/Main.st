@@ -431,8 +431,13 @@ PROGRAM _CYCLIC
 			// ----------------------------------------------------------------------------------------
 			// OK
 			IF (DClose.status = OK) THEN
-				DClose.ident := 0;
-				step := EXP_READ_DIR_4;
+				// Report error from dir read
+				IF (DRead.status <> ERR_OK AND DRead.status <> fiERR_NO_MORE_ENTRIES) THEN
+					step := CreateError(DRead.status, side, step, 'error dir read', ADR(EXPL));
+				ELSE
+					DClose.ident := 0;
+					step := EXP_READ_DIR_4;
+				END_IF
 			// Error
 			ELSIF (DClose.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(DClose.status, side, step, 'error dir close', ADR(EXPL));
@@ -1013,9 +1018,14 @@ PROGRAM _CYCLIC
 				WebServiceUpload[side].enable := FALSE;
 				WebServiceUpload[side]();
 				EXPL.CMD[side].upload := FALSE;
-				EXPL.CMD[side].refresh := 1;
 				EXPL.VIS[side].reload_upload := TRUE;
-				step := EXP_WAIT;
+				// Report error from file write
+				IF (FWrite.status <> ERR_OK) THEN
+					step := CreateError(FWrite.status, side, step, 'error writing file from upload', ADR(EXPL));
+				ELSE
+					EXPL.CMD[side].refresh := 1;
+					step := EXP_WAIT;
+				END_IF
 			// Error
 			ELSIF (FClose.status <> ERR_FUB_BUSY) THEN
 				step := CreateError(FClose.status, side, step, 'error closing file from upload', ADR(EXPL));

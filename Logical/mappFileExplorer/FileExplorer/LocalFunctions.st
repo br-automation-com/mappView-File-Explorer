@@ -40,9 +40,10 @@ FUNCTION CreateError
 	END_IF
 	EXPL.ERR.no   	:= nr;
 	EXPL.ERR.state 	:= step;
-	// Set next step
+	// When error occurs in dir read call dir close before reporting error
 	IF (step = EXP_READ_DIR_2) THEN
 		CreateError := EXP_READ_DIR_3;
+	// When error occurs in file write call file close before reporting error
 	ELSIF(step = EXP_FILE_UPLOAD_2) THEN
 		CreateError := EXP_FILE_UPLOAD_3;
 	ELSE
