@@ -1,12 +1,12 @@
 VAR CONSTANT
-	EXPL_DIR_PATH_LENGTH : UINT := 200; (* Maximum length for the complete path *)
-	EXPL_LIST_NUM : UINT := 100; (* Maximum number if files and folders that can be listed *)
-	EXPL_ITEM_LENGTH : USINT := 50; (* Maximum length for a file or folder name *)
-	EXPL_SIZE_LENGTH : USINT := 15; (* Maximum length for a file or folder size*)
-	EXPL_UPLOAD_DOWNLOAD_SIZE : UDINT := 5000000; (* Maximum size of memory allocated for uploading and downloading files*)
-	EXPL_DEVICE_LIST : ARRAY[0..6] OF STRING[40] := ['USER','SYSTEM','USB_DEVICE1','USB_DEVICE2','USB_DEVICE3','NET_DEVICE','']; (* List of predefined devices *)
+	EXPL_DIR_PATH_LENGTH : UINT := 200; (*Maximum length for the complete path *)
+	EXPL_LIST_NUM : UINT := 100; (*Maximum number if files and folders that can be listed *)
+	EXPL_ITEM_LENGTH : USINT := 50; (*Maximum length for a file or folder name *)
+	EXPL_SIZE_LENGTH : USINT := 15; (*Maximum length for a file or folder size*)
+	EXPL_UPLOAD_DOWNLOAD_SIZE : UDINT := 5000000; (*Maximum size of memory allocated for uploading and downloading files*)
+	EXPL_DEVICE_LIST : ARRAY[0..6] OF STRING[40] := ['USER','SYSTEM','USB_DEVICE1','USB_DEVICE2','USB_DEVICE3','NET_DEVICE','']; (*List of predefined devices *)
 END_VAR
 VAR
 	EXPL_VIEW_FILTER : ARRAY[0..9] OF STRING[5] := ['csv','xml','txt','bmp','jpg',5('')]; (*Files extensions than can be used with the view command*)
-	EXPL : expMAIN;
+	EXPL : expMAIN; (*Explorer main structure*)
 END_VAR

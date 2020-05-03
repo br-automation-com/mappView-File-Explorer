@@ -9,7 +9,7 @@ TYPE
 		slotId : SINT;
 	END_STRUCT;
 	expSTATE : 
-		(
+		( (*Explorer state machine*)
 		EXP_WAIT,
 		EXP_READ_DIR,
 		EXP_READ_DIR_1,
@@ -39,12 +39,12 @@ TYPE
 		EXP_OVERWRITE_1,
 		EXP_OVERWRITE_2
 		);
-	expERR : 	STRUCT 
+	expERR : 	STRUCT  (*Sub structure error*)
 		text : STRING[150]; (* Error text *)
 		no : UINT; (* Error number *)
 		state : expSTATE; (* Error step *)
 	END_STRUCT;
-	expCMD : 	STRUCT 
+	expCMD : 	STRUCT  (*Sub structure commands*)
 		refresh : BOOL; (*Read directory and file names from devices *)
 		dir_change : BOOL; (*Change current directory *)
 		dir_create : BOOL; (*Create a new directory *)
@@ -56,21 +56,21 @@ TYPE
 		download : BOOL; (*Download selected file*)
 		upload : BOOL; (*Upload file to target*)
 	END_STRUCT;
-	expPAR : 	STRUCT 
+	expPAR : 	STRUCT  (*Sub structure parameters*)
 		device_active : STRING[40]; (*Active device name *)
 		device_list : ARRAY[0..6]OF STRING[40]; (*List of all devices*)
 		item_filter : STRING[EXPL_ITEM_LENGTH]; (*Only show files with this extension	*)
 		new_name : STRING[EXPL_ITEM_LENGTH]; (*Name for for directory create and rename*)
 		dir_path : STRING[EXPL_DIR_PATH_LENGTH]; (*Current directory path	*)
 	END_STRUCT;
-	expDAT : 	STRUCT 
+	expDAT : 	STRUCT  (*Sub structure data*)
 		item_list : ARRAY[0..EXPL_LIST_NUM]OF STRING[EXPL_ITEM_LENGTH]; (*List with file names	*)
 		item_size : ARRAY[0..EXPL_LIST_NUM]OF STRING[EXPL_SIZE_LENGTH]; (*List with file sizes*)
 		item_num : UINT; (*Number of files	 displayed*)
 		device_free : UINT; (*Free memory on device in MB*)
 		device_size : UINT; (*Total memory size of device in MB*)
 	END_STRUCT;
-	expVIS : 	STRUCT 
+	expVIS : 	STRUCT  (*Sub structure visualization*)
 		item_selected : UINT; (*Current selected file *)
 		enable_button_set_1 : BOOL; (*Enable or disable buttons copy and delete*)
 		enable_button_set_2 : BOOL; (*Enable or disable buttons refresh and create*)
@@ -83,7 +83,7 @@ TYPE
 		double_click_event : USINT; (*Helper variable for double click in item list*)
 		device_list : ARRAY[0..6]OF STRING[80]; (* Device name *)
 	END_STRUCT;
-	expMAIN : 	STRUCT 
+	expMAIN : 	STRUCT  (*Main explorer structure*)
 		CMD : ARRAY[0..1]OF expCMD; (* Command structure *)
 		PAR : ARRAY[0..1]OF expPAR; (* Parameter structure *)
 		DAT : ARRAY[0..1]OF expDAT; (*Data structure*)
