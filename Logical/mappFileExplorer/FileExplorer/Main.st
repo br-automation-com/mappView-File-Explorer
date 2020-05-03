@@ -308,7 +308,7 @@ PROGRAM _CYCLIC
 			EXPL.DAT[side].item_num := 0;
 			// ----------------------------------------------------------------------------------------
 			// Add .. for directory up
-			IF(EXPL.PAR[side].dir_path <> '/' AND EXPL.PAR[side].dir_path <> '') THEN
+			IF(EXPL.PAR[side].dir_path <> '/' AND EXPL.PAR[side].dir_path <> '.' AND EXPL.PAR[side].dir_path <> '') THEN
 				EXPL.DAT[side].item_list[0] := '..';
 				EXPL.DAT[side].item_num := 1;
 			END_IF
@@ -341,6 +341,10 @@ PROGRAM _CYCLIC
 		// Open directory
 		//**********************************************************************************************
 		EXP_READ_DIR_1:
+			// Add current directory
+			IF(EXPL.PAR[side].dir_path = '') THEN
+				EXPL.PAR[side].dir_path := '.';
+			END_IF
 			DOpen.enable 	:= TRUE;
 			DOpen.pDevice	:= ADR(EXPL.PAR[side].device_active);
 			DOpen.pName 	:= ADR(EXPL.PAR[side].dir_path);
@@ -497,6 +501,10 @@ PROGRAM _CYCLIC
 			// ----------------------------------------------------------------------------------------
 			// Move one directory down
 			ELSE
+				// Remove current directory entry
+				IF(EXPL.PAR[side].dir_path = '.') THEN
+					EXPL.PAR[side].dir_path := '';
+				END_IF
 				brsstrcat(ADR(EXPL.PAR[side].dir_path), ADR('/'));
 				brsstrcat(ADR(EXPL.PAR[side].dir_path), ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]) + 5);
 				EXPL.CMD[side].refresh := 1;
