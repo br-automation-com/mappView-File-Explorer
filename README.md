@@ -22,8 +22,16 @@ Recommended task class is #8 with a 10ms cycle time.
 <a name="Revision-History"></a>
 ## Revision History
 
-#### Version 1.2
-- Fixed download not working when downloading the same file again
-- Fixed upload not working with large files > 1 MB
+#### Version 1.3
+- Code cleanup
+- UI Tweaks
+- Added file device memory information
+- Added current directory entry to be compatible with network shares
+- Change from static IP to DHCP
+- Fixed filter text field and button is disabled when no files are visible
+- Fixed file size calculation
+- Fixed ReplaceString function call
+- Fixed error is not showing up in wait state
+- Fixed dir read and file write error is not reported
 
 
