@@ -157,7 +157,7 @@ PROGRAM _CYCLIC
 	IF (EXPL.CMD[side].refresh = FALSE AND EXPL.CMD[side].dir_change = FALSE AND EXPL.CMD[side].dir_create = FALSE AND EXPL.CMD[side].copy = FALSE AND EXPL.CMD[side].copy_all = FALSE AND EXPL.CMD[side].delete = FALSE AND EXPL.CMD[side].rename = FALSE AND EXPL.CMD[side].view_file = FALSE AND EXPL.CMD[side].download = FALSE AND EXPL.CMD[side].upload = FALSE) THEN
 		// --------------------------------------------------------------------------------------------
 		// Show current state
-		EXPL.status := 'Waiting...';
+		EXPL.status_text := 'Waiting...';
 		// --------------------------------------------------------------------------------------------
 		// If selection is out of range set it to maximum
 		IF ((EXPL.VIS[side].item_selected > EXPL.DAT[side].item_num - 1) AND (EXPL.DAT[side].item_num <> 0)) THEN
@@ -167,6 +167,10 @@ PROGRAM _CYCLIC
 		// Enable buttons when command is active
 		EXPL.VIS[0].enable_button_set_2 := TRUE;
 		EXPL.VIS[1].enable_button_set_2 := TRUE;
+		// Reset busy status
+		IF(EXPL.ERR.state = 0) THEN
+			EXPL.status_no := 0;
+		END_IF
 		RETURN;
 	END_IF
 	
@@ -262,7 +266,7 @@ PROGRAM _CYCLIC
 						step := EXP_FILE_DOWNLOAD;
 					// Selected item is a directory
 					ELSE
-						ReplaceString(ADR(item_name), ADR('(DIR)'), ADR(''));
+						ReplaceString(ADR(item_name), ADR('(DIR)'), ADR(''), TRUE);
 						step := EXP_FILE_DOWNLOAD_DIR;
 					END_IF
 				ELSE
@@ -314,6 +318,9 @@ PROGRAM _CYCLIC
 					step := EXP_FILE_RENAME;
 				END_IF
 			END_IF
+			
+			// Set status
+			EXPL.status_no := ERR_FUB_BUSY;
 
 		//**********************************************************************************************
 		// Read directory information
@@ -856,7 +863,7 @@ PROGRAM _CYCLIC
 			// Create response header
 			response_header_data :=  'Content-Type: application/octet-stream; Content-Transfer-Encoding: binary; Content-Disposition: attachment; filename="';
 			brsstrcpy(ADR(tmp_str1), ADR(item_name));
-			ReplaceString(ADR(tmp_str1), ADR(' '), ADR('%20'));
+			ReplaceString(ADR(tmp_str1), ADR(' '), ADR('%20'), FALSE);
 			brsstrcat(ADR(response_header_data), ADR(tmp_str1));
 			brsstrcat(ADR(response_header_data), ADR('"'));
 			

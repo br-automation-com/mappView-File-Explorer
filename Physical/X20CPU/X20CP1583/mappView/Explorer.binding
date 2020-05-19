@@ -4,10 +4,7 @@
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[0].enable_button_set_2" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="flyConfiguration" attribute="enable" />
-		</Binding>
-		
-		
-		
+		</Binding>	
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[0].new_name" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirA" attribute="value" />
@@ -16,10 +13,9 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.PAR[1].new_name" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNewDirB" attribute="value" />
 		</Binding>
-		
 		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.status" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtStatus" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.status_text" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtStatusText" attribute="value" />
 		</Binding>
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.text" attribute="value" />
@@ -126,8 +122,8 @@
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnRefreshB" attribute="enable" />
 		</Binding>
 		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.ERR.no" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numErrorNo" attribute="value" />
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.status_no" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numStatusNo" attribute="value" />
 		</Binding>
 		<Binding mode="oneWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_2" attribute="value" />
@@ -285,13 +281,13 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[0].device_size" attribute="node" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numMemInfo2A" attribute="node" />
 		</Binding>
-	<Binding mode="oneWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[1].device_free" attribute="node" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numMemInfobB1" attribute="node" />
-</Binding>
-<Binding mode="oneWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[1].device_size" attribute="node" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numMemInfoB2" attribute="node" />
-</Binding>
-</Bindings>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[1].device_free" attribute="node" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numMemInfobB1" attribute="node" />
+		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[1].device_size" attribute="node" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numMemInfoB2" attribute="node" />
+		</Binding>
+	</Bindings>
 </BindingsSet>

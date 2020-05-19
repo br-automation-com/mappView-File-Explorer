@@ -38,7 +38,7 @@ FUNCTION CreateError
 	ELSE			
 		brsstrcat(ADR(EXPL.ERR.text), ADR(' on side b'));
 	END_IF
-	EXPL.ERR.no   	:= nr;
+	EXPL.status_no 	:= nr;
 	EXPL.ERR.state 	:= step;
 	// When error occurs in dir read call dir close before reporting error
 	IF (step = EXP_READ_DIR_2) THEN
@@ -87,13 +87,13 @@ FUNCTION WorkingStatus
 		animation := 0;
 	END_IF
 	
-	brsmemset(ADR(EXPL.status), 0, SIZEOF(EXPL.status));
-	brsstrcpy(ADR(EXPL.status), str);
+	brsmemset(ADR(EXPL.status_text), 0, SIZEOF(EXPL.status_text));
+	brsstrcpy(ADR(EXPL.status_text), str);
 	CASE(animation) OF
-		0..19	: brsstrcat(ADR(EXPL.status), ADR('/'));
-		20..39	: brsstrcat(ADR(EXPL.status), ADR('-'));
-		40..59	: brsstrcat(ADR(EXPL.status), ADR('\'));
-		60..79	: brsstrcat(ADR(EXPL.status), ADR('|'));
+		0..19	: brsstrcat(ADR(EXPL.status_text), ADR('/'));
+		20..39	: brsstrcat(ADR(EXPL.status_text), ADR('-'));
+		40..59	: brsstrcat(ADR(EXPL.status_text), ADR('\'));
+		60..79	: brsstrcat(ADR(EXPL.status_text), ADR('|'));
 	END_CASE;
 	WorkingStatus := animation;
 END_FUNCTION

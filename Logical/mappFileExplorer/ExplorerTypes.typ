@@ -43,7 +43,6 @@ TYPE
 		);
 	expERR : 	STRUCT  (*Sub structure error*)
 		text : STRING[150]; (* Error text *)
-		no : UINT; (* Error number *)
 		state : expSTATE; (* Error step *)
 	END_STRUCT;
 	expCMD : 	STRUCT  (*Sub structure commands*)
@@ -91,6 +90,7 @@ TYPE
 		DAT : ARRAY[0..1]OF expDAT; (*Data structure*)
 		VIS : ARRAY[0..1]OF expVIS; (*Visualization structure*)
 		ERR : expERR; (* Error structure *)
-		status : STRING[50]; (* Actual step	*)
+		status_no : UINT; (*Shows the status as number*)
+		status_text : STRING[50]; (*Shows the status as text*)
 	END_STRUCT;
 END_TYPE

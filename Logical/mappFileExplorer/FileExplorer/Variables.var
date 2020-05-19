@@ -19,7 +19,6 @@ VAR
 	tmp_str4 : STRING[EXPL_DIR_PATH_LENGTH]; (* Temporary STRING variable *)
 	lx : UDINT := 0; (* Index	*)
 	ly : UINT;
-	lz : UINT;
 	double_click_timer : TON_10ms;
 	device_active_old : ARRAY[0..1] OF STRING[40];
 	response_header : httpResponseHeader_t;
@@ -78,7 +77,7 @@ VAR CONSTANT
 	ERR_MEM_ALLOC : UINT := 50300; (*Memory allocation for file upload and download failed*)
 	ERR_MEM_DOWNLOAD : UINT := 50310; (*Size of download file exceeds maximum*)
 	ERR_TIMEOUT_DOWNLOAD : UINT := 50320; (*Download response timed out*)
-	ERR_DIR_DOWNLOAD_INVALID : UINT := 50331; (*This is not a valid directory*)
+	ERR_DIR_DOWNLOAD_INVALID : UINT := 50331; (*This is not a valid directory for downloading*)
 	ERR_POS_NAME_UPLOAD : UINT := 50400; (*Can not find filename in upload response*)
 	ERR_SIZE_NAME_UPLOAD : UINT := 50401; (*Can not determine end of filename in upload response*)
 	ERR_LEN_NAME_UPLOAD : UINT := 50402; (*Filename is too long in upload response*)
