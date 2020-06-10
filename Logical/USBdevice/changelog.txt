@@ -1,3 +1,8 @@
+Version 0.4
+- Remove state variable from PAR structure
+- Added status variable to main structure
+- Fixed USB reconnect issue
+
 Version 0.3
 - Fixed USB reconnect issue
 

@@ -16,21 +16,18 @@ TYPE
 		error_reset : BOOL; (*Reset error*)
 	END_STRUCT;
 	usbPAR : 	STRUCT 
-		state_machine : usbSTATE; (*State machine*)
 		ignore_dongle : BOOL := TRUE; (*Ignoe B&R license dongle*)
 		refresh_interval : UINT := 300; (*Intervall timer for USB device refresh*)
 		is_connected : ARRAY[1..USB_MAX_CNT]OF BOOL; (*Shows if a USB stick is connected*)
-		link_handle : ARRAY[1..USB_MAX_CNT]OF UDINT;
 	END_STRUCT;
 	usbERR : 	STRUCT 
-		no : UINT; (*Error number*)
-		state : usbSTATE;
+		state : usbSTATE; (*State where the error occured*)
 		text : STRING[80]; (*Error text*)
-		active : BOOL;
 	END_STRUCT;
 	usbMAIN : 	STRUCT 
 		CMD : usbCMD; (*Command structure*)
 		PAR : usbPAR; (*Parameter structure*)
 		ERR : usbERR; (*Error structure*)
+		status : UINT; (*Current status*)
 	END_STRUCT;
 END_TYPE

@@ -7,7 +7,7 @@
     <Object Type="Package" Description="Global libraries">Libraries</Object>
     <Object Type="Package">mappView</Object>
     <Object Type="Package">mappFileExplorer</Object>
-    <Object Type="Package">NETdevice</Object>
     <Object Type="Package">USBdevice</Object>
+    <Object Type="Package">NETdevice</Object>
   </Objects>
 </Package>

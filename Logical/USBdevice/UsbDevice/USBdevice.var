@@ -10,12 +10,14 @@ END_VAR
 (*----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*)
 (*Local variables*)
 VAR
+	state_machine : usbSTATE; (*State machine*)
 	device_param : STRING[80]; (*Connection path of USB device*)
 	device_name : STRING[40]; (*Connection path of USB device*)
+	link_handle : ARRAY[1..USB_MAX_CNT] OF UDINT; (*Link handle for USB device*)
 	usb_data : ARRAY[1..USB_MAX_CNT] OF usbNode_typ; (*Data of all available USB devices*)
 	usb_data_old : ARRAY[1..USB_MAX_CNT] OF usbNode_typ; (*Old data of all available USB devices*)
 	node_id_buffer : ARRAY[1..USB_MAX_CNT] OF UDINT; (*Different nodeIDs saved in array-elements*)
-	is_linked : BOOL;
+	is_linked : BOOL; (*Helper variable that indicates that a USB stick is linked*)
 	node : USINT; (*Node number*)
 	idx : USINT;
 	tmpSTR : STRING[10];
