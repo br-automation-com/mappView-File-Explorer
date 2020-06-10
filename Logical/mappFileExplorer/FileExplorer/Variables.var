@@ -74,6 +74,7 @@ VAR CONSTANT
 	ERR_DIR_EXCEEDS_MAX : UINT := 50201; (*Directory name exceeds maximum length*)
 	ERR_PATH_EXCEEDS_MAX : UINT := 50202; (*Directory path exceeds maximum length*)
 	ERR_PATH_CRITICAL : UINT := 50203; (*Directory path critical error*)
+	ERR_PATH_RECURSIVE : UINT := 50204; (*Can not copy directory into itself*)
 	ERR_MEM_ALLOC : UINT := 50300; (*Memory allocation for file upload and download failed*)
 	ERR_MEM_DOWNLOAD : UINT := 50310; (*Size of download file exceeds maximum*)
 	ERR_TIMEOUT_DOWNLOAD : UINT := 50320; (*Download response timed out*)

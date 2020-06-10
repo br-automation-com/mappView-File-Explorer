@@ -165,10 +165,7 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.user_password" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNETuser_password" attribute="value" />
 		</Binding>
-		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.ERR.no" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numNETErrorNo" attribute="value" />
-		</Binding>
+		
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.ERR.text" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNETError" attribute="value" />
@@ -178,10 +175,6 @@
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnNETconnected" attribute="value" />
 		</Binding>
 		<Binding mode="twoWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.state_machine" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbNETstatus" attribute="selectedIndex" />
-		</Binding>
-		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.server_share" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNETserver_path" attribute="value" />
 		</Binding>		
@@ -189,10 +182,6 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.refresh_interval" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numUSBintervall" attribute="value" />
 		</Binding>	
-		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.state_machine" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="ddbUSBstatus" attribute="selectedIndex" />
-		</Binding>
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.PAR.ignore_dongle" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="chkUSBdongle" attribute="value" />
@@ -201,10 +190,7 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.text" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtUSBError" attribute="value" />
 		</Binding>
-		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.no" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numUSBErrorNo" attribute="value" />
-		</Binding>
+		
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.CMD.auto_scan" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="chkUSBenable" attribute="value" />
@@ -289,5 +275,13 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[1].device_size" attribute="node" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numMemInfoB2" attribute="node" />
 		</Binding>
-	</Bindings>
+	<Binding mode="oneWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.status" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numUSBStatusNo" attribute="value" />
+</Binding>
+<Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.status" attribute="value" />
+<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numNETStatusNo" attribute="value" />
+</Binding>
+</Bindings>
 </BindingsSet>

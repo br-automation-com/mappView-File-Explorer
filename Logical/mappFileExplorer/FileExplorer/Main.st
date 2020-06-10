@@ -644,33 +644,39 @@ PROGRAM _CYCLIC
 						// Initialize copy structure
 						CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str3));
 						CreateCompletePath(EXPL.PAR[NOT side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str4));
-						DCopy.enable 	:= 1;
-						DCopy.pSrcDev	:= ADR(EXPL.PAR[side].device_active);
-						DCopy.pSrcDir	:= ADR(tmp_str3);
-						DCopy.pDestDev 	:= ADR(EXPL.PAR[NOT side].device_active);
-						DCopy.pDestDir 	:= ADR(tmp_str4);
-						DCopy.option 	:= fiOVERWRITE;
-						DCopy();
-
 						// ----------------------------------------------------------------------------
-						// OK
-						IF (DCopy.status = OK AND EXPL.CMD[side].copy = 1) THEN
-							// Reset command and refresh directory
-							IF(COPY_AUTO_REFRESH = TRUE) THEN
-								EXPL.CMD[NOT side].refresh := TRUE;
-							END_IF
-							IF (COPY_AUTO_SELECT = TRUE) THEN
-								do_select := BOOL_TO_USINT(side) + 1;
-							END_IF
-							EXPL.CMD[side].copy	:= FALSE;
-							step := EXP_WAIT;
-						// ----------------------------------------------------------------------------
-						// Proceed with next directory
-						ELSIF (DCopy.status = OK) THEN
-							EXPL.VIS[side].item_selected := EXPL.VIS[side].item_selected + 1;
-							// Switch to file copy when no more directory can be found
-							IF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) <> 0) THEN
-								step := EXP_FILE_COPY;
+						// Make sure we are not copying directories recursively
+						IF((EXPL.PAR[side].device_active = EXPL.PAR[NOT side].device_active) AND ((brsmemcmp(ADR(tmp_str3), ADR(tmp_str4), brsstrlen(ADR(tmp_str3))) = 0) OR (brsmemcmp(ADR(tmp_str4), ADR(tmp_str3), brsstrlen(ADR(tmp_str4))) = 0))) THEN
+							step := CreateError(ERR_PATH_RECURSIVE, side, step, 'can not copy directory into itself', ADR(EXPL));
+						ELSE
+							DCopy.enable 	:= 1;
+							DCopy.pSrcDev	:= ADR(EXPL.PAR[side].device_active);
+							DCopy.pSrcDir	:= ADR(tmp_str3);
+							DCopy.pDestDev 	:= ADR(EXPL.PAR[NOT side].device_active);
+							DCopy.pDestDir 	:= ADR(tmp_str4);
+							DCopy.option 	:= fiOVERWRITE;
+							DCopy();
+	
+							// ----------------------------------------------------------------------------
+							// OK
+							IF (DCopy.status = OK AND EXPL.CMD[side].copy = 1) THEN
+								// Reset command and refresh directory
+								IF(COPY_AUTO_REFRESH = TRUE) THEN
+									EXPL.CMD[NOT side].refresh := TRUE;
+								END_IF
+								IF (COPY_AUTO_SELECT = TRUE) THEN
+									do_select := BOOL_TO_USINT(side) + 1;
+								END_IF
+								EXPL.CMD[side].copy	:= FALSE;
+								step := EXP_WAIT;
+							// ----------------------------------------------------------------------------
+							// Proceed with next directory
+							ELSIF (DCopy.status = OK) THEN
+								EXPL.VIS[side].item_selected := EXPL.VIS[side].item_selected + 1;
+								// Switch to file copy when no more directory can be found
+								IF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) <> 0) THEN
+									step := EXP_FILE_COPY;
+								END_IF
 							END_IF
 						END_IF
 					// Error
