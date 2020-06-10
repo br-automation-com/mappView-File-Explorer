@@ -1,3 +1,4 @@
 VAR
+	PING_TIMEOUT : UINT := 200; (*Timeout for ping response*)
 	NET : netMAIN;
 END_VAR

@@ -1,17 +1,41 @@
-
 PROGRAM _INIT
-	(* Insert code here *)
-	 
 END_PROGRAM
 
 PROGRAM _CYCLIC
+	// Trigger ping request
+	PingTimer.IN := TRUE;
+	PingTimer.PT := PING_TIMEOUT;
+	PingTimer();
+	// Try to ping network share if not connected
+	IF((NET.PAR.server_ip <> '' OR NET.PAR.server_name <> '') AND PingTimer.Q) THEN
+		// Use IPÜ address
+		IF(NET.PAR.server_ip <> '') THEN
+			IcmpPing_0(enable := 1, pHost := ADR(NET.PAR.server_ip), timeout := PING_TIMEOUT);
+		// Use host name		
+		ELSE
+			IcmpPing_0(enable := 1, pHost := ADR(NET.PAR.server_name), timeout := PING_TIMEOUT);
+		END_IF
+		// Ping was OK
+		IF(IcmpPing_0.status = ERR_OK) THEN
+			PingTimer(IN := FALSE);
+			NET.PAR.can_ping := TRUE;
+		// Disconnect from share when ping failed
+		ELSIF(IcmpPing_0.status <> ERR_FUB_BUSY) THEN
+			PingTimer(IN := FALSE);
+			NET.PAR.can_ping := FALSE;
+			NET.CMD.disconnect := TRUE;
+		END_IF
+	ELSIF(PingTimer.Q) THEN
+		PingTimer(IN := FALSE);
+	END_IF
 
-	CASE NET.PAR.state_machine OF
+	CASE state_machine OF
 		// -----------------------------------------------------------------------------------------------------------
 		// Wait state
 		// -----------------------------------------------------------------------------------------------------------
 		NET_WAIT:
 			NET.PAR.enable_connect := TRUE;
+			NET.status := ERR_OK;
 			// --------------------------------------------------------------------------------------------------------------------	
 			// Connect to server
 			IF(NET.CMD.connect) THEN
@@ -19,26 +43,33 @@ PROGRAM _CYCLIC
 					DevUnlink_0.enable := 0;
 					DevUnlink_0;
 					IF (DevUnlink_0.status = ERR_FUB_ENABLE_FALSE) THEN
-						NET.PAR.state_machine := NET_UNLINK_DEVICE;
+						state_machine := NET_UNLINK_DEVICE;
 					END_IF
 				ELSE
 					DevLink_0.enable := 0;
 					DevLink_0;
 					IF (DevLink_0.status = ERR_FUB_ENABLE_FALSE) THEN
-						NET.PAR.state_machine := NET_LINK_DEVICE;
+						state_machine := NET_LINK_DEVICE;
 					END_IF
 				END_IF
+				NET.status := ERR_FUB_BUSY;
 			END_IF
 			// --------------------------------------------------------------------------------------------------------------------	
 			// Disconnect from server
-			IF(NET.CMD.error_reset) THEN
+			IF(NET.CMD.disconnect) THEN
 				IF(NET.PAR.is_linked) THEN
 					DevUnlink_0.enable := 0;
 					DevUnlink_0;
-					NET.PAR.state_machine := NET_UNLINK_DEVICE;
+					state_machine := NET_UNLINK_DEVICE;
 				ELSE
-					NET.CMD.error_reset := FALSE;
+					NET.CMD.disconnect := FALSE;
 				END_IF
+			END_IF
+			// --------------------------------------------------------------------------------------------------------------------	
+			// Reset error
+			IF(NET.CMD.error_reset) THEN
+				NET.CMD.error_reset := FALSE;
+				brsmemset(ADR(NET.ERR), 0, SIZEOF(NET.ERR));
 			END_IF
 		// -----------------------------------------------------------------------------------------------------------
 		// Link device
@@ -100,19 +131,19 @@ PROGRAM _CYCLIC
 				device_handle := DevLink_0.handle;
 				NET.PAR.is_linked := TRUE;
 				NET.CMD.connect := FALSE;				
-				NET.PAR.state_machine := NET_WAIT;
+				state_machine := NET_WAIT;
 			// --------------------------------------------------------------------------------------------------------------------	
 			// Abort command
-			ELSIF(NET.CMD.error_reset) THEN
+			ELSIF(NET.CMD.error_reset = TRUE OR NET.CMD.disconnect = TRUE) THEN
 				NET.CMD.error_reset := FALSE;
 				NET.CMD.connect := FALSE;
-				NET.PAR.state_machine := NET_WAIT;
-				// Error
+				state_machine := NET_WAIT;
+			// Error
 			ELSIF DevLink_0.status <> ERR_FUB_BUSY THEN
-				NET.ERR.state := NET.PAR.state_machine;
-				NET.ERR.no := DevLink_0.status;
+				NET.ERR.state := state_machine;
 				NET.ERR.text := 'error linking device';
-				NET.PAR.state_machine := NET_ERROR;  
+				NET.status := DevLink_0.status;
+				state_machine := NET_ERROR;  
 			END_IF;										
 		// -----------------------------------------------------------------------------------------------------------
 		// UnLink device
@@ -130,18 +161,18 @@ PROGRAM _CYCLIC
 				IF(NET.CMD.connect) THEN
 					DevLink_0.enable := 0;
 					DevLink_0;
-					NET.PAR.state_machine := NET_LINK_DEVICE;
+					state_machine := NET_LINK_DEVICE;
 				ELSE
-					NET.CMD.error_reset := FALSE;
-					NET.PAR.state_machine := NET_WAIT;
+					NET.CMD.disconnect := FALSE;
+					state_machine := NET_WAIT;
 				END_IF					
 			// Error
 			ELSIF DevUnlink_0.status <> ERR_FUB_BUSY THEN
 				NET.CMD.error_reset := FALSE;
-				NET.ERR.state := NET.PAR.state_machine;
-				NET.ERR.no := DevUnlink_0.status;
+				NET.ERR.state := state_machine;
 				NET.ERR.text := 'error unlinking device';
-				NET.PAR.state_machine := NET_ERROR;
+				NET.status := DevUnlink_0.status;
+				state_machine := NET_ERROR;
 			END_IF;
 		// -----------------------------------------------------------------------------------------------------------
 		// Error step
@@ -152,11 +183,10 @@ PROGRAM _CYCLIC
 			NET.CMD.connect := FALSE;
 
 			// Get more error information
-			IF(NET.ERR.no = 0) THEN
-				NET.ERR.no := FileIoGetSysError();
+			IF(NET.status = 0) THEN
+				NET.status := FileIoGetSysError();
 			END_IF
-			NET.ERR.active := TRUE;
-			IF(NET.ERR.no=26228) THEN
+			IF(NET.status = 26228) THEN
 				brsstrcpy(ADR(NET.ERR.text), ADR('connection rejected: check network protocol, username and password'));
 			ELSIF(DevLink_0.status = fiERR_DEVICE_ALREADY_EXIST) THEN
 				brsstrcpy(ADR(NET.ERR.text), ADR('device is already connected'));
@@ -165,10 +195,8 @@ PROGRAM _CYCLIC
 			// Reset error
 			IF(NET.CMD.error_reset) THEN
 				NET.CMD.error_reset := FALSE;
-				NET.ERR.active := FALSE;
-				NET.ERR.no := 0;
-				brsmemset(ADR(NET.ERR.text), 0, SIZEOF(NET.ERR.text));
-				NET.PAR.state_machine := NET_WAIT;
+				brsmemset(ADR(NET.ERR), 0, SIZEOF(NET.ERR));
+				state_machine := NET_WAIT;
 			END_IF
 	END_CASE;
 	 

@@ -1,0 +1,9 @@
+                                                                      
+VAR CONSTANT
+	icmpERR_NO_RESPONSE					: UINT := 32750;	(*no ping response*)
+	icmpERR_PARAMETER					: UINT := 32751;	(*invalid parameter, check parameter*)
+	icmpERR_SOCKET_CREATE				: UINT := 32752;	(*create socket failed*)
+	icmpERR_UNREACHABLE					: UINT := 32753;	(*host unreachable*)
+	icmpERR_FIREWALL					: UINT := 32754;	(*blocked by firewall*)
+	icmpERR_SYSTEM						: UINT := 32799;	(*system error*)
+END_VAR

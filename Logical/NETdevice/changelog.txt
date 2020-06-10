@@ -1,2 +1,11 @@
+Version 0.3
+- Remove state variable from PAR structure
+- Added status variable to main structure
+- Added disconnect command
+- Ping is now executed all the time to detect connection interruption
+
+Version 0.2
+- Added ping support
+
 Version 0.1
 - First public release

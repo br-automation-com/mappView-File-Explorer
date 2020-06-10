@@ -16,5 +16,6 @@
     <Object Type="Library" Language="binary" Description="The AsMem library makes it possible to manage memory blocks located in large memory areas (memory partitions).">AsMem</Object>
     <Object Type="Library" Language="binary" Description="The AsARCfg library supports reading and writing Automation Runtime configurations.">AsARCfg</Object>
     <Object Type="Library" Language="binary" Description="The AsZip library offers compressing archive-support">AsZip</Object>
+    <Object Type="Library" Language="binary" Description="This library contains FBKs for pinging a station.">AsICMP</Object>
   </Objects>
 </Package>
