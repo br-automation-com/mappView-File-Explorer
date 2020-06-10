@@ -22,7 +22,8 @@ Recommended task class is #8 with a 10ms cycle time.
 <a name="Revision-History"></a>
 ## Revision History
 
-#### Version 1.4
-- Added support for folder download
-- Renamed status to status_text and added status_no to show busy state and error numbers
+#### Version 1.5
+- Update USB helper task
+- Update NET helper task
+- Prevent user from copying directories recursively
 
