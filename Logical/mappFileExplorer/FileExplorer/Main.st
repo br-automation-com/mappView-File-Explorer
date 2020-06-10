@@ -980,6 +980,8 @@ PROGRAM _CYCLIC
 			// ----------------------------------------------------------------------------------------
 			// Initialize file zip structure
 			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str2));
+			brsmemset(ADR(tmp_str2) + brsstrlen(ADR(tmp_str2))-1, 0, 1);
+			
 			zipArchive_0.enable := 1;
 			zipArchive_0.pArchiveDevice := ADR('TMP_USER'); 
 			zipArchive_0.pArchiveFile := ADR(tmp_str1);
