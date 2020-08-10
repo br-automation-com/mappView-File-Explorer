@@ -275,5 +275,9 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.status" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numNETStatusNo" attribute="value" />
 		</Binding>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.can_ping" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnNETping" attribute="value" />
+		</Binding>
 	</Bindings>
 </BindingsSet>

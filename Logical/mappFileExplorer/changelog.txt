@@ -1,3 +1,7 @@
+Next Version
+- Fixed reset button was disabled for network and USB
+- Added ping OK button to network share configuration page
+
 Version 1.5
 - Update USB helper task
 - Update NET helper task

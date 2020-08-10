@@ -1,3 +1,4 @@
+
 //******************************************************************************************************
 // Create mappView data provider string
 //******************************************************************************************************
@@ -79,7 +80,7 @@ FUNCTION CreateCompletePath
 	// Create directory path																			
 	brsstrcat(return_path, ADR('/')); 
 	brsstrcat(return_path, ADR(tmp));
-	brsstrcat(return_path, ADR('/')); 
+//	brsstrcat(return_path, ADR('/')); 
 	
 	CreateCompletePath := FALSE;
 END_FUNCTION
