@@ -129,10 +129,7 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_2" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnDirCreateB" attribute="enable" />
 		</Binding>
-		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.ERR.active" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnNETreset" attribute="enable" />
-		</Binding>
+		
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.enable_connect" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnNETconnect" attribute="enable" />
@@ -165,7 +162,6 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.PAR.user_password" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNETuser_password" attribute="value" />
 		</Binding>
-		
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.ERR.text" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtNETError" attribute="value" />
@@ -190,15 +186,11 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.text" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="txtUSBError" attribute="value" />
 		</Binding>
-		
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.CMD.auto_scan" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="chkUSBenable" attribute="value" />
 		</Binding>
-		<Binding mode="oneWay">
-			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.ERR.active" attribute="value" />
-			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnUSBreset" attribute="enable" />
-		</Binding>
+		
 		<Binding mode="twoWay">
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.VIS[1].enable_button_set_1" attribute="value" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="btnViewFileB" attribute="enable" />
@@ -275,13 +267,13 @@
 			<Source xsi:type="opcUa" refId="::AsGlobalPV:EXPL.DAT[1].device_size" attribute="node" />
 			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numMemInfoB2" attribute="node" />
 		</Binding>
-	<Binding mode="oneWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.status" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numUSBStatusNo" attribute="value" />
-</Binding>
-<Binding mode="twoWay">
-<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.status" attribute="value" />
-<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numNETStatusNo" attribute="value" />
-</Binding>
-</Bindings>
+		<Binding mode="oneWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:USB.status" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numUSBStatusNo" attribute="value" />
+		</Binding>
+		<Binding mode="twoWay">
+			<Source xsi:type="opcUa" refId="::AsGlobalPV:NET.status" attribute="value" />
+			<Target xsi:type="brease" contentRefId="contentExplorer" widgetRefId="numNETStatusNo" attribute="value" />
+		</Binding>
+	</Bindings>
 </BindingsSet>
