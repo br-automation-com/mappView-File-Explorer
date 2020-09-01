@@ -335,7 +335,7 @@ PROGRAM _CYCLIC
 			EXPL.DAT[side].item_num := 0;
 			// ----------------------------------------------------------------------------------------
 			// Add .. for directory up
-			IF(EXPL.PAR[side].dir_path <> '/' AND EXPL.PAR[side].dir_path <> '.' AND EXPL.PAR[side].dir_path <> '') THEN
+			IF(EXPL.PAR[side].dir_path <> '/' AND EXPL.PAR[side].dir_path <> '') THEN
 				EXPL.DAT[side].item_list[0] := '..';
 				EXPL.DAT[side].item_num := 1;
 			END_IF
@@ -370,7 +370,7 @@ PROGRAM _CYCLIC
 		EXP_READ_DIR_1:
 			// Add current directory
 			IF(EXPL.PAR[side].dir_path = '') THEN
-				EXPL.PAR[side].dir_path := '.';
+				EXPL.PAR[side].dir_path := '/';
 			END_IF
 			DOpen.enable 	:= TRUE;
 			DOpen.pDevice	:= ADR(EXPL.PAR[side].device_active);
@@ -528,11 +528,10 @@ PROGRAM _CYCLIC
 			// ----------------------------------------------------------------------------------------
 			// Move one directory down
 			ELSE
-				// Remove current directory entry
-				IF(EXPL.PAR[side].dir_path = '.') THEN
-					EXPL.PAR[side].dir_path := '';
+				// Add slash if not in root
+				IF(EXPL.PAR[side].dir_path <> '/') THEN
+					brsstrcat(ADR(EXPL.PAR[side].dir_path), ADR('/'));
 				END_IF
-				brsstrcat(ADR(EXPL.PAR[side].dir_path), ADR('/'));
 				brsstrcat(ADR(EXPL.PAR[side].dir_path), ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]) + 5);
 				EXPL.CMD[side].refresh := 1;
 			END_IF
@@ -980,7 +979,6 @@ PROGRAM _CYCLIC
 			// ----------------------------------------------------------------------------------------
 			// Initialize file zip structure
 			CreateCompletePath(EXPL.PAR[side].dir_path, EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected], ADR(tmp_str2));
-			brsmemset(ADR(tmp_str2) + brsstrlen(ADR(tmp_str2))-1, 0, 1);
 			
 			zipArchive_0.enable := 1;
 			zipArchive_0.pArchiveDevice := ADR('TMP_USER'); 

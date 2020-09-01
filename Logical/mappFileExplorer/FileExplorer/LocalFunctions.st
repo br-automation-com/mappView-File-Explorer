@@ -63,12 +63,6 @@ FUNCTION CreateCompletePath
 	brsstrcpy(return_path, ADR(path));
 	
 	// ------------------------------------------------------------------------------------------------ 		
-	// Remove leading dot
-	IF(brsmemcmp(return_path, ADR('.'), 1) = 0) THEN
-		brsmemmove(return_path, return_path+1, brsstrlen(return_path));
-	END_IF
-
-	// ------------------------------------------------------------------------------------------------ 		
 	// Filter directory name																			
 	IF(brsmemcmp(ADR(target), ADR('(DIR)'), 5) = 0) THEN
 		brsmemcpy(ADR(tmp), ADR(target)+5, brsstrlen(ADR(target))-5);
@@ -77,10 +71,12 @@ FUNCTION CreateCompletePath
 	END_IF
 		
 	// ------------------------------------------------------------------------------------------------ 		
-	// Create directory path																			
-	brsstrcat(return_path, ADR('/')); 
+	// Create directory path
+	IF(path <> '/') THEN
+		brsstrcat(return_path, ADR('/')); 
+	END_IF
 	brsstrcat(return_path, ADR(tmp));
-//	brsstrcat(return_path, ADR('/')); 
+	//	brsstrcat(return_path, ADR('/')); 
 	
 	CreateCompletePath := FALSE;
 END_FUNCTION
