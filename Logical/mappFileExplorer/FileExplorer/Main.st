@@ -676,11 +676,11 @@ PROGRAM _CYCLIC
 								IF(brsmemcmp(ADR(EXPL.DAT[side].item_list[EXPL.VIS[side].item_selected]), ADR('(DIR)'), 5) <> 0) THEN
 									step := EXP_FILE_COPY;
 								END_IF
+							// Error
+							ELSIF (DCopy.status <> ERR_FUB_BUSY) THEN
+								step := CreateError(DCopy.status, side, step, 'error copying directory', ADR(EXPL));
 							END_IF
 						END_IF
-					// Error
-					ELSIF (DCopy.status <> ERR_FUB_BUSY) THEN
-						step := CreateError(DCopy.status, side, step, 'error copying directory', ADR(EXPL));
 					// Directory name is too long
 					ELSE
 						step := CreateError(ERR_PATH_EXCEEDS_MAX, side, step, 'directory path name exceeds maximum length', ADR(EXPL));

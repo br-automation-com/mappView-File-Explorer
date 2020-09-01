@@ -1,6 +1,7 @@
 Next Version
 - Fixed reset button was disabled for network and USB
 - Fixed network root directory is showing all as directories
+- Fixed copy directory does not report error
 - Added ping OK button to network share configuration page
 
 
