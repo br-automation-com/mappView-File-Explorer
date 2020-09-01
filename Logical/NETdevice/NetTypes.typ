@@ -8,8 +8,8 @@ TYPE
 		NET_ERROR (*Function step: Jump to this step in every case of Error occuring in the Function chain*)
 		);
 	netCMD : 	STRUCT 
-		connect : BOOL := TRUE; (*Connect to network share*)
-		disconnect : BOOL := TRUE; (*Disconnect from network share*)
+		connect : BOOL; (*Connect to network share*)
+		disconnect : BOOL; (*Disconnect from network share*)
 		error_reset : BOOL; (*Reset error*)
 	END_STRUCT;
 	netPAR : 	STRUCT 

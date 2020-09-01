@@ -56,11 +56,24 @@
 		<EventBinding id="contentExplorer.btnNETreset.Click">
 			<Source contentRefId="contentExplorer" widgetRefId="btnNETreset" xsi:type="widgets.brease.Button.Event" event="Click" />
 			<EventHandler>
-				<Action>
-					<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:NET.CMD.error_reset" >
-						<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
-					</Target>
-				</Action>
+				<Sequence>
+					<!-- Disconnect />-->
+					<Step order="1">
+						<Action>
+							<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:NET.CMD.disconnect" >
+								<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+							</Target>
+						</Action>
+					</Step>
+					<!-- Reset error />-->
+					<Step order="2">
+						<Action>
+							<Target xsi:type="opcUa.NodeAction" refId="::AsGlobalPV:NET.CMD.error_reset" >
+								<Method xsi:type="opcUa.NodeAction.SetValueBool" value="true" />
+							</Target>
+						</Action>
+					</Step>
+				</Sequence>
 			</EventHandler>
 		</EventBinding>
 		

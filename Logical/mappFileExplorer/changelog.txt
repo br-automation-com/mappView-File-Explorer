@@ -3,7 +3,7 @@ Next Version
 - Fixed network root directory is showing all as directories
 - Fixed copy directory does not report error
 - Added ping OK button to network share configuration page
-
+- Network can now be disconnected with the Reset / Abort button
 
 Version 1.5
 - Update USB helper task

@@ -11,5 +11,4 @@ END_VAR
 VAR
 	state_machine : netSTATE;
 	device_param : STRING[200]; (*Connection path of network device*)
-	device_handle : UDINT;
 END_VAR
