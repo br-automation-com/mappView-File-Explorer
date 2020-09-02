@@ -22,8 +22,10 @@ Recommended task class is #8 with a 10ms cycle time.
 <a name="Revision-History"></a>
 ## Revision History
 
-#### Version 1.5
-- Update USB helper task
-- Update NET helper task
-- Prevent user from copying directories recursively
+#### Version 1.6
+- Fixed reset button was disabled for network and USB
+- Fixed network root directory is showing all as directories
+- Fixed copy directory does not report error
+- Added ping OK button to network share configuration page
+- Network can now be disconnected with the Reset / Abort button
 
