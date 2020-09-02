@@ -1,4 +1,4 @@
-Next Version
+Version 1.6
 - Fixed reset button was disabled for network and USB
 - Fixed network root directory is showing all as directories
 - Fixed copy directory does not report error
