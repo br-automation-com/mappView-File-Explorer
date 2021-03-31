@@ -25,11 +25,11 @@ VAR
 	response_header_data : STRING[300];
 	download_timeout : TON_10ms;
 	upload_delay : TON_10ms;
-	upload_response : ARRAY[0..1] OF STRING[600];
-	file_name_start : UDINT;
-	file_name_len : UDINT;
-	file_data_start : UDINT;
-	file_data_len : UDINT;
+	upload_response : ARRAY[0..1] OF STRING[1000];
+	file_name_start : DINT;
+	file_name_len : DINT;
+	file_data_start : DINT;
+	file_data_len : DINT;
 	dir_path : STRING[EXPL_DIR_PATH_LENGTH];
 	device_active : STRING[40];
 	item_name : STRING[EXPL_DIR_PATH_LENGTH];
