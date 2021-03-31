@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?AutomationStudio Version=4.5.5.113?>
 <Hardware xmlns="http://br-automation.co.at/AS/Hardware">
-  <Module Name="X20CP1583" Type="X20CP1583" Version="1.5.0.0">
+  <Module Name="X20CP3585" Type="X20CP3585" Version="1.5.0.0">
     <Connector Name="IF2">
       <Parameter ID="ActivateDevice" Value="1" />
     </Connector>
