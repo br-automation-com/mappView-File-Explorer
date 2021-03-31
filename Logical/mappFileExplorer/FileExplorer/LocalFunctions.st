@@ -181,6 +181,7 @@ END_FUNCTION
 // Find second data in first data																		
 //******************************************************************************************************
 FUNCTION FindInMem
+	FindInMem := -1;
 	IF (len1 > len2) THEN
 		IF(direction) THEN
 			idx := len1 - len2; 
