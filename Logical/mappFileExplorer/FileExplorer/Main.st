@@ -1028,7 +1028,7 @@ PROGRAM _CYCLIC
 					file_name_len := FindInMem(AsMemPartAllocClear_0.mem+file_name_start, WebServiceUpload[side].requestDataLen-file_name_start, ADR('"$r$n'), brsstrlen(ADR('"$r$n')), FALSE);
 					IF(file_name_len > 0) THEN
 						// Make sure file name is not too long
-						IF(file_name_len <= SIZEOF(item_name)) THEN
+						IF(file_name_len <= EXPL_ITEM_LENGTH) THEN
 							// Store file name
 							brsmemset(ADR(item_name), 0, SIZEOF(item_name));
 							brsmemcpy(ADR(item_name), AsMemPartAllocClear_0.mem+file_name_start, file_name_len);
