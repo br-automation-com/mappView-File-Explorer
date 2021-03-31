@@ -1,7 +1,7 @@
 // ----------------------------------------------------------------------------------------
 //	Function:	mappView explorer
-//  Version:	1.7
-//	Changed:	31.03.2021
+//  Version:	1.04
+//	Changed:	29.05.2020
 // ----------------------------------------------------------------------------------------
 
 PROGRAM _INIT
@@ -31,27 +31,15 @@ PROGRAM _INIT
 	
 	// ----------------------------------------------------------------------------------------
 	// Generate HTML messages for web upload
-	brsitoa(EXPL_UPLOAD_DOWNLOAD_SIZE, ADR(tmp_str1));
-	upload_response[0]	:= '<html><body><form action="/uploadA.html" name="form_upload" method="post" enctype="multipart/form-data">
-	<label for="file-upload" style="font-weight:bold;font-family: sans-serif;font-size:16px;padding:10px 10px;" class="custom-file-upload">Upload</label>
-	<input type="file" id="file-upload" style="display:none;" name="file_selected" content-type="application/octet-stream"/>
-	<script type="text/javascript">var uploadField = document.getElementById("file-upload");uploadField.onchange = function () {
-	var formUpload = document.getElementsByName("form_upload");	if (this.files[0].size >';
-	brsstrcat(ADR(upload_response[0]), ADR(tmp_str1)); 
-	brsstrcat(ADR(upload_response[0]), ADR(') {	alert("File exceeds maximum of '));
-	brsstrcat(ADR(upload_response[0]), ADR(tmp_str1)); 
-	brsstrcat(ADR(upload_response[0]), ADR(' bytes!");this.value = "";}else{document.form_upload.submit();};};</script></form><body></html>'));
+	upload_response[0]	:= '<html><body><form action="/uploadA.html" name="form_upload" method="post" enctype="multipart/form-data" >
+	<label for="file-upload" style="font-weight:bold;font-family: sans-serif;font-size:16px;padding:10px 10px;10px;10px;" class="custom-file-upload">Upload</label>
+	<input type="file" id="file-upload" style="display:none;" onchange="form.submit()" name="file_selected" content-type="application/octet-stream" />
+	</form><body></html> ';
 	WebServiceUpload[0].pServiceName := ADR('uploadA.html');
-	
-	upload_response[1]	:= '<html><body><form action="/uploadB.html" name="form_upload" method="post" enctype="multipart/form-data">
-	<label for="file-upload" style="font-weight:bold;font-family: sans-serif;font-size:16px;padding:10px 10px 10px 10px;" class="custom-file-upload">Upload</label>
-	<input type="file" id="file-upload" style="display:none;" name="file_selected" content-type="application/octet-stream"/>
-	<script type="text/javascript">var uploadField = document.getElementById("file-upload");uploadField.onchange = function () {
-	var formUpload = document.getElementsByName("form_upload");	if (this.files[0].size >';
-	brsstrcat(ADR(upload_response[1]), ADR(tmp_str1)); 
-	brsstrcat(ADR(upload_response[1]), ADR(') {	alert("File exceeds maximum of '));
-	brsstrcat(ADR(upload_response[1]), ADR(tmp_str1)); 
-	brsstrcat(ADR(upload_response[1]), ADR(' bytes!");this.value = "";}else{document.form_upload.submit();};};</script></form><body></html>'));
+	upload_response[1]	:= '<html><body><form action="/uploadB.html" name="form_upload" method="post" enctype="multipart/form-data" >
+	<label for="file-upload" style="font-weight:bold;font-family: sans-serif;font-size:16px;padding:10px 10px;10px;10px;" class="custom-file-upload">Upload</label>
+	<input type="file" id="file-upload" style="display:none;" onchange="form.submit()" name="file_selected" content-type="application/octet-stream" />
+	</form><body></html> ';
 	WebServiceUpload[1].pServiceName := ADR('uploadB.html');
 
 	// ----------------------------------------------------------------------------------------
@@ -85,7 +73,7 @@ PROGRAM _CYCLIC
 	// New upload data arrived
 	ELSIF(WebServiceUpload[side].send = FALSE AND WebServiceUpload[side].requestDataLen > 0 AND EXPL.CMD[side].upload = FALSE) THEN
 		// Add delay so that upload can finish
-		upload_delay.PT := WebServiceUpload[side].requestDataLen/10000;
+		upload_delay.PT := WebServiceUpload[side].requestDataLen/100000*5;
 		upload_delay.IN := TRUE;
 		upload_delay();
 	END_IF
@@ -1021,9 +1009,8 @@ PROGRAM _CYCLIC
 			// Make sure data fits into memory
 			IF(WebServiceUpload[side].requestDataLen < EXPL_UPLOAD_DOWNLOAD_SIZE) THEN
 				// Find file name start
-				file_name_start := FindInMem(AsMemPartAllocClear_0.mem, WebServiceUpload[side].requestDataLen, ADR('filename="'), brsstrlen(ADR('filename="')), FALSE);
+				file_name_start := FindInMem(AsMemPartAllocClear_0.mem, WebServiceUpload[side].requestDataLen, ADR('filename="'), brsstrlen(ADR('filename="')), FALSE) + brsstrlen(ADR('filename="'));
 				IF(file_name_start > 0) THEN
-					file_name_start := file_name_start + brsstrlen(ADR('filename="'));
 					// Find end of file name
 					file_name_len := FindInMem(AsMemPartAllocClear_0.mem+file_name_start, WebServiceUpload[side].requestDataLen-file_name_start, ADR('"$r$n'), brsstrlen(ADR('"$r$n')), FALSE);
 					IF(file_name_len > 0) THEN
@@ -1033,9 +1020,8 @@ PROGRAM _CYCLIC
 							brsmemset(ADR(item_name), 0, SIZEOF(item_name));
 							brsmemcpy(ADR(item_name), AsMemPartAllocClear_0.mem+file_name_start, file_name_len);
 							// Find start of data
-							file_data_start := FindInMem(AsMemPartAllocClear_0.mem, WebServiceUpload[side].requestDataLen, ADR('Content-Type:'), brsstrlen(ADR('Content-Type:')), FALSE);
+							file_data_start := FindInMem(AsMemPartAllocClear_0.mem, WebServiceUpload[side].requestDataLen, ADR('Content-Type:'), brsstrlen(ADR('Content-Type:')), FALSE) + brsstrlen(ADR('Content-Type:'));
 							IF(file_data_start > 0) THEN
-								file_data_start := file_data_start + brsstrlen(ADR('Content-Type:'));
 								// Find end of data
 								file_data_start := FindInMem(AsMemPartAllocClear_0.mem+file_data_start, WebServiceUpload[side].requestDataLen-file_data_start, ADR('$r$n$r$n'), brsstrlen(ADR('$r$n$r$n')), FALSE) + brsstrlen(ADR('$r$n$r$n')) + file_data_start;
 								file_data_len := FindInMem(AsMemPartAllocClear_0.mem+file_data_start, WebServiceUpload[side].requestDataLen-file_data_start, ADR('$r$n------'), brsstrlen(ADR('$r$n------')), TRUE);
@@ -1060,7 +1046,7 @@ PROGRAM _CYCLIC
 					END_IF
 				// File name start not found in upload response
 				ELSE
-					step := CreateError(ERR_POS_NAME_UPLOAD, side, step, 'file name not found in upload response', ADR(EXPL));
+					step := CreateError(ERR_POS_NAME_UPLOAD, side, step, 'file name position not found in upload response', ADR(EXPL));
 				END_IF
 			// Upload file exceeds maximum buffer size
 			ELSE
