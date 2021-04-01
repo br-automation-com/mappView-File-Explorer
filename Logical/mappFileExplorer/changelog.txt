@@ -1,3 +1,8 @@
+Version 1.7
+- Fixed data start offset in upload was not correct
+- Fixed upload file name can exceed EXPL_ITEM_LENGTH
+- Fixed upload crashing CPU when it exceeds EXPL_UPLOAD_DOWNLOAD_SIZE
+
 Version 1.6
 - Fixed reset button was disabled for network and USB
 - Fixed network root directory is showing all as directories
