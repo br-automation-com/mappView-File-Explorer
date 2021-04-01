@@ -1037,7 +1037,7 @@ PROGRAM _CYCLIC
 							IF(file_data_start > 0) THEN
 								file_data_start := file_data_start + brsstrlen(ADR('Content-Type:'));
 								// Find end of data
-								file_data_start := FindInMem(AsMemPartAllocClear_0.mem+file_data_start, WebServiceUpload[side].requestDataLen-file_data_start, ADR('$r$n$r$n'), brsstrlen(ADR('$r$n$r$n')), FALSE) + file_data_start;
+								file_data_start := FindInMem(AsMemPartAllocClear_0.mem+file_data_start, WebServiceUpload[side].requestDataLen-file_data_start, ADR('$r$n$r$n'), brsstrlen(ADR('$r$n$r$n')), FALSE) + brsstrlen(ADR('$r$n$r$n')) + file_data_start;
 								file_data_len := FindInMem(AsMemPartAllocClear_0.mem+file_data_start, WebServiceUpload[side].requestDataLen-file_data_start, ADR('$r$n------'), brsstrlen(ADR('$r$n------')), TRUE);
 								// When file name and data is correct procceed with saving data to file
 								IF(file_data_len > 0) THEN
