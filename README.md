@@ -22,10 +22,8 @@ Recommended task class is #8 with a 10ms cycle time.
 <a name="Revision-History"></a>
 ## Revision History
 
-#### Version 1.6
-- Fixed reset button was disabled for network and USB
-- Fixed network root directory is showing all as directories
-- Fixed copy directory does not report error
-- Added ping OK button to network share configuration page
-- Network can now be disconnected with the Reset / Abort button
+#### Version 1.7
+- Fixed data start offset in upload was not correct
+- Fixed upload file name can exceed EXPL_ITEM_LENGTH
+- Fixed upload crashing CPU when it exceeds EXPL_UPLOAD_DOWNLOAD_SIZE
 
