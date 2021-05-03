@@ -21,6 +21,7 @@
     <Build GccVersion="4.1.2" />
     <DefaultTargetMemory Tasks="UserROM" />
     <Safety SafetyRelease="0.0" />
+    <Transfer SavedOfflineInstallationFolder="" SavedPipDestinationFolder="" SavedRuntimeUtilityCenterPackagePath="" />
     <Vc FirmwareVersion="V4.52.0" />
   </Configuration>
 </Cpu>
