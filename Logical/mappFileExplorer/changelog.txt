@@ -1,3 +1,7 @@
+Version 1.8
+- Update to Automation Studio AS 4.9 and runtime D4.90
+- Revert fix from build 1.7 since bug in AsHTTP is fixed in D4.90
+
 Version 1.7
 - Fixed data start offset in upload was not correct
 - Fixed upload file name can exceed EXPL_ITEM_LENGTH
