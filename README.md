@@ -13,17 +13,16 @@ See [**How to import the user management into an existing project.**](Logical/ma
 
 <a name="Requirements"></a>
 ## Requirements
-* Automation Studio 4.5
-* mappView 5.7.1
-* Automation Runtime B4.53
+* Automation Studio 4.9
+* mappView 5.13.1
+* Automation Runtime D4.90
 
 Recommended task class is #8 with a 10ms cycle time.	
 
 <a name="Revision-History"></a>
 ## Revision History
 
-#### Version 1.7
-- Fixed data start offset in upload was not correct
-- Fixed upload file name can exceed EXPL_ITEM_LENGTH
-- Fixed upload crashing CPU when it exceeds EXPL_UPLOAD_DOWNLOAD_SIZE
+#### Version 1.8
+- Update to Automation Studio AS 4.9 and runtime D4.90
+- Revert fix from build 1.7 since bug in AsHTTP is fixed in D4.90
 
