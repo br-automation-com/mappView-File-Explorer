@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<OpcUaSource FileVersion="4" ArVersion="B4.53">
+<?AutomationStudio FileVersion="4.9"?>
+<OpcUaSource FileVersion="9" ArVersion="J4.93">
   <Aliases>
     <ACLAliases>
       <ACL Id="1">
-        <ACE RoleId="1" RoleName="Everyone" Access="0x015F" />
-        <ACE RoleId="2" RoleName="Administrator" Access="0x015F" />
+        <ACE RoleName="Everyone" Access="0x015F" />
+        <ACE RoleName="Administrator" Access="0x015F" />
       </ACL>
       <ACL Id="2">
-        <ACE RoleId="1" RoleName="Everyone" Access="0x017F" />
-        <ACE RoleId="2" RoleName="Administrator" Access="0x017F" />
+        <ACE RoleName="Everyone" Access="0x017F" />
+        <ACE RoleName="Administrator" Access="0x017F" />
       </ACL>
     </ACLAliases>
     <EURangeViolationAliases />
@@ -18,35 +19,35 @@
   <DefaultView AclId="2">
     <Module Name="&lt;Default&gt;">
       <GlobalVariables Name="Global Variables">
-        <Variable Name="NET" AutomaticEnable="True">
+        <Variable Name="NET" RecursiveEnable="1">
           <Variable Name="CMD" />
           <Variable Name="PAR" />
           <Variable Name="ERR" />
         </Variable>
-        <Variable Name="USB" AutomaticEnable="True">
+        <Variable Name="USB" RecursiveEnable="1">
           <Variable Name="PAR">
-            <Variable Name="is_connected" EnableArrayElements="True" />
+            <Variable Name="is_connected" RecursiveEnable="1" />
           </Variable>
         </Variable>
-        <Variable Name="EXPL" AutomaticEnable="True">
-          <Variable Name="CMD" EnableArrayElements="True" />
-          <Variable Name="PAR" EnableArrayElements="True" />
-          <Variable Name="DAT" EnableArrayElements="True">
+        <Variable Name="EXPL" RecursiveEnable="1">
+          <Variable Name="CMD" RecursiveEnable="1" />
+          <Variable Name="PAR" RecursiveEnable="1" />
+          <Variable Name="DAT" RecursiveEnable="1">
             <Variable Name="DAT[0]">
-              <Variable Name="item_list" EnableArrayElements="True" />
-              <Variable Name="item_size" EnableArrayElements="True" />
+              <Variable Name="item_list" RecursiveEnable="1" />
+              <Variable Name="item_size" RecursiveEnable="1" />
             </Variable>
             <Variable Name="DAT[1]">
-              <Variable Name="item_list" EnableArrayElements="True" />
-              <Variable Name="item_size" EnableArrayElements="True" />
+              <Variable Name="item_list" RecursiveEnable="1" />
+              <Variable Name="item_size" RecursiveEnable="1" />
             </Variable>
           </Variable>
-          <Variable Name="VIS" EnableArrayElements="True">
+          <Variable Name="VIS" RecursiveEnable="1">
             <Variable Name="VIS[0]">
-              <Variable Name="device_list" EnableArrayElements="True" />
+              <Variable Name="device_list" RecursiveEnable="1" />
             </Variable>
             <Variable Name="VIS[1]">
-              <Variable Name="device_list" EnableArrayElements="True" />
+              <Variable Name="device_list" RecursiveEnable="1" />
             </Variable>
           </Variable>
         </Variable>
