@@ -22,7 +22,6 @@ Recommended task class is #8 with a 10ms cycle time.
 <a name="Revision-History"></a>
 ## Revision History
 
-#### Version 1.8
-- Update to Automation Studio AS 4.9 and runtime D4.90
-- Revert fix from build 1.7 since bug in AsHTTP is fixed in D4.90
+#### Version 1.9
+- Update to Automation Studio AS 4.12 and mapp 5.24
 
